@@ -22,7 +22,10 @@
 
 
 #landing-header h1 {
+  font-family: 'Titan One';
   color: #fff;
+  font-size: 51px;
+  
 }
 
 .slideshow { 
@@ -85,8 +88,8 @@
   }
 }
 
-@media(max-width:440px){
+@media(max-width:736px){
     #landingSearch>.btn{
     margin-top: 10px;
-}
+    }
 }
