@@ -1,6 +1,4 @@
-﻿body {
-  background-color: #000;
-}
+﻿
 
 #landing-header {
   z-index: 1;
@@ -45,6 +43,7 @@ ul.nav > li > a:hover{
   font-family: 'Titan One';
   color: #fff;
   font-size: 51px;
+  margin-bottom: 20px;
   
 }
 
@@ -112,4 +111,17 @@ ul.nav > li > a:hover{
     #landingSearch>.btn{
     margin-top: 10px;
     }
+}
+
+
+
+#aboutBg{
+    background-image : url(../Media/Parachute.jpg);
+    background-size : contain;
+    background-repeat: no-repeat;
+}
+
+.titanHeader{
+    font-family: "Titan One";
+    margin-bottom: 20px;
 }
