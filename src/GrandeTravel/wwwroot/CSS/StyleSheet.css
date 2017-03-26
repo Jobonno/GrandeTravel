@@ -18,6 +18,17 @@
     margin-top: 50px;
 }
 
+#brandLogo{
+    font-family: 'Titan One';
+    color:forestgreen;
+   
+}
+
+#brandLogo:hover{
+    text-shadow: 6px 6px 6px #aaa;
+   
+}
+
 
 
 
