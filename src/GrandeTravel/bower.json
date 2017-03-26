@@ -1,8 +1,11 @@
 {
 	"name": "asp.net",
 	"private": true,
-	"dependencies": {
-		"jquery": "3.2.1",
-			"bootstrap": "3.3.7"
-	}
+  "dependencies": {
+    "jquery": "3.2.1",
+    "bootstrap": "3.3.7",
+    "fontawesome": "~4.1.0"
+
+
+  }
 }

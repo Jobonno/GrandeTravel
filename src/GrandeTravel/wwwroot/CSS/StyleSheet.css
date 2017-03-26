@@ -24,6 +24,15 @@
    
 }
 
+ul.nav > li{
+    font-family: 'Titan One';
+}
+
+ul.nav > li > a:hover{
+    color:forestgreen;
+     text-shadow: 6px 6px 6px #aaa;
+}
+
 #brandLogo:hover{
     text-shadow: 6px 6px 6px #aaa;
    
