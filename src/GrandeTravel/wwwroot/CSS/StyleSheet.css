@@ -107,11 +107,8 @@ ul.nav > li > a:hover{
   }
 }
 
-@media(max-width:736px){
-    #landingSearch>.btn{
-    margin-top: 10px;
-    }
-}
+
+
 
 
 
@@ -124,4 +121,71 @@ ul.nav > li > a:hover{
 .titanHeader{
     font-family: "Titan One";
     margin-bottom: 20px;
+}
+
+footer {
+	background:#e7e7e7;
+	width:100%;
+	
+	position:relative;
+    margin-top:200px;
+	
+}
+address{
+    margin-top: 15px;
+    font-size:x-small;
+}
+
+
+#JoeContact{
+    margin-top: 15px;
+    font-size:x-small;
+    
+}
+
+#social{
+    margin-top:30px;
+	text-align: center;
+}
+
+i.fa{
+	font-size: 26px;
+	padding: 3px 10px ;
+	
+
+}
+i.fa:hover{
+    font-size: 30px;
+    padding: 0px 8px;
+    text-shadow: 6px 6px 6px #aaa;
+}
+
+
+@media(max-width:768px){
+    #landingSearch>.btn{
+    margin-top: 10px;
+    }
+    .mobile-hide{
+        display:none;
+    }
+    #social{
+    margin-top:10px;
+	
+}
+}
+
+
+@media(max-width:450px){
+    address{
+        margin-top: 5px;
+        }
+    i.fa{
+        font-size:14px;
+        padding: 1px 3px;
+    }
+    i.fa:hover{
+    font-size: 15px;
+    padding: 0px 2px;
+    text-shadow: 3px 3px 3px #aaa;
+    }
 }
