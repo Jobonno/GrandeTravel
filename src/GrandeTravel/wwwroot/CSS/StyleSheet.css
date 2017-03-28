@@ -1,4 +1,5 @@
 ﻿
+/*Landing Css*/
 
 #landing-header {
   z-index: 1;
@@ -16,25 +17,7 @@
     margin-top: 50px;
 }
 
-#brandLogo{
-    font-family: 'Titan One';
-    color:forestgreen;
-   
-}
 
-ul.nav > li{
-    font-family: 'Titan One';
-}
-
-ul.nav > li > a:hover{
-    color:forestgreen;
-     text-shadow: 6px 6px 6px #aaa;
-}
-
-#brandLogo:hover{
-    text-shadow: 6px 6px 6px #aaa;
-   
-}
 
 
 
@@ -107,21 +90,32 @@ ul.nav > li > a:hover{
   }
 }
 
+/*NavBar Css*/
 
-
-
-
-
-#aboutBg{
-    background-image : url(../Media/Parachute.jpg);
-    background-size : contain;
-    background-repeat: no-repeat;
+#brandLogo{
+    font-family: 'Titan One';
+    color:forestgreen;
+   
 }
 
-.titanHeader{
-    font-family: "Titan One";
-    margin-bottom: 20px;
+ul.nav > li{
+    font-family: 'Titan One';
 }
+
+ul.nav > li > a:hover{
+    color:forestgreen;
+     text-shadow: 6px 6px 6px #aaa;
+}
+
+#brandLogo:hover{
+    text-shadow: 6px 6px 6px #aaa;
+   
+}
+
+
+/*Footer Css*/
+
+
 
 footer {
 	background:#e7e7e7;
@@ -148,16 +142,29 @@ address{
 	text-align: center;
 }
 
-i.fa{
+.socialHover{
 	font-size: 26px;
 	padding: 3px 10px ;
 	
 
 }
-i.fa:hover{
+.socialHover:hover{
     font-size: 30px;
     padding: 0px 8px;
     text-shadow: 6px 6px 6px #aaa;
+}
+
+/*About Page Css*/
+
+#aboutBg{
+    background-image : url(../Media/Parachute.jpg);
+    background-size : contain;
+    background-repeat: no-repeat;
+}
+
+.titanHeader{
+    font-family: "Titan One";
+    margin-bottom: 20px;
 }
 
 
@@ -183,9 +190,9 @@ i.fa:hover{
         font-size:14px;
         padding: 1px 3px;
     }
-    i.fa:hover{
-    font-size: 15px;
-    padding: 0px 2px;
+    .socialHover:hover{
+    font-size: 14px;
+    padding: 1px 3px;
     text-shadow: 3px 3px 3px #aaa;
     }
 }

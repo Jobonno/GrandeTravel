@@ -5,7 +5,5 @@
         $("footer").addClass("hide");             
       
     }
-    //$("i.fa").hover(function () {
-    //    $(this).css("fontSize", "27px")
-    //});
+    
 });
