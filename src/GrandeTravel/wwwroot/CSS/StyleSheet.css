@@ -122,7 +122,7 @@ footer {
 	width:100%;
 	
 	position:relative;
-    margin-top:200px;
+    margin-top:100px;
 	
 }
 address{
@@ -155,18 +155,29 @@ address{
 }
 
 /*About Page Css*/
-
-#aboutBg{
-    background-image : url(../Media/Parachute.jpg);
-    background-size : contain;
-    background-repeat: no-repeat;
+#aboutImg{
+    width:400px;
+    margin:auto;
 }
+
 
 .titanHeader{
     font-family: "Titan One";
     margin-bottom: 20px;
 }
 
+#SocialMedia{
+    margin-top:20px;
+    border-radius:12px;
+    background-color:rgba(0, 148, 255,0.4);
+}
+#SocialMedia>h3{
+     color:white;
+}
+
+h4{
+    color:white;
+}
 
 @media(max-width:768px){
     #landingSearch>.btn{
@@ -194,5 +205,8 @@ address{
     font-size: 14px;
     padding: 1px 3px;
     text-shadow: 3px 3px 3px #aaa;
+    }
+    #SocialMedia {
+        display:none;
     }
 }
