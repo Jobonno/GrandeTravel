@@ -154,7 +154,7 @@ address{
     text-shadow: 6px 6px 6px #aaa;
 }
 
-/*ABout Page*/
+/*About Page*/
 
 #aboutContent{
     position: relative;
@@ -182,19 +182,6 @@ address{
 
 
 /*Contact Page*/
-#SocialMedia{
-    margin-top:20px;
-    border-radius:12px;
-    background-color:rgba(0, 148, 255,0.4);
-}
-#SocialMedia>h3{
-     color:white;
-}
-
-h4{
-    color:white;
-}
-
 
 
 
@@ -225,7 +212,5 @@ h4{
     padding: 1px 3px;
     text-shadow: 3px 3px 3px #aaa;
     }
-    #SocialMedia {
-        display:none;
-    }
+   
 }
