@@ -2,3 +2,53 @@
     ViewBag.Title = "Grande Travel Contact";
 
 }
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<div class="container">
+
+    <h2 class="text-center titanHeader">Grande Travel Contact</h2>
+    <div class="row">
+        <div class="col-lg-6" id="About">
+            <h2></h2>
+            <img src="~/Media/Parachute.jpg" alt="About Us" class="img-rounded img-responsive" id="aboutImg" />
+            
+            
+        </div>
+
+        <aside class="col-lg-5 col-lg-offset-1 col-md-6 col-sm-offset-2 col-sm-8 text-center" id="SocialMedia">
+
+            <h3 class="text-capitalize"><b>Social Media </b></h3>
+            <hr />
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-xs-6">
+                    <h4>TWITTER <i class="fa fa-twitter" aria-hidden="true"></i></h4>
+                    <a class="twitter-timeline text-center" data-width="250" data-height="450" data-chrome="nofooter noborders" href="https://twitter.com/ThatBucketList"></a>
+                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6">
+                    <h4>FACEBOOK <i class="fa fa-facebook"></i></h4>
+                    <div class="fb-page" data-href="https://www.facebook.com/grandtravelandtours/" data-tabs="timeline" data-width="250" data-height="450" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                        <blockquote cite="https://www.facebook.com/grandtravelandtours/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/grandtravelandtours/">Grand Travel</a></blockquote>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+
+
+
+</div>

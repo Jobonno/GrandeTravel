@@ -154,18 +154,34 @@ address{
     text-shadow: 6px 6px 6px #aaa;
 }
 
-/*About Page Css*/
-#aboutImg{
-    width:400px;
-    margin:auto;
+/*ABout Page*/
+
+#aboutContent{
+    position: relative;
 }
 
+#aboutImg{
+    width: 100%;
+    height: auto;
+    
+}
+
+#aboutH2{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    text-align: center;
+    
+}
 
 .titanHeader{
     font-family: "Titan One";
     margin-bottom: 20px;
 }
 
+
+/*Contact Page*/
 #SocialMedia{
     margin-top:20px;
     border-radius:12px;
@@ -178,6 +194,9 @@ address{
 h4{
     color:white;
 }
+
+
+
 
 @media(max-width:768px){
     #landingSearch>.btn{
