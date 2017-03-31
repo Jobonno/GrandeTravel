@@ -2,19 +2,47 @@
     ViewBag.Title = "Grande Travel Contact";
 
 }
-
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 <div class="container">
     <h2 class="text-capitalize text-center titanHeader">Grande Travel Contact</h2>
     <div class="row">
-        <div class="col-md-2 col-sm-2 socialMedia">
+        <div class="jumbotron col-md-12" id="contactContent">
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-5 col-sm-5 socialMedia text-center">
             <h3 class="text-center">TWITTER <i class="fa fa-twitter" aria-hidden="true"></i></h3>
-            <a class="twitter-timeline" data-width="220" data-height="500" data-chrome="nofooter" data-theme="light" data- data-link-color="#2B7BB9" href="https://twitter.com/Australia">Tweets by Australia</a>
+            <a class="twitter-timeline" data-width="350" data-height="350" data-chrome="nofooter" data-theme="light" data-tweet-limit="1" data-link-color="#2B7BB9" href="https://twitter.com/Australia">Tweets by Australia</a>
             <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
-        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-            <div class="yaya"></div>
+        <div class="col-lg-5 col-md-5 col-sm-5 text-center socialMedia" id="facebook">
+            
+                <h3><i class="fa fa-facebook" aria-hidden="true"></i>ACEBOOK </h3>
+                <div class="fb-page" data-href="https://www.facebook.com/GrandTravel55/e" data-width="350" data-height="100" data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/GrandTravel55/e" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/GrandTravel55/e">Grande Travel</a></blockquote></div><br /><br />
+                <div class="fb-follow" data-href="https://www.facebook.com/GrandTravel55/" data-layout="button" data-size="small" data-show-faces="true"></div><div class="fb-share-button" data-href="https://www.facebook.com/GrandTravel55/" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2FGrandTravel55%2F&amp;src=sdkpreparse">Share</a></div><br /><br />
+            <div class="fb-post" data-href="https://www.facebook.com/JoeBonno/posts/10208355704881478:0" data-width="250" data-show-text="true">
+                <blockquote cite="https://www.facebook.com/JoeBonno/posts/10208355704881478:0" class="fb-xfbml-parse-ignore">
+                    <p>
+                        Great Company, Amazing Experience.
+                        Once in a Lifetime Experience
+                    </p>Posted by <a href="https://www.facebook.com/JoeBonno">Joe E Silvia Bonifacio</a> on&nbsp;<a href="https://www.facebook.com/JoeBonno/posts/10208355704881478:0">Wednesday, March 29, 2017</a>
+                </blockquote>
+            </div>
+          
         </div>
         
     </div>
+    
 </div>
