@@ -190,6 +190,11 @@ address{
     background-size: cover;
 }
 
+.ContactUsBtn{
+    font-size:36px;
+    color:white;
+}
+
 .socialMedia{
     
     border-radius: 10px;
@@ -199,21 +204,19 @@ address{
 
 #facebook{
     border-radius: 10px;
-    border:solid rgba(4, 18, 249, 0.90) 1px;
-    width:auto;
-    margin-left:5px;
-    padding-bottom:10px;
-    background-color:white;
-}
-#facebook>h3{
-    color:rgba(4, 18, 249, 0.90);
+    background-color:#415ca9;
     
 }
 
-.socialMedia>h3{
-    color:white;
+#instagram1{
+    color: #30104c;
+    background-color:floralwhite;
+    border:solid 1px #30104c;
 }
 
+#instagram1>i {
+    color: #30104c;
+}
 
 
 
