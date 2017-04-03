@@ -150,7 +150,7 @@ address{
 }
 .socialHover:hover{
     font-size: 30px;
-    padding: 0px 8px;
+    padding: 0 8px;
     text-shadow: 6px 6px 6px #aaa;
 }
 
