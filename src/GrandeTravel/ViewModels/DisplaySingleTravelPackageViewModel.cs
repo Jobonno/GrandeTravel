@@ -1,24 +1,24 @@
-﻿using System;
+﻿using GrandeTravel.Models;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GrandeTravel.Models
+namespace GrandeTravel.ViewModels
 {
-    public class TravelPackage
+    public class DisplaySingleTravelPackageViewModel
     {
         public int TravelPackageId { get; set; }
 
-       
+
         public string PackageName { get; set; }
 
         public string Location { get; set; }
 
-        
+
         public string PackageDescription { get; set; }
 
-      
+
         public int PackagePrice { get; set; }
 
         //One TravelPackage has many Bookings

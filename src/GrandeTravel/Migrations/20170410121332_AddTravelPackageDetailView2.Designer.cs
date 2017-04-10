@@ -8,9 +8,10 @@ using GrandeTravel.Services;
 namespace GrandeTravel.Migrations
 {
     [DbContext(typeof(GrandeTravelDbContext))]
-    partial class GrandeTravelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170410121332_AddTravelPackageDetailView2")]
+    partial class AddTravelPackageDetailView2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")

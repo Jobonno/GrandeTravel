@@ -10,6 +10,7 @@ namespace GrandeTravel.Services
     public class GrandeTravelDbContext:DbContext
     {
         public DbSet<TravelPackage> TblTravelPackage { get; set; }
+        public DbSet<Booking> TblBooking { get; set; }
 
 
         //connection string

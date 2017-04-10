@@ -13,7 +13,7 @@
                     <p>@item.Location</p>
                     <p>@item.PackageDescription</p>
                     <p>$@item.PackagePrice</p>
-                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                    <p><a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId" class="btn btn-primary" role="button">Details</a> <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@item.TravelPackageId" class="btn btn-warning" role="button">Update</a></p>
                 </div>
             </div>
         </div>

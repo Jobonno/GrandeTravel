@@ -13,10 +13,13 @@ namespace GrandeTravel.Controllers
     public class TravelPackageController : Controller
     {
         private IRepository<TravelPackage> _TravelPackageRepo;
+        private IRepository<Booking> _BookingRepo;
 
-        public TravelPackageController(IRepository<TravelPackage> repo)
+
+        public TravelPackageController(IRepository<TravelPackage> TravelPackagerepo, IRepository<Booking> bookingRepo)
         {
-            _TravelPackageRepo = repo;
+            _TravelPackageRepo = TravelPackagerepo;
+            _BookingRepo = bookingRepo;
         }
 
 
@@ -59,6 +62,74 @@ namespace GrandeTravel.Controllers
             }
 
             return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
+            IEnumerable<Booking> list = _BookingRepo.Query(b => b.TravelPackageId == id);
+            DisplaySingleTravelPackageViewModel vm = new DisplaySingleTravelPackageViewModel
+            {
+                PackageName = tp.PackageName,
+                TravelPackageId = tp.TravelPackageId,
+                Location = tp.Location,
+                PackageDescription = tp.PackageDescription,
+                PackagePrice = tp.PackagePrice,
+                Bookings = list
+
+        };
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
+            if (tp != null)
+            {
+                UpdateTravelPackageViewModel vm = new UpdateTravelPackageViewModel
+                {
+                    PackageName = tp.PackageName,
+                    Location = tp.Location,
+                    PackageDescription = tp.PackageDescription,
+                    PackagePrice = tp.PackagePrice
+                };
+                return View(vm);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Update(int id, UpdateTravelPackageViewModel vm)
+        {
+            TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
+            if (ModelState.IsValid && tp != null)
+            {
+                tp.PackageName = vm.PackageName;
+                tp.Location = vm.Location;
+                tp.PackageDescription = vm.PackageDescription;
+                tp.PackagePrice = vm.PackagePrice;
+
+                _TravelPackageRepo.Update(tp);
+                return RedirectToAction("Details", new { id = tp.TravelPackageId });
+            }
+
+            //if Invalid
+            return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
+            if (tp != null)
+            {
+                _TravelPackageRepo.Delete(tp);
+                
+            }
+            return RedirectToAction("Index");
         }
     }
 }

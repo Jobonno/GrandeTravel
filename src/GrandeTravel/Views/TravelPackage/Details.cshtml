@@ -1,0 +1,18 @@
+﻿@model DisplaySingleTravelPackageViewModel
+
+<h3>@Model.PackageName</h3>
+<p>@Model.Location</p>
+<p>@Model.PackageDescription</p>
+<p>$@Model.PackagePrice</p>
+<ul>
+    
+    
+        @foreach (var item in @Model.Bookings)
+        {
+            <li>@item.BookingDate</li>
+        }
+
+    
+    
+</ul>
+<a asp-controller="TravelPackage" asp-action="Delete" asp-route-id="@Model.TravelPackageId" class="btn btn-danger">Delete</a>

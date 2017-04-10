@@ -20,6 +20,7 @@ namespace GrandeTravel
         {
             services.AddMvc();
             services.AddScoped<IRepository<TravelPackage>, BaseRepository<TravelPackage>>();
+            services.AddScoped<IRepository<Booking>, BaseRepository<Booking>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
