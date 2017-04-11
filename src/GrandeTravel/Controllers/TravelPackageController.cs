@@ -23,10 +23,19 @@ namespace GrandeTravel.Controllers
         }
 
 
-        // GET: /<controller>/
-        public IActionResult Index()
+        //GET: /<controller>/
+        public IActionResult Index(string searchString)
         {
-            IEnumerable<TravelPackage> list = _TravelPackageRepo.GetAll();
+            IEnumerable<TravelPackage> list;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                list = _TravelPackageRepo.Query(b => b.Location.Contains(searchString));
+            }else
+            {
+                list = _TravelPackageRepo.GetAll();
+            }
+            
             DisplayAllTravelPackagesViewModel vm = new DisplayAllTravelPackagesViewModel
             {
                 Total = list.Count(),
@@ -34,6 +43,8 @@ namespace GrandeTravel.Controllers
             };
             return View(vm);
         }
+
+        
 
 
         [HttpGet]
