@@ -24,13 +24,23 @@ namespace GrandeTravel.Controllers
 
 
         //GET: /<controller>/
-        public IActionResult Index(string searchString)
+        public IActionResult Index(string searchString, int minPrice, int maxPrice)
         {
             IEnumerable<TravelPackage> list;
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 list = _TravelPackageRepo.Query(b => b.Location.Contains(searchString));
+            }else if (maxPrice > 0 || minPrice > 0)
+            {
+                //only if minprice is entered
+                if(minPrice > maxPrice)
+                {
+                    list = _TravelPackageRepo.Query(b => b.PackagePrice >= minPrice);
+                }else
+                {
+                    list = _TravelPackageRepo.Query(b => (b.PackagePrice <= maxPrice && b.PackagePrice >= minPrice));
+                }                
             }else
             {
                 list = _TravelPackageRepo.GetAll();
