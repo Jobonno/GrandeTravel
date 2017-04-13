@@ -31,6 +31,18 @@ namespace GrandeTravel.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 list = _TravelPackageRepo.Query(b => b.Location.Contains(searchString));
+                if(maxPrice > 0 || minPrice > 0)
+                {
+                    if (minPrice > maxPrice)
+                    {
+                        list = list.Where(b => b.PackagePrice >= minPrice);
+                    }
+                    else
+                    {
+                        list = list.Where(b => (b.PackagePrice <= maxPrice && b.PackagePrice >= minPrice));
+                    }
+                }
+                
             }else if (maxPrice > 0 || minPrice > 0)
             {
                 //only if minprice is entered
