@@ -17,6 +17,7 @@ namespace GrandeTravel.Models
 
         public TravelPackage TravelPackage { get; set; }
 
+        
 
     }
 

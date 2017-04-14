@@ -14,5 +14,9 @@ namespace GrandeTravel.Models
         public int TravelPackageId { get; set; }
 
         public TravelPackage TravelPackage { get; set; }
+
+        
+
+        
     }
 }
