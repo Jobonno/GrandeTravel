@@ -12,6 +12,8 @@ namespace GrandeTravel.Models
 
        
         public string PackageName { get; set; }
+        
+        public string PhotoLocation { get; set; }
 
         public string Location { get; set; }
 

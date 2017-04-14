@@ -13,6 +13,8 @@ namespace GrandeTravel.ViewModels
 
         public string Location { get; set; }
 
+        public string PhotoLocation { get; set; }
+
         [Display(Name = "Package Description")]
         public string PackageDescription { get; set; }
 

@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using GrandeTravel.Services;
 using GrandeTravel.Models;
 using GrandeTravel.ViewModels;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GrandeTravel.Controllers
@@ -14,12 +17,14 @@ namespace GrandeTravel.Controllers
     {
         private IRepository<TravelPackage> _TravelPackageRepo;
         private IRepository<Booking> _BookingRepo;
+        private IHostingEnvironment _HostingEnviro;
 
 
-        public TravelPackageController(IRepository<TravelPackage> TravelPackagerepo, IRepository<Booking> bookingRepo)
+        public TravelPackageController(IRepository<TravelPackage> TravelPackagerepo, IRepository<Booking> bookingRepo, IHostingEnvironment HostingEnviro)
         {
             _TravelPackageRepo = TravelPackagerepo;
             _BookingRepo = bookingRepo;
+            _HostingEnviro = HostingEnviro;
         }
 
 
@@ -77,10 +82,11 @@ namespace GrandeTravel.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(CreateTravelPackageViewModel vm)
+        public IActionResult Create(CreateTravelPackageViewModel vm, IFormFile PhotoLocation)
         {
             if (ModelState.IsValid)
             {
+               
                 //map the tp props with the viewmodel
                 TravelPackage tp = new TravelPackage
                 {
@@ -89,6 +95,19 @@ namespace GrandeTravel.Controllers
                     PackageDescription = vm.PackageDescription,
                     PackagePrice = vm.PackagePrice
                 };
+                if (PhotoLocation != null)
+                {
+                    string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media/TravelPackage");
+
+                    string filename = Path.GetFileName(PhotoLocation.FileName);
+
+                    using (FileStream fs = new FileStream(Path.Combine(uploadPath, filename), FileMode.Create))
+                    {
+                        PhotoLocation.CopyTo(fs);
+                    }
+                    tp.PhotoLocation = filename;
+                }
+
                 //call the service to add the package
                 _TravelPackageRepo.Create(tp);
                 return RedirectToAction("Index", "TravelPackage");
@@ -106,7 +125,7 @@ namespace GrandeTravel.Controllers
             {
                 PackageName = tp.PackageName,
                 TravelPackageId = tp.TravelPackageId,
-                Location = tp.Location,
+                Location = tp.Location,                
                 PackageDescription = tp.PackageDescription,
                 PackagePrice = tp.PackagePrice,
                 Bookings = list
@@ -126,6 +145,7 @@ namespace GrandeTravel.Controllers
                 {
                     PackageName = tp.PackageName,
                     Location = tp.Location,
+                    PhotoLocation = tp.PhotoLocation,
                     PackageDescription = tp.PackageDescription,
                     PackagePrice = tp.PackagePrice
                 };
@@ -135,7 +155,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(int id, UpdateTravelPackageViewModel vm)
+        public IActionResult Update(int id, UpdateTravelPackageViewModel vm, IFormFile PhotoLocation)
         {
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
             if (ModelState.IsValid && tp != null)
@@ -144,6 +164,18 @@ namespace GrandeTravel.Controllers
                 tp.Location = vm.Location;
                 tp.PackageDescription = vm.PackageDescription;
                 tp.PackagePrice = vm.PackagePrice;
+                if (PhotoLocation != null)
+                {
+                    string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media/TravelPackage");
+
+                    string filename = Path.GetFileName(PhotoLocation.FileName);
+
+                    using (FileStream fs = new FileStream(Path.Combine(uploadPath, filename), FileMode.Create))
+                    {
+                        PhotoLocation.CopyTo(fs);
+                    }
+                    tp.PhotoLocation = filename;
+                }
 
                 _TravelPackageRepo.Update(tp);
                 return RedirectToAction("Details", new { id = tp.TravelPackageId });

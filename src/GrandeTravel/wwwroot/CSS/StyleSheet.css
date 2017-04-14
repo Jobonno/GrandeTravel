@@ -219,6 +219,13 @@ address{
 }
 
 
+.photoLocation{
+    max-height: 150px;
+    max-width: 200px;
+    height: auto;
+    width: auto;
+}
+
 
 
 

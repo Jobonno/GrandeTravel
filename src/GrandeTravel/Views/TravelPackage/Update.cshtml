@@ -4,10 +4,19 @@
         <div class="col-md-6">
             <h2>Create Travel Package</h2>
 
-            <form asp-controller="TravelPackage" asp-action="Update" method="post" role="form">
+            <form asp-controller="TravelPackage" asp-action="Update" method="post" role="form"  enctype="multipart/form-data">
                 <div class="form-group">
                     <label asp-for="PackageName"></label>
                     <input asp-for="PackageName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhotoLocation"></label><br />
+                    <img src="~/Media/TravelPackage/@Model.PhotoLocation" alt="Alternate Text" class="photoLocation"/>
+                    <input type="hidden" asp-for="PhotoLocation" class="form-control">
+                </div>
+                <div class="form-group">
+                   
+                    <input type="file" name="PhotoLocation" class="form-control">
                 </div>
                 <div class="form-group">
                     <label asp-for="Location"></label>

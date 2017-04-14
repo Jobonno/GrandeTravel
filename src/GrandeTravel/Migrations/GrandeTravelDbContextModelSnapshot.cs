@@ -45,6 +45,8 @@ namespace GrandeTravel.Migrations
 
                     b.Property<int>("PackagePrice");
 
+                    b.Property<string>("PhotoLocation");
+
                     b.HasKey("TravelPackageId");
 
                     b.ToTable("TblTravelPackage");
