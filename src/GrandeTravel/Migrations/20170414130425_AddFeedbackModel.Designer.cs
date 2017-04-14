@@ -8,9 +8,10 @@ using GrandeTravel.Services;
 namespace GrandeTravel.Migrations
 {
     [DbContext(typeof(GrandeTravelDbContext))]
-    partial class GrandeTravelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170414130425_AddFeedbackModel")]
+    partial class AddFeedbackModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -30,24 +31,6 @@ namespace GrandeTravel.Migrations
                     b.HasIndex("TravelPackageId");
 
                     b.ToTable("TblBooking");
-                });
-
-            modelBuilder.Entity("GrandeTravel.Models.Feedback", b =>
-                {
-                    b.Property<int>("FeedbackId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Comment");
-
-                    b.Property<int>("Rating");
-
-                    b.Property<int>("TravelPackageId");
-
-                    b.HasKey("FeedbackId");
-
-                    b.HasIndex("TravelPackageId");
-
-                    b.ToTable("TblFeedback");
                 });
 
             modelBuilder.Entity("GrandeTravel.Models.TravelPackage", b =>
@@ -74,14 +57,6 @@ namespace GrandeTravel.Migrations
                 {
                     b.HasOne("GrandeTravel.Models.TravelPackage", "TravelPackage")
                         .WithMany("Bookings")
-                        .HasForeignKey("TravelPackageId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("GrandeTravel.Models.Feedback", b =>
-                {
-                    b.HasOne("GrandeTravel.Models.TravelPackage", "TravelPackage")
-                        .WithMany("Feedbacks")
                         .HasForeignKey("TravelPackageId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

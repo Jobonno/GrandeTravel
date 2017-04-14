@@ -11,8 +11,8 @@ namespace GrandeTravel.Services
     {
         public DbSet<TravelPackage> TblTravelPackage { get; set; }
         public DbSet<Booking> TblBooking { get; set; }
-
-
+        public DbSet<Feedback> TblFeedback { get; set; }
+ 
         //connection string
         protected override void OnConfiguring(DbContextOptionsBuilder option)
         {

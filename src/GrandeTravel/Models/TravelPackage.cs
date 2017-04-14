@@ -25,5 +25,7 @@ namespace GrandeTravel.Models
 
         //One TravelPackage has many Bookings
         public IEnumerable<Booking> Bookings { get; set; }
+
+        public IEnumerable<Feedback> Feedbacks { get; set; }
     }
 }
