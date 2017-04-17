@@ -218,6 +218,7 @@ address{
     color: #30104c;
 }
 
+/*Update details travel package*/
 
 .photoLocation{
     max-height: 150px;
@@ -226,6 +227,13 @@ address{
     width: auto;
 }
 
+
+/*Index TravelPackage*/
+.IndexThumb{
+    min-height:160px;   
+    
+   
+}
 
 
 
@@ -243,6 +251,7 @@ address{
      .socialMedia{
         display:none;
     }
+     
 }
 
 

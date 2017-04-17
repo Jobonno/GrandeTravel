@@ -1,26 +1,43 @@
 ﻿@model DisplayAllTravelPackagesViewModel
+<div class="container">
+    <h2>Number of Available Packages @Model.Total</h2>
 
-<h2>Number of Available Packages @Model.Total</h2>
+    <form class="form-inline" asp-controller="TravelPackage" asp-action="Index">
+        <input type="text" class="form-control" name="searchString" placeholder="Search Here..">
+        <input type="number" class="form-control" name="minPrice" placeholder="Min Price">
+        <input type="number" class="form-control" name="maxPrice" placeholder="Max Price">
+        <input type="submit" class="btn btn-default" value="Search" />
+    </form>
 
-<form class="form-inline" asp-controller="TravelPackage" asp-action="Index">
-    <input type="text" class="form-control" name="searchString" placeholder="Search Here..">
-    <input type="number" class="form-control" name="minPrice" placeholder="Min Price">
-    <input type="number" class="form-control" name="maxPrice" placeholder="Max Price">
-    <input type="submit" class="btn btn-default" value="Search" />
-</form>
-
-<div class="row">
-    @{
-        int count = 1;
-    }
-    @foreach (var item in Model.TravelPackageList)
-    {
-        if(count % 4 == 0)
+    <div class="row">
+        @{
+            int count = 1;
+        }
+        @foreach (var item in Model.TravelPackageList)
         {
-            <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-3">
+            if (count % 4 == 0)
+            {
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="thumbnail">
+                            <img src="~/Media/TravelPackage/@item.PhotoLocation" class="IndexThumb" />
+                            <div class="caption">
+                                <h3>@item.PackageName</h3>
+                                <p>@item.Location</p>
+                                <p>@item.PackageDescription</p>
+                                <p>$@item.PackagePrice</p>
+                                <p><a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId" class="btn btn-primary" role="button">Details</a> <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@item.TravelPackageId" class="btn btn-warning" role="button">Update</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            else
+            {
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3" >
                     <div class="thumbnail">
-                        <img src="~/Media/TravelPackage/@item.PhotoLocation" />
+                        <img src="~/Media/TravelPackage/@item.PhotoLocation" class="IndexThumb" />
                         <div class="caption">
                             <h3>@item.PackageName</h3>
                             <p>@item.Location</p>
@@ -30,28 +47,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
+
+            }
+            count++;
+
 
         }
-        else
-        {
-            <div class="col-sm-12 col-md-6 col-lg-3">
-                <div class="thumbnail">
-                    <img src="~/Media/TravelPackage/@item.PhotoLocation" />
-                    <div class="caption">
-                        <h3>@item.PackageName</h3>
-                        <p>@item.Location</p>
-                        <p>@item.PackageDescription</p>
-                        <p>$@item.PackagePrice</p>
-                        <p><a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId" class="btn btn-primary" role="button">Details</a> <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@item.TravelPackageId" class="btn btn-warning" role="button">Update</a></p>
-                    </div>
-                </div>
-            </div>
 
-        }
-        count++;
-
-
-    }
+    </div>
 
 </div>
