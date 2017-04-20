@@ -1,18 +1,46 @@
 ﻿@model DisplaySingleTravelPackageViewModel
 
-<h3>@Model.PackageName</h3>
-<p>@Model.Location</p>
-<p>@Model.PackageDescription</p>
-<p>$@Model.PackagePrice</p>
-<ul>
-    
-    
-        @foreach (var item in @Model.Bookings)
-        {
-            <li>@item.BookingDate</li>
-        }
 
-    
-    
-</ul>
-<a asp-controller="TravelPackage" asp-action="Delete" asp-route-id="@Model.TravelPackageId" class="btn btn-danger">Delete</a>
+
+
+
+<div class="container">
+    <h2>@Model.PackageName</h2>
+    <div class="row">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+            <img class="img-rounded img-responsive" src="~/Media/TravelPackage/@Model.PhotoLocation" />
+            <div class="text-center" id="shareIcons">
+                
+               
+            </div>  
+           
+                       
+         </div>
+        
+            
+            
+            
+       
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10">
+            <h4>@Model.Location</h4>
+            <p>@Model.PackageDescription</p>
+            <p><strong>$@Model.PackagePrice</strong></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul>
+
+
+                @foreach (var item in @Model.Bookings)
+                {
+                    <li>@item.BookingDate</li>
+                }
+
+
+
+            </ul>
+        </div>
+    </div>  
+    <a asp-controller="TravelPackage" asp-action="Delete" asp-route-id="@Model.TravelPackageId" class="btn btn-danger">Delete</a><a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>   
+</div>

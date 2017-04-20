@@ -196,9 +196,7 @@ address{
 }
 
 .socialMedia{
-    
-    border-radius: 10px;
-    
+    border-radius: 10px;    
     background-color:rgba(29, 96, 255,0.6);
 }
 
@@ -230,11 +228,58 @@ address{
 
 /*Index TravelPackage*/
 .IndexThumb{
-    min-height:160px;   
+    min-height:165px; 
+    max-height: 165px;  
+    width:auto; 
     
-   
 }
 
+.IndexThumb:hover{
+      
+    border:solid 7px rgba(9,9,9,0);
+}
+
+
+/*Details Page*/
+
+#SocialSharing{
+    
+    font-size:16px;
+}
+
+.ShareBtns{
+    margin: 10px 5px;
+    font-size: 30px;
+}
+
+
+
+@media(max-width:1200px){
+    .IndexThumb{
+    min-height: 284px;
+    max-height: 284px;   
+    }
+}
+
+@media(max-width:991px){
+    .IndexThumb{
+    min-height: 215px;
+    max-height: 215px;   
+    }
+}
+
+@media(max-width:768px) {
+    .IndexThumb{
+    max-height : 215px;   
+    height:auto;
+    }
+
+}
+
+
+#SearchForm{
+    margin:15px auto;
+}
 
 
 @media(max-width:768px){

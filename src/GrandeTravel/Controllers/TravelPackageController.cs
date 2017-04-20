@@ -125,7 +125,8 @@ namespace GrandeTravel.Controllers
             {
                 PackageName = tp.PackageName,
                 TravelPackageId = tp.TravelPackageId,
-                Location = tp.Location,                
+                Location = tp.Location,    
+                PhotoLocation = tp.PhotoLocation,            
                 PackageDescription = tp.PackageDescription,
                 PackagePrice = tp.PackagePrice,
                 Bookings = list

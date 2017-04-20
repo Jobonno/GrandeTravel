@@ -43,6 +43,32 @@
           }
         }
       },
+      "Microsoft.AspNet.Razor/3.1.0-rc1": {
+        "type": "package"
+      },
+      "Microsoft.AspNet.WebHelpers/3.1.0-rc1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.WebPages": "3.1.0-rc1",
+          "Microsoft.AspNet.WebPages.WebData": "3.1.0-rc1"
+        }
+      },
+      "Microsoft.AspNet.WebPages/3.1.0-rc1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "3.1.0-rc1",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        }
+      },
+      "Microsoft.AspNet.WebPages.Data/3.1.0-rc1": {
+        "type": "package"
+      },
+      "Microsoft.AspNet.WebPages.WebData/3.1.0-rc1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.WebPages.Data": "3.1.0-rc1"
+        }
+      },
       "Microsoft.AspNetCore.Antiforgery/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -1556,6 +1582,9 @@
         "runtime": {
           "lib/netstandard1.3/Microsoft.VisualBasic.dll": {}
         }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package"
       },
       "Microsoft.Win32.Primitives/4.0.1": {
         "type": "package",
@@ -4023,6 +4052,68 @@
         "runtimes/win7-x86/native/libuv.dll"
       ]
     },
+    "Microsoft.AspNet.Razor/3.1.0-rc1": {
+      "sha512": "FxjBbfcYR0NTnoychcA+D3d6CNRbIap1BKbBry5RzP+nA3bvOg7lJXXh5/XaQRrZ1UP1ZJcEOCcN8EQyeKU/OA==",
+      "type": "package",
+      "path": "Microsoft.AspNet.Razor/3.1.0-rc1",
+      "files": [
+        "Microsoft.AspNet.Razor.3.1.0-rc1.nupkg.sha512",
+        "Microsoft.AspNet.Razor.nuspec",
+        "lib/net45/System.Web.Razor.dll",
+        "lib/net45/System.Web.Razor.xml"
+      ]
+    },
+    "Microsoft.AspNet.WebHelpers/3.1.0-rc1": {
+      "sha512": "PiNb1Q4d2qClhlGo2z1m9JZiJovTkzeyx0zhb8bC9kSQHnnzGtVGrlcmVuTlOhGznSS/78TBemqA35UoatAZzw==",
+      "type": "package",
+      "path": "Microsoft.AspNet.WebHelpers/3.1.0-rc1",
+      "files": [
+        "Microsoft.AspNet.WebHelpers.3.1.0-rc1.nupkg.sha512",
+        "Microsoft.AspNet.WebHelpers.nuspec",
+        "lib/net45/Microsoft.Web.Helpers.dll"
+      ]
+    },
+    "Microsoft.AspNet.WebPages/3.1.0-rc1": {
+      "sha512": "c0tuZg4bJazsmMg7WMPAKUNzeV42vVTwLGR5bNqzH90nrvG6g4VakDlmYdET8UO/Ii/H85xT4GwDu9/pvnIOzQ==",
+      "type": "package",
+      "path": "Microsoft.AspNet.WebPages/3.1.0-rc1",
+      "files": [
+        "Content/Web.config.install.xdt",
+        "Content/Web.config.uninstall.xdt",
+        "Microsoft.AspNet.WebPages.3.1.0-rc1.nupkg.sha512",
+        "Microsoft.AspNet.WebPages.nuspec",
+        "lib/net45/System.Web.Helpers.dll",
+        "lib/net45/System.Web.Helpers.xml",
+        "lib/net45/System.Web.WebPages.Deployment.dll",
+        "lib/net45/System.Web.WebPages.Deployment.xml",
+        "lib/net45/System.Web.WebPages.Razor.dll",
+        "lib/net45/System.Web.WebPages.Razor.xml",
+        "lib/net45/System.Web.WebPages.dll",
+        "lib/net45/System.Web.WebPages.xml"
+      ]
+    },
+    "Microsoft.AspNet.WebPages.Data/3.1.0-rc1": {
+      "sha512": "3Xgaxi7B1z4v48WjLs/c1olRLuWf+t30EweVh8aTSwiN9/SuLqAhpTe8rtCjGl5YxD9OMSCxoHPt2kFDmzuFAA==",
+      "type": "package",
+      "path": "Microsoft.AspNet.WebPages.Data/3.1.0-rc1",
+      "files": [
+        "Microsoft.AspNet.WebPages.Data.3.1.0-rc1.nupkg.sha512",
+        "Microsoft.AspNet.WebPages.Data.nuspec",
+        "lib/net45/WebMatrix.Data.dll",
+        "lib/net45/WebMatrix.Data.xml"
+      ]
+    },
+    "Microsoft.AspNet.WebPages.WebData/3.1.0-rc1": {
+      "sha512": "vB4qNizgUI8m8SuVE6wNPkn4VTyJEicNf3XcDeaAUC7AEOUW+POKd4Ts1NnDtIBtvyS6Zk4loNYqWApieEOUfA==",
+      "type": "package",
+      "path": "Microsoft.AspNet.WebPages.WebData/3.1.0-rc1",
+      "files": [
+        "Microsoft.AspNet.WebPages.WebData.3.1.0-rc1.nupkg.sha512",
+        "Microsoft.AspNet.WebPages.WebData.nuspec",
+        "lib/net45/WebMatrix.WebData.dll",
+        "lib/net45/WebMatrix.WebData.xml"
+      ]
+    },
     "Microsoft.AspNetCore.Antiforgery/1.0.0": {
       "sha512": "oJnrSvL6S7jM2eD/TR/Kyp/7O6pKvN+8FcnYvUaxaHbKlISwl98o44uidzePBjGxTf4fh9NFEx/q3OuuxAvBzw==",
       "type": "package",
@@ -5252,6 +5343,16 @@
         "ref/portable-net45+win8+wpa81/_._",
         "ref/win8/_._",
         "ref/wpa81/_._"
+      ]
+    },
+    "Microsoft.Web.Infrastructure/1.0.0": {
+      "sha512": "FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
+      "type": "package",
+      "path": "Microsoft.Web.Infrastructure/1.0.0",
+      "files": [
+        "Microsoft.Web.Infrastructure.1.0.0.nupkg.sha512",
+        "Microsoft.Web.Infrastructure.nuspec",
+        "lib/net40/Microsoft.Web.Infrastructure.dll"
       ]
     },
     "Microsoft.Win32.Primitives/4.0.1": {
@@ -10302,6 +10403,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "Microsoft.AspNet.WebHelpers >= 3.1.0-rc1",
       "Microsoft.AspNetCore.Diagnostics >= 1.0.0",
       "Microsoft.AspNetCore.Mvc >= 1.0.0",
       "Microsoft.AspNetCore.Razor.Tools >= 1.0.0-preview2-final",

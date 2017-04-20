@@ -6,4 +6,16 @@
       
     }
     
+    $("#shareIcons").jsSocials({
+        showCount: "inside",
+        showLabel: false,
+        shares: [
+            "twitter",
+            "facebook",
+            "googleplus",
+            "linkedin"
+           
+            
+        ]
+    });
 });
