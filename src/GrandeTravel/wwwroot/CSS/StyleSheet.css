@@ -112,6 +112,16 @@ ul.nav > li > a:hover{
    
 }
 
+#logoutBtn{
+        -webkit-appearance:none;
+        line-height:20px;
+        background-color: #f8f8f8;
+        border:none;
+        
+}
+#logoutBtn:hover{
+    text-shadow: 6px 6px 6px #aaa;
+}
 
 /*Footer Css*/
 

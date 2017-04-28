@@ -40,7 +40,7 @@
                     @if(@User.Identity.IsAuthenticated)
                     {
                             <li><a asp-area="" asp-controller="Account" asp-action="Register">@User.Identity.Name</a></li>
-                            <li><form method="post" asp-controller="Account" asp-action="Logout"><input type="submit" value="Logout" /></form></li>
+                            <li><a><form method="post" asp-controller="Account" asp-action="Logout"><input id="logoutBtn" type="submit" value="Logout" /></form></a></li>
                     }
                     else
                     {
