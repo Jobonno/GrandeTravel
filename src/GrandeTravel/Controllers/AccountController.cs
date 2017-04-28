@@ -45,7 +45,7 @@ namespace GrandeTravel.Controllers
                 var result = await _userManager.CreateAsync(tempUser, vm.Password);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "TravelPackage");
+                    return RedirectToAction("LogIn", "Account");
                 }else
                 {
                     foreach (var error in result.Errors)
