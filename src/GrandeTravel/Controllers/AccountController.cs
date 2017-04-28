@@ -57,5 +57,36 @@ namespace GrandeTravel.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        public IActionResult LogIn(string returnUrl = "")
+        {
+            LoginViewModel vm = new LoginViewModel
+            {
+                ReturnUrl = returnUrl
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LogIn(LoginViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(vm.Username, vm.Password, vm.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    if(!string.IsNullOrEmpty(vm.ReturnUrl) && Url.IsLocalUrl(vm.ReturnUrl))
+                    {
+                        return Redirect(vm.ReturnUrl);
+                    }else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+            }
+            ModelState.AddModelError("", "Username or Password Incorrect");
+            return View(vm);
+        }
+
     }
 }

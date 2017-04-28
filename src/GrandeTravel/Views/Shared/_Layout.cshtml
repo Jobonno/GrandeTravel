@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+ 
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -35,8 +37,18 @@
                     
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Sign Up</a></li>
-                    <li><a href="#">Sign In</a></li>
+                    @if(@User.Identity.IsAuthenticated)
+                    {
+                            <li><a asp-area="" asp-controller="Account" asp-action="Register">@User.Identity.Name</a></li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="LogOut">Sign Out</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Account" asp-action="Register">Sign Up</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="LogIn">Sign In</a></li>
+
+                    }
+                    
 
                 </ul>
             </div><!-- /.navbar-collapse -->

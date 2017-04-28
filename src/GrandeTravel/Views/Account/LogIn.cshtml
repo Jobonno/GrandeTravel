@@ -1,0 +1,31 @@
+﻿@model LoginViewModel
+
+<form class="form-horizontal" asp-controller="Account" asp-action="LogIn" method="post" role="form">
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+        <label asp-for="Username" class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+            <input asp-for="Username" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10">
+            <input asp-for="Password" class="form-control" >
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="RememberMe"> Remember me
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Log In</button>
+        </div>
+    </div>
+</form>
