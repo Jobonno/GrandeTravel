@@ -1,4 +1,5 @@
 ﻿using GrandeTravel.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GrandeTravel.Services
 {
-    public class GrandeTravelDbContext:DbContext
+    public class GrandeTravelDbContext:IdentityDbContext<MyUser>
     {
         public DbSet<TravelPackage> TblTravelPackage { get; set; }
         public DbSet<Booking> TblBooking { get; set; }

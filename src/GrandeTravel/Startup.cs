@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using GrandeTravel.Services;
 using GrandeTravel.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GrandeTravel
 {
@@ -21,6 +22,16 @@ namespace GrandeTravel
             services.AddMvc();
             services.AddScoped<IRepository<TravelPackage>, BaseRepository<TravelPackage>>();
             services.AddScoped<IRepository<Booking>, BaseRepository<Booking>>();
+            services.AddIdentity<MyUser, IdentityRole>
+                (
+                config =>
+                {
+                    config.Password.RequireNonAlphanumeric = false;
+                    config.Password.RequiredLength = 4;
+                    config.Password.RequireDigit = false;
+                }
+                ).AddEntityFrameworkStores<GrandeTravelDbContext>();
+            services.AddDbContext<GrandeTravelDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,7 +45,7 @@ namespace GrandeTravel
             }
 
             app.UseStaticFiles();
-
+            app.UseIdentity();
             app.UseMvcWithDefaultRoute();
         }
     }
