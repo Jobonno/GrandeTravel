@@ -26,6 +26,6 @@ namespace GrandeTravel.ViewModels
         //One TravelPackage has many Bookings
         public IEnumerable<Booking> Bookings { get; set; }
 
-        public string TravelProviderId { get; set; }
+        public string TravelProviderName { get; set; }
     }
 }

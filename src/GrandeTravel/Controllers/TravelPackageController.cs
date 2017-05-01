@@ -127,10 +127,13 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
+           
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
             IEnumerable<Booking> list = _BookingRepo.Query(b => b.TravelPackageId == id);
+            MyUser travelProviderName = await _userManager.FindByIdAsync(tp.MyUserId);
+            string TpName = travelProviderName.UserName; 
             DisplaySingleTravelPackageViewModel vm = new DisplaySingleTravelPackageViewModel
             {
                 PackageName = tp.PackageName,
@@ -140,7 +143,7 @@ namespace GrandeTravel.Controllers
                 PackageDescription = tp.PackageDescription,
                 PackagePrice = tp.PackagePrice,
                 Bookings = list,
-                TravelProviderId = tp.MyUserId
+                TravelProviderName = TpName
 
         };
 
