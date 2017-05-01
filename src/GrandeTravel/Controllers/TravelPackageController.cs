@@ -108,13 +108,14 @@ namespace GrandeTravel.Controllers
                 if (PhotoLocation != null)
                 {
                     string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media/TravelPackage");
-                    //Directory.CreateDirectory(Path.Combine(uploadPath, travelProviderId));
+                    Directory.CreateDirectory(Path.Combine(uploadPath, tp.PackageName));
                     string filename = Path.GetFileName(PhotoLocation.FileName);
                     
-                    using (FileStream fs = new FileStream(Path.Combine(uploadPath, /*travelProviderId,*/ filename), FileMode.Create))
+                    using (FileStream fs = new FileStream(Path.Combine(uploadPath, tp.PackageName, filename), FileMode.Create))
                     {
                         PhotoLocation.CopyTo(fs);
                     }
+                   
                     tp.PhotoLocation = filename;
                 }
 
@@ -182,13 +183,14 @@ namespace GrandeTravel.Controllers
                 if (PhotoLocation != null)
                 {
                     string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media/TravelPackage");
-
+                    uploadPath = Path.Combine(uploadPath, tp.PackageName);
                     string filename = Path.GetFileName(PhotoLocation.FileName);
 
                     using (FileStream fs = new FileStream(Path.Combine(uploadPath, filename), FileMode.Create))
                     {
                         PhotoLocation.CopyTo(fs);
                     }
+                    
                     tp.PhotoLocation = filename;
                 }
 
