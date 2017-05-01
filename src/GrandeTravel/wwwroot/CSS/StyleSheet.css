@@ -6,6 +6,8 @@
   position: relative;
   text-align: center;
   padding-top: 20vh;
+  width: 500px;
+  margin:auto;
 }
 
 #landingNav{
@@ -110,6 +112,9 @@ ul.nav > li > a:hover{
 #brandLogo:hover{
     text-shadow: 6px 6px 6px #aaa;
    
+}
+.dropdown-menu{
+    z-index:3;
 }
 
 #logoutBtn{
@@ -323,5 +328,8 @@ address{
     padding: 1px 3px;
     text-shadow: 3px 3px 3px #aaa;
     }
-   
+   #landing-header{
+        width: 100%;
+        margin:auto;
+   }
 }

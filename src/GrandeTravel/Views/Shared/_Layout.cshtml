@@ -32,15 +32,32 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="TravelPackage" asp-action="Index">Search Packages<span class="sr-only">(current)</span></a></li>
                     <li><a href="~/home/about">About Us</a></li>
-                    <li><a href="~/home/contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="TravelPackage" asp-action="Create">Add Travel Package</a></li>
+                    <li><a href="~/home/contact">Contact</a></li>                 
                     
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    @if(@User.Identity.IsAuthenticated)
+                <ul class="nav navbar-nav navbar-right" >
+                    @if (@User.Identity.IsAuthenticated)
                     {
-                            <li><a asp-area="" asp-controller="Account" asp-action="Register">@User.Identity.Name</a></li>
-                            <li><a><form method="post" asp-controller="Account" asp-action="Logout"><input id="logoutBtn" type="submit" value="Logout" /></form></a></li>
+                        <li class="dropdown" >
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                @User.Identity.Name
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li class="dropdown-header">Admin Options</li>
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="dropdown-header">Travel Provider Options</li>
+                                <li><a asp-area="" asp-controller="TravelPackage" asp-action="Create">Add Travel Package</a></li>
+                                <li class="dropdown-header">Customer Options</li>
+                                <li role="separator" class="divider"></li>
+                                <li><a><form method="post" asp-controller="Account" asp-action="Logout"><input id="logoutBtn" type="submit" value="Logout" /></form></a></li>
+                            </ul>
+                        </li>
+
+                            
+                            
                     }
                     else
                     {
