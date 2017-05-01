@@ -8,6 +8,9 @@ namespace GrandeTravel.Models
 {
     public class MyUser:IdentityUser
     {
-        
+        IEnumerable<TravelPackage> TravelPackages { get; set; }
+        IEnumerable<Booking> Bookings { get; set; }
+        IEnumerable<Feedback> Feedbacks { get; set; }
+
     }
 }

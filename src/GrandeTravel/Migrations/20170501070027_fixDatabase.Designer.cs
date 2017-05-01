@@ -8,9 +8,10 @@ using GrandeTravel.Services;
 namespace GrandeTravel.Migrations
 {
     [DbContext(typeof(GrandeTravelDbContext))]
-    partial class GrandeTravelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170501070027_fixDatabase")]
+    partial class fixDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -23,15 +24,9 @@ namespace GrandeTravel.Migrations
 
                     b.Property<DateTime>("BookingDate");
 
-                    b.Property<string>("MyUserId");
-
                     b.Property<int>("TravelPackageId");
 
-                    b.Property<int>("UserId");
-
                     b.HasKey("BookingId");
-
-                    b.HasIndex("MyUserId");
 
                     b.HasIndex("TravelPackageId");
 
@@ -45,19 +40,11 @@ namespace GrandeTravel.Migrations
 
                     b.Property<string>("Comment");
 
-                    b.Property<string>("MyUserId");
-
                     b.Property<int>("Rating");
 
                     b.Property<int>("TravelPackageId");
 
-                    b.Property<int>("UserId");
-
-                    b.Property<string>("UserName");
-
                     b.HasKey("FeedbackId");
-
-                    b.HasIndex("MyUserId");
 
                     b.HasIndex("TravelPackageId");
 
@@ -120,8 +107,6 @@ namespace GrandeTravel.Migrations
 
                     b.Property<string>("Location");
 
-                    b.Property<string>("MyUserId");
-
                     b.Property<string>("PackageDescription");
 
                     b.Property<string>("PackageName");
@@ -130,11 +115,7 @@ namespace GrandeTravel.Migrations
 
                     b.Property<string>("PhotoLocation");
 
-                    b.Property<int>("UserId");
-
                     b.HasKey("TravelPackageId");
-
-                    b.HasIndex("MyUserId");
 
                     b.ToTable("TblTravelPackage");
                 });
@@ -248,10 +229,6 @@ namespace GrandeTravel.Migrations
 
             modelBuilder.Entity("GrandeTravel.Models.Booking", b =>
                 {
-                    b.HasOne("GrandeTravel.Models.MyUser", "MyUser")
-                        .WithMany()
-                        .HasForeignKey("MyUserId");
-
                     b.HasOne("GrandeTravel.Models.TravelPackage", "TravelPackage")
                         .WithMany("Bookings")
                         .HasForeignKey("TravelPackageId")
@@ -260,21 +237,10 @@ namespace GrandeTravel.Migrations
 
             modelBuilder.Entity("GrandeTravel.Models.Feedback", b =>
                 {
-                    b.HasOne("GrandeTravel.Models.MyUser", "MyUser")
-                        .WithMany()
-                        .HasForeignKey("MyUserId");
-
                     b.HasOne("GrandeTravel.Models.TravelPackage", "TravelPackage")
                         .WithMany("Feedbacks")
                         .HasForeignKey("TravelPackageId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("GrandeTravel.Models.TravelPackage", b =>
-                {
-                    b.HasOne("GrandeTravel.Models.MyUser", "MyUser")
-                        .WithMany()
-                        .HasForeignKey("MyUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

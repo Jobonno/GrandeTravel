@@ -9,12 +9,14 @@ using GrandeTravel.ViewModels;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GrandeTravel.Controllers
 {
     public class TravelPackageController : Controller
     {
+        
         private IRepository<TravelPackage> _TravelPackageRepo;
         private IRepository<Booking> _BookingRepo;
         private IHostingEnvironment _HostingEnviro;
@@ -25,6 +27,7 @@ namespace GrandeTravel.Controllers
             _TravelPackageRepo = TravelPackagerepo;
             _BookingRepo = bookingRepo;
             _HostingEnviro = HostingEnviro;
+            
         }
 
 
@@ -77,6 +80,8 @@ namespace GrandeTravel.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+           
+            
             return View();
         }
 
@@ -94,14 +99,15 @@ namespace GrandeTravel.Controllers
                     Location = vm.Location,
                     PackageDescription = vm.PackageDescription,
                     PackagePrice = vm.PackagePrice
+                 
                 };
                 if (PhotoLocation != null)
                 {
                     string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media/TravelPackage");
-
+                    //Directory.CreateDirectory(Path.Combine(uploadPath, travelProviderId));
                     string filename = Path.GetFileName(PhotoLocation.FileName);
 
-                    using (FileStream fs = new FileStream(Path.Combine(uploadPath, filename), FileMode.Create))
+                    using (FileStream fs = new FileStream(Path.Combine(uploadPath, /*travelProviderId,*/ filename), FileMode.Create))
                     {
                         PhotoLocation.CopyTo(fs);
                     }

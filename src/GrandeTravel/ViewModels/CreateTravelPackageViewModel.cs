@@ -22,5 +22,7 @@ namespace GrandeTravel.ViewModels
         [Display(Name = "Package Price")]
         [DataType(DataType.Currency)]
         public int PackagePrice { get; set; }
+
+        
     }
 }

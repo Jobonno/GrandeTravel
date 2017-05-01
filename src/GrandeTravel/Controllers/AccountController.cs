@@ -34,6 +34,7 @@ namespace GrandeTravel.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUserViewModel vm)
         {
+            
             if (ModelState.IsValid)
             {
                 MyUser tempUser = new MyUser

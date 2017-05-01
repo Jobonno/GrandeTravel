@@ -23,6 +23,9 @@ namespace GrandeTravel.Models
       
         public int PackagePrice { get; set; }
 
+        public int UserId { get; set; }
+        public MyUser MyUser { get; set; }
+
         //One TravelPackage has many Bookings
         public IEnumerable<Booking> Bookings { get; set; }
 

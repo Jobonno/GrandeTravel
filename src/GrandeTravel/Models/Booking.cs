@@ -15,8 +15,9 @@ namespace GrandeTravel.Models
 
         public TravelPackage TravelPackage { get; set; }
 
-        
+        public int UserId { get; set; }
+        public MyUser MyUser { get; set; }
 
-        
+
     }
 }
