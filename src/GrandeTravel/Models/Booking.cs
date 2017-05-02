@@ -18,6 +18,11 @@ namespace GrandeTravel.Models
         public string MyUserId { get; set; }
         public MyUser MyUser { get; set; }
 
+        public string Name { get; set; }
+
+        public int People { get; set; }
+
+
 
     }
 }

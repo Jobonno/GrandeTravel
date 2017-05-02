@@ -33,26 +33,32 @@ namespace GrandeTravel.Controllers
         public IActionResult Create(int id)
         {
             var userId = _userManager.GetUserId(User);
+            string today = DateTime.Now.ToString();
             CreateBookingViewModel vm = new CreateBookingViewModel
             {
+                
                 TravelPackageId = id,
-                MyUserId = userId
+                MyUserId = userId,
+                Name = User.Identity.Name
             };
             return View(vm);
         }
         [HttpPost]
         public IActionResult Create(CreateBookingViewModel vm)
         {
+            
             if (ModelState.IsValid)
             {
                 Booking booking = new Booking
                 {
                     BookingDate = vm.BookingDate,
                     TravelPackageId = vm.TravelPackageId,
-                    MyUserId = vm.MyUserId
+                    MyUserId = vm.MyUserId,
+                    People = vm.People,
+                    Name = vm.Name
                 };
                 _bookingRepo.Create(booking);
-                return RedirectToAction("Index", "TravelPackage");
+                return RedirectToAction("Details", "TravelPackage", new { id = booking.TravelPackageId});
             }
             return View(vm);
         }

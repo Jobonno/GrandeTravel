@@ -32,18 +32,25 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <ul>
-
-
+            <table border="1">
+                <tr>
+                    <td>Booking Date</td>
+                    <td>Number of People</td>
+                    <td>Booking Name</td>
+                </tr>
+                
                 @foreach (var item in @Model.Bookings)
                 {
-                    <li>@item.BookingDate</li>
-                    
-                }
+                    <tr>
+                        <td>@item.BookingDate.ToString("dd/MM/yyyy")</td>
+                        <td>@item.People</td>
+                        <td>@item.Name</td>
+                   </tr>
+                        }
 
 
 
-            </ul>
+</table>
         </div>
     </div>  
      
