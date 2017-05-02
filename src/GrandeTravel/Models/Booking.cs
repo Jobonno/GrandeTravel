@@ -22,6 +22,10 @@ namespace GrandeTravel.Models
 
         public int People { get; set; }
 
+        public int TotalCost { get; set; }
+
+        public string TravelPackageName { get; set; }
+
 
 
     }

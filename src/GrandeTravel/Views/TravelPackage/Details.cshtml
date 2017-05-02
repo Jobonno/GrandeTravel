@@ -37,6 +37,7 @@
                     <td>Booking Date</td>
                     <td>Number of People</td>
                     <td>Booking Name</td>
+                    <td>Total Cost</td>
                 </tr>
                 
                 @foreach (var item in @Model.Bookings)
@@ -45,6 +46,7 @@
                         <td>@item.BookingDate.ToString("dd/MM/yyyy")</td>
                         <td>@item.People</td>
                         <td>@item.Name</td>
+                        <td>$@item.TotalCost</td>
                    </tr>
                         }
 

@@ -17,26 +17,38 @@ namespace GrandeTravel.Controllers
     {
         private IRepository<Booking> _bookingRepo;
         private UserManager<MyUser> _userManager;
+        private IRepository<TravelPackage> _travelPackageManager;
 
-        public BookingController(IRepository<Booking> bookingRepo, UserManager<MyUser> userManager)
+        public BookingController(IRepository<Booking> bookingRepo, UserManager<MyUser> userManager, IRepository<TravelPackage> travelPackageManager)
         {
             _userManager = userManager;
             _bookingRepo = bookingRepo;
+            _travelPackageManager = travelPackageManager;
         }
+
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            var userId = _userManager.GetUserId(User);
+            IEnumerable<Booking> list = _bookingRepo.Query(b => b.MyUserId == userId);
+            DisplayAllBookingsViewModel vm = new DisplayAllBookingsViewModel
+            {
+                Bookings = list,
+                total = list.Count()
+            };
+            return View(vm);
         }
 
         [HttpGet]
         public IActionResult Create(int id)
         {
+            TravelPackage tp = _travelPackageManager.GetSingle(t => t.TravelPackageId == id);
             var userId = _userManager.GetUserId(User);
             string today = DateTime.Now.ToString();
             CreateBookingViewModel vm = new CreateBookingViewModel
             {
-                
+                TravelPackageName = tp.PackageName,
+                TotalCost = tp.PackagePrice,
                 TravelPackageId = id,
                 MyUserId = userId,
                 Name = User.Identity.Name
@@ -55,7 +67,9 @@ namespace GrandeTravel.Controllers
                     TravelPackageId = vm.TravelPackageId,
                     MyUserId = vm.MyUserId,
                     People = vm.People,
-                    Name = vm.Name
+                    Name = vm.Name,
+                    TotalCost = (vm.People * vm.TotalCost),
+                    TravelPackageName = vm.TravelPackageName
                 };
                 _bookingRepo.Create(booking);
                 return RedirectToAction("Details", "TravelPackage", new { id = booking.TravelPackageId});
