@@ -13,9 +13,11 @@
             <div class="text-center" id="shareIcons">
                 
                
-            </div>  
-           
-                       
+            </div> 
+            <div class="text-center">
+                <a asp-controller="TravelPackage" asp-action="Delete" asp-route-id="@Model.TravelPackageId" class="btn btn-danger">Delete</a> <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>
+                <a asp-controller="Booking" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-success" role="button">Book</a>
+            </div>           
          </div>
         
             
@@ -36,6 +38,7 @@
                 @foreach (var item in @Model.Bookings)
                 {
                     <li>@item.BookingDate</li>
+                    
                 }
 
 
@@ -43,5 +46,5 @@
             </ul>
         </div>
     </div>  
-    <a asp-controller="TravelPackage" asp-action="Delete" asp-route-id="@Model.TravelPackageId" class="btn btn-danger">Delete</a><a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>   
+     
 </div>
