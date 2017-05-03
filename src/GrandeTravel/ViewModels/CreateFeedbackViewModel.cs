@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GrandeTravel.Models
+namespace GrandeTravel.ViewModels
 {
-    public class Feedback
+    public class CreateFeedbackViewModel
     {
-        public int FeedbackId { get; set; }
-
+        [Required]
         public string Comment { get; set; }
-
+        [Display(Name ="")]
         public byte Rating { get; set; }
 
         public int TravelPackageId { get; set; }
 
-        public TravelPackage TravelPackage { get; set; }
-
         public string MyUserId { get; set; }
-        public MyUser MyUser { get; set; }
+
         public string UserName { get; set; }
     }
-
-   
 }

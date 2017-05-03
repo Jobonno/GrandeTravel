@@ -13,6 +13,7 @@
             <td>@item.TravelPackageName</td>
             <td>@item.People</td>
             <td>$@item.TotalCost</td>
+            <td><a asp-controller="Feedback" asp-action="Create" asp-route-id="@item.TravelPackageId" class="btn btn-success" role="button">Add a Feedback</a></td>
         </tr>
     }
 </table>

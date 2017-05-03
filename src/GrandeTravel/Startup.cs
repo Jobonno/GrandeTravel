@@ -22,6 +22,7 @@ namespace GrandeTravel
             services.AddMvc();
             services.AddScoped<IRepository<TravelPackage>, BaseRepository<TravelPackage>>();
             services.AddScoped<IRepository<Booking>, BaseRepository<Booking>>();
+            services.AddScoped<IRepository<Feedback>, BaseRepository<Feedback>>();
             services.AddIdentity<MyUser, IdentityRole>
                 (
                 config =>

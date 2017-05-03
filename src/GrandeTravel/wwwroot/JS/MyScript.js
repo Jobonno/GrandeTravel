@@ -18,4 +18,12 @@
             
         ]
     });
+
+    $(".ratings").on('click', function () {
+        $(".ratings").removeClass('active');
+        $(".ratings").removeClass('secondary-active');
+        $(this).addClass('active');
+        $(this).prevAll().addClass('secondary-active');
+
+    })
 });

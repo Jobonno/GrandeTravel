@@ -270,6 +270,32 @@ address{
 
 
 
+
+
+/*Create Feedback Page*/
+
+.ratings {
+    color: white;
+    text-shadow: 2px 2px 7px grey;
+    font-size: 28px;
+}
+
+.ratings:hover{
+    color:yellow;
+}
+
+.ratings.active{
+    color:yellow;
+}
+.ratings.secondary-active{
+    color:yellow;
+}
+
+input[type="radio"]{
+    display:none;
+}
+
+
 @media(max-width:1200px){
     .IndexThumb{
     min-height: 284px;
