@@ -27,5 +27,7 @@ namespace GrandeTravel.ViewModels
         public IEnumerable<Booking> Bookings { get; set; }
 
         public string TravelProviderName { get; set; }
+
+        public IEnumerable<Feedback> Feedbacks { get; set; }
     }
 }

@@ -268,7 +268,11 @@ address{
     font-size: 30px;
 }
 
-
+.detailStars{
+    text-shadow: 2px 2px 7px grey;
+    font-size: 16px;
+    color:yellow;
+}
 
 
 
@@ -290,7 +294,12 @@ address{
 .ratings.secondary-active{
     color:yellow;
 }
-
+.ratings.selected-active{
+    color:yellow;
+}
+.ratings.selected-secondary-active{
+    color:yellow;
+}
 input[type="radio"]{
     display:none;
 }

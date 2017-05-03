@@ -20,14 +20,16 @@ namespace GrandeTravel.Controllers
         private IRepository<TravelPackage> _TravelPackageRepo;
         private IRepository<Booking> _BookingRepo;
         private IHostingEnvironment _HostingEnviro;
+        private IRepository<Feedback> _feedbackRepo;
 
 
-        public TravelPackageController(IRepository<TravelPackage> TravelPackagerepo, IRepository<Booking> bookingRepo, IHostingEnvironment HostingEnviro, UserManager<MyUser> userManager)
+        public TravelPackageController(IRepository<TravelPackage> TravelPackagerepo, IRepository<Booking> bookingRepo, IHostingEnvironment HostingEnviro, UserManager<MyUser> userManager, IRepository<Feedback> feedbackRepo)
         {
             _TravelPackageRepo = TravelPackagerepo;
             _BookingRepo = bookingRepo;
             _HostingEnviro = HostingEnviro;
             _userManager = userManager;
+            _feedbackRepo = feedbackRepo;
         }
 
 
@@ -133,6 +135,7 @@ namespace GrandeTravel.Controllers
            
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
             IEnumerable<Booking> list = _BookingRepo.Query(b => b.TravelPackageId == id);
+            IEnumerable<Feedback> feedbacks = _feedbackRepo.Query(f => f.TravelPackageId == id);
             MyUser travelProviderName = await _userManager.FindByIdAsync(tp.MyUserId);
             string TpName = travelProviderName.UserName; 
             DisplaySingleTravelPackageViewModel vm = new DisplaySingleTravelPackageViewModel
@@ -144,6 +147,7 @@ namespace GrandeTravel.Controllers
                 PackageDescription = tp.PackageDescription,
                 PackagePrice = tp.PackagePrice,
                 Bookings = list,
+                Feedbacks = feedbacks,
                 TravelProviderName = TpName
 
         };

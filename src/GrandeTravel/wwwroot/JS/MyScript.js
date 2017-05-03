@@ -20,10 +20,22 @@
     });
 
     $(".ratings").on('click', function () {
+        $(".ratings").removeClass('selected-active');
+        $(".ratings").removeClass('selected-secondary-active');
+        $(this).addClass('selected-active');
+        $(this).prevAll().addClass('selected-secondary-active');
+
+    })
+    $(".ratings").mouseenter(function () {
         $(".ratings").removeClass('active');
         $(".ratings").removeClass('secondary-active');
         $(this).addClass('active');
         $(this).prevAll().addClass('secondary-active');
 
+    })
+    $(".ratings").mouseleave(function () {
+        $(".ratings").removeClass('active');
+        $(".ratings").removeClass('secondary-active');
+       
     })
 });
