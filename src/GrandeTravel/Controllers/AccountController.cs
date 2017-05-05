@@ -144,14 +144,14 @@ namespace GrandeTravel.Controllers
 
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddRole()
         {
             return View();
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddRole(AddRoleViewModel vm)
         {
             if (ModelState.IsValid)
@@ -170,6 +170,11 @@ namespace GrandeTravel.Controllers
                 }
             }
             return View(vm);
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
     }

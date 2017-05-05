@@ -33,6 +33,7 @@ namespace GrandeTravel
                     config.Password.RequireNonAlphanumeric = false;
                     config.Password.RequiredLength = 4;
                     config.Password.RequireDigit = false;
+                    config.Cookies.ApplicationCookie.AccessDeniedPath = "/Account/AccessDenied";
                 }
                 ).AddEntityFrameworkStores<GrandeTravelDbContext>();
             services.AddDbContext<GrandeTravelDbContext>();

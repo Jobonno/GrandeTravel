@@ -18,12 +18,14 @@ namespace GrandeTravel.Controllers
         private UserManager<MyUser> _userManager;
         private IRepository<TravelProviderProfile> _travelProfileRepo;
         private IRepository<CustomerProfile> _customerProfileRepo;
+        private IRepository<TravelPackage> _travelPackageRepo;
 
-        public ProfileController(UserManager<MyUser> userManager, IRepository<TravelProviderProfile> travelProfileRepo, IRepository<CustomerProfile> customerProfileRepo)
+        public ProfileController(UserManager<MyUser> userManager, IRepository<TravelProviderProfile> travelProfileRepo, IRepository<CustomerProfile> customerProfileRepo, IRepository<TravelPackage> travelPackageRepo)
         {
             _travelProfileRepo = travelProfileRepo;
             _userManager = userManager;
             _customerProfileRepo = customerProfileRepo;
+            _travelPackageRepo = travelPackageRepo;
         }
 
         // GET: /<controller>/
@@ -56,12 +58,20 @@ namespace GrandeTravel.Controllers
                 //create or update
                 if (loggedProfile != null)
                 {
+                    
                     //update the loggedProfile
                     loggedProfile.CompanyName = vm.CompanyName;
                     loggedProfile.Email = vm.Email;
                     loggedProfile.Phone = vm.Phone;
                     //save the update to the database
                     _travelProfileRepo.Update(loggedProfile);
+                    //update existing Packages For Name Changes
+                    IEnumerable<TravelPackage> list = _travelPackageRepo.Query(l => l.MyUserId == loggedUser.Id).ToList();
+                    foreach (var item in list)
+                    {
+                        item.ProviderName = vm.CompanyName;
+                        _travelPackageRepo.Update(item);
+                    }
                 }
                 else
                 {
