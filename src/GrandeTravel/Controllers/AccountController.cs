@@ -63,6 +63,45 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult RegisterTravelProvider()
+        {
+            return View();
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> RegisterTravelProvider(RegisterUserViewModel vm)
+        {
+
+            if (ModelState.IsValid)
+            {
+                MyUser tempUser = new MyUser
+                {
+                    UserName = vm.Username,
+                    Email = vm.Email
+
+                };
+                var result = await _userManager.CreateAsync(tempUser, vm.Password);
+                if (result.Succeeded)
+                {
+                    //remember to add roles first!!
+                    await _userManager.AddToRoleAsync(tempUser, "TravelProvider");
+                    return RedirectToAction("Index", "TravelPackage");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return View(vm);
+        }
+
+
+
+        [HttpGet]
         public IActionResult LogIn(string returnUrl = "")
         {
             LoginViewModel vm = new LoginViewModel
@@ -109,7 +148,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpPost]
-        [Authorize( Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddRole(AddRoleViewModel vm)
         {
             if (ModelState.IsValid)

@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-6  col-md-8  col-sm-9 col-xs-12">
             <h2>LOG IN FORM</h2>
-            <form class="form-horizontal" asp-controller="Account" asp-action="LogIn" method="post" role="form">
+            <form class="form-horizontal" asp-controller="Account" asp-action="LogIn" asp-route-returnurl="@Model.ReturnUrl" method="post" role="form">
                 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
                 <div class="form-group">
                     <label asp-for="Username" class="col-sm-2 control-label"></label>

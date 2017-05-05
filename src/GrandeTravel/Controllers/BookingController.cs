@@ -42,7 +42,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Customer,Admin")]
+        [Authorize]
         public IActionResult Create(int id)
         {
             TravelPackage tp = _travelPackageManager.GetSingle(t => t.TravelPackageId == id);
@@ -57,7 +57,7 @@ namespace GrandeTravel.Controllers
             return View(vm);
         }
         [HttpPost]
-        [Authorize(Roles = "Customer ,Admin")]
+        [Authorize]
         public IActionResult Create(CreateBookingViewModel vm)
         {
             

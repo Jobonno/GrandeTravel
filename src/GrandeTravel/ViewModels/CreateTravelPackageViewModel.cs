@@ -8,18 +8,19 @@ namespace GrandeTravel.ViewModels
 {
     public class CreateTravelPackageViewModel
     {
-        [Display(Name = "Package Name")]
-        public string PackageName { get; set; }
 
+        [Required, Display(Name = "Package Name")]
+        public string PackageName { get; set; }
+        [Required]
         public string Location { get; set; }
 
         [Display(Name = "Photo")]
         public string PhotoLocation { get; set; }
 
-        [Display(Name = "Package Description")]
+        [Required, Display(Name = "Package Description")]
         public string PackageDescription { get; set; }
 
-        [Display(Name = "Package Price")]
+        [Required, Display(Name = "Package Price")]
         [DataType(DataType.Currency)]
         public int PackagePrice { get; set; }
 
