@@ -8,9 +8,10 @@ using GrandeTravel.Services;
 namespace GrandeTravel.Migrations
 {
     [DbContext(typeof(GrandeTravelDbContext))]
-    partial class GrandeTravelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170505080030_TravelProfile")]
+    partial class TravelProfile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -42,26 +43,6 @@ namespace GrandeTravel.Migrations
                     b.HasIndex("TravelPackageId");
 
                     b.ToTable("TblBooking");
-                });
-
-            modelBuilder.Entity("GrandeTravel.Models.CustomerProfile", b =>
-                {
-                    b.Property<int>("CustomerProfileId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<int>("Phone");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("CustomerProfileId");
-
-                    b.ToTable("TblCustomerProfile");
                 });
 
             modelBuilder.Entity("GrandeTravel.Models.Feedback", b =>
