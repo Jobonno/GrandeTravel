@@ -212,7 +212,8 @@ namespace GrandeTravel.Controllers
         public IActionResult Delete(int id)
         {
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
-            if (tp != null)
+            //check if It is Their Own Travel Package
+            if (tp != null && tp.MyUserId == _userManager.GetUserId(User))
             {
                 _TravelPackageRepo.Delete(tp);
                 
