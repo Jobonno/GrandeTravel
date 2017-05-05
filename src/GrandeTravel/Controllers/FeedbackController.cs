@@ -38,12 +38,12 @@ namespace GrandeTravel.Controllers
         public IActionResult Create(int id)
         {
             TravelPackage tp = _travelPackageManager.GetSingle(t => t.TravelPackageId == id);
-            var userId = _userManager.GetUserId(User);
+            
             CreateFeedbackViewModel vm = new CreateFeedbackViewModel
             {
                 TravelPackageId = tp.TravelPackageId,
-                MyUserId = userId,
-                UserName = User.Identity.Name
+               
+              
             };
             return View(vm);
         }
@@ -53,11 +53,12 @@ namespace GrandeTravel.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = _userManager.GetUserId(User);
                 Feedback newfeedback = new Feedback
                 {
-                    UserName = vm.UserName,
+                    UserName = User.Identity.Name,
                     TravelPackageId = vm.TravelPackageId,
-                    MyUserId = vm.MyUserId,
+                    MyUserId = userId,
                     Rating = vm.Rating,
                     Comment = vm.Comment
                 };

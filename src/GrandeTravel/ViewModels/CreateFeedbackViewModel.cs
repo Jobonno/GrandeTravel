@@ -13,10 +13,8 @@ namespace GrandeTravel.ViewModels
         [Display(Name ="")]
         public byte Rating { get; set; }
 
-        public int TravelPackageId { get; set; }
+        public int TravelPackageId { get; set; }       
 
-        public string MyUserId { get; set; }
-
-        public string UserName { get; set; }
+        
     }
 }

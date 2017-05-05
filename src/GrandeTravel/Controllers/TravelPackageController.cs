@@ -82,12 +82,8 @@ namespace GrandeTravel.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var id =_userManager.GetUserId(User);
-            CreateTravelPackageViewModel vm = new CreateTravelPackageViewModel
-            {
-                TravelProviderId = id
-            };
-            return View(vm);
+           
+            return View();
         }
 
 
@@ -96,7 +92,7 @@ namespace GrandeTravel.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+                var id = _userManager.GetUserId(User);
                 //map the tp props with the viewmodel
                 TravelPackage tp = new TravelPackage
                 {
@@ -104,7 +100,7 @@ namespace GrandeTravel.Controllers
                     Location = vm.Location,
                     PackageDescription = vm.PackageDescription,
                     PackagePrice = vm.PackagePrice,
-                    MyUserId = vm.TravelProviderId
+                    MyUserId = id
                     
                 };
                 if (PhotoLocation != null)

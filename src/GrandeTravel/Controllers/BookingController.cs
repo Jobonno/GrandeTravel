@@ -43,15 +43,13 @@ namespace GrandeTravel.Controllers
         public IActionResult Create(int id)
         {
             TravelPackage tp = _travelPackageManager.GetSingle(t => t.TravelPackageId == id);
-            var userId = _userManager.GetUserId(User);
             string today = DateTime.Now.ToString();
             CreateBookingViewModel vm = new CreateBookingViewModel
             {
                 TravelPackageName = tp.PackageName,
                 TotalCost = tp.PackagePrice,
-                TravelPackageId = id,
-                MyUserId = userId,
-                Name = User.Identity.Name
+                TravelPackageId = id               
+                
             };
             return View(vm);
         }
@@ -61,13 +59,14 @@ namespace GrandeTravel.Controllers
             
             if (ModelState.IsValid)
             {
+                var userId = _userManager.GetUserId(User);
                 Booking booking = new Booking
                 {
                     BookingDate = vm.BookingDate,
                     TravelPackageId = vm.TravelPackageId,
-                    MyUserId = vm.MyUserId,
+                    MyUserId = userId,
                     People = vm.People,
-                    Name = vm.Name,
+                    Name = User.Identity.Name,
                     TotalCost = (vm.People * vm.TotalCost),
                     TravelPackageName = vm.TravelPackageName
                 };

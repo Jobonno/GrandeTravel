@@ -15,9 +15,9 @@ namespace GrandeTravel.ViewModels
 
         public int TravelPackageId { get; set; }
 
-        public string MyUserId { get; set; }
+       
         
-        public string Name { get; set; }
+     
 
         [Display(Name = "Number of People")] [Range(1,20, ErrorMessage = "Please enter Atleast 1 Person and No more than 20 People")]      
         public int People { get; set; }
