@@ -15,7 +15,13 @@
                
             </div> 
             <div class="text-center">
-                <a asp-controller="TravelPackage" asp-action="Delete" asp-route-id="@Model.TravelPackageId" class="btn btn-danger">Delete</a> <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>
+                @if (Model.UserName == User.Identity.Name || User.IsInRole("Admin"))
+                {
+                    <a asp-controller="TravelPackage" asp-action="Delete" asp-route-id="@Model.TravelPackageId" class="btn btn-danger">Delete</a> 
+                    <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>
+                                       
+
+                }
                 <a asp-controller="Booking" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-success" role="button">Book</a>
             </div>           
          </div>

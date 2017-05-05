@@ -20,13 +20,14 @@ namespace GrandeTravel.ViewModels
 
         public string PackageDescription { get; set; }
 
+        public string TravelProviderName { get; set; }
 
         public int PackagePrice { get; set; }
 
         //One TravelPackage has many Bookings
         public IEnumerable<Booking> Bookings { get; set; }
 
-        public string TravelProviderName { get; set; }
+        public string UserName { get; set; }
 
         public IEnumerable<Feedback> Feedbacks { get; set; }
     }

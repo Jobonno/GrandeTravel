@@ -22,15 +22,16 @@ namespace GrandeTravel.Controllers
         private IRepository<Booking> _BookingRepo;
         private IHostingEnvironment _HostingEnviro;
         private IRepository<Feedback> _feedbackRepo;
+        private IRepository<TravelProviderProfile> _travelProfileRepo;
 
-
-        public TravelPackageController(IRepository<TravelPackage> TravelPackagerepo, IRepository<Booking> bookingRepo, IHostingEnvironment HostingEnviro, UserManager<MyUser> userManager, IRepository<Feedback> feedbackRepo)
+        public TravelPackageController(IRepository<TravelPackage> TravelPackagerepo, IRepository<Booking> bookingRepo, IHostingEnvironment HostingEnviro, UserManager<MyUser> userManager, IRepository<Feedback> feedbackRepo, IRepository<TravelProviderProfile> travelProfileRepo)
         {
             _TravelPackageRepo = TravelPackagerepo;
             _BookingRepo = bookingRepo;
             _HostingEnviro = HostingEnviro;
             _userManager = userManager;
             _feedbackRepo = feedbackRepo;
+            _travelProfileRepo = travelProfileRepo;
         }
 
 
@@ -96,6 +97,15 @@ namespace GrandeTravel.Controllers
             if (ModelState.IsValid)
             {
                 var id = _userManager.GetUserId(User);
+                TravelProviderProfile tpp = _travelProfileRepo.GetSingle(t => t.UserId == id);
+                string providerName;
+                if(tpp == null)
+                {
+                    providerName = "";
+                }else
+                {
+                    providerName = tpp.CompanyName;
+                }
                 //map the tp props with the viewmodel
                 TravelPackage tp = new TravelPackage
                 {
@@ -103,6 +113,7 @@ namespace GrandeTravel.Controllers
                     Location = vm.Location,
                     PackageDescription = vm.PackageDescription,
                     PackagePrice = vm.PackagePrice,
+                    ProviderName = providerName,
                     MyUserId = id
                     
                 };
@@ -147,7 +158,8 @@ namespace GrandeTravel.Controllers
                 PackagePrice = tp.PackagePrice,
                 Bookings = list,
                 Feedbacks = feedbacks,
-                TravelProviderName = TpName
+                TravelProviderName = tp.ProviderName,
+                UserName = TpName
 
         };
 
@@ -213,7 +225,7 @@ namespace GrandeTravel.Controllers
         {
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
             //check if It is Their Own Travel Package
-            if (tp != null && tp.MyUserId == _userManager.GetUserId(User))
+            if (tp != null && (tp.MyUserId == _userManager.GetUserId(User) || User.IsInRole("Admin")))
             {
                 _TravelPackageRepo.Delete(tp);
                 

@@ -20,7 +20,8 @@ namespace GrandeTravel.Models
         
         public string PackageDescription { get; set; }
 
-      
+        public string ProviderName { get; set; }
+
         public int PackagePrice { get; set; }
 
         public string MyUserId { get; set; }

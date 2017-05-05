@@ -50,8 +50,10 @@ namespace GrandeTravel.Controllers
                 {
                     //remember to add roles first!!
                     await _userManager.AddToRoleAsync(tempUser, "Customer");
-                    return RedirectToAction("LogIn", "Account");
-                }else
+                    await _signInManager.SignInAsync(tempUser, false);
+                    return RedirectToAction("UpdateCustomerProfile", "Profile");
+                }
+                else
                 {
                     foreach (var error in result.Errors)
                     {
@@ -86,7 +88,8 @@ namespace GrandeTravel.Controllers
                 {
                     //remember to add roles first!!
                     await _userManager.AddToRoleAsync(tempUser, "TravelProvider");
-                    return RedirectToAction("Index", "TravelPackage");
+                    await _signInManager.SignInAsync(tempUser,false);
+                    return RedirectToAction("UpdateProviderProfile", "Profile");
                 }
                 else
                 {
@@ -141,14 +144,14 @@ namespace GrandeTravel.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult AddRole()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddRole(AddRoleViewModel vm)
         {
             if (ModelState.IsValid)
