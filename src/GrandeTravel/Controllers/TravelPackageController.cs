@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GrandeTravel.Controllers
@@ -80,6 +81,7 @@ namespace GrandeTravel.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Create()
         {
            
@@ -88,6 +90,7 @@ namespace GrandeTravel.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Create(CreateTravelPackageViewModel vm, IFormFile PhotoLocation)
         {
             if (ModelState.IsValid)
@@ -152,6 +155,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Update(int id)
         {
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
@@ -171,6 +175,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Update(int id, UpdateTravelPackageViewModel vm, IFormFile PhotoLocation)
         {
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
@@ -203,6 +208,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Delete(int id)
         {
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);

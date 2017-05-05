@@ -8,6 +8,7 @@ using GrandeTravel.Models;
 using GrandeTravel.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,6 +28,7 @@ namespace GrandeTravel.Controllers
         }
 
         // GET: /<controller>/
+        [Authorize]
         public IActionResult Index()
         {
             var userId = _userManager.GetUserId(User);
@@ -40,6 +42,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Customer,Admin")]
         public IActionResult Create(int id)
         {
             TravelPackage tp = _travelPackageManager.GetSingle(t => t.TravelPackageId == id);
@@ -54,6 +57,7 @@ namespace GrandeTravel.Controllers
             return View(vm);
         }
         [HttpPost]
+        [Authorize(Roles = "Customer ,Admin")]
         public IActionResult Create(CreateBookingViewModel vm)
         {
             

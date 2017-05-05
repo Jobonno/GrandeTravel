@@ -9,6 +9,8 @@ using GrandeTravel.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
+using Microsoft.AspNetCore.Authorization;
+
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GrandeTravel.Controllers
@@ -46,6 +48,8 @@ namespace GrandeTravel.Controllers
                 var result = await _userManager.CreateAsync(tempUser, vm.Password);
                 if (result.Succeeded)
                 {
+                    //remember to add roles first!!
+                    await _userManager.AddToRoleAsync(tempUser, "Customer");
                     return RedirectToAction("LogIn", "Account");
                 }else
                 {
@@ -94,6 +98,36 @@ namespace GrandeTravel.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AddRole()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize( Roles = "Admin")]
+        public async Task<IActionResult> AddRole(AddRoleViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                //check if role exists
+                var theRole = await _roleManager.FindByNameAsync(vm.NewRole);
+                if (theRole == null)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(vm.NewRole));
+                    //change later to redirect to display roles
+                    return RedirectToAction("Index", "TravelPackage");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Role Name already used");
+                }
+            }
+            return View(vm);
         }
 
     }
