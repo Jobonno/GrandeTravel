@@ -1,4 +1,7 @@
-﻿
+﻿* {
+margin: 0;
+padding: 0;
+}
 /*Landing Css*/
 
 #landing-header {
@@ -248,11 +251,31 @@ address{
     max-height:216px ;  
     width:100%; 
     
+    
 }
 
-.IndexThumb:hover{
-      
-    border:solid 7px rgba(9,9,9,0);
+
+
+#bgIndex {
+    width: 100%;
+    height: 500px;
+    z-index: -1;
+    position: fixed;
+    background-image: url('../media/Rockybeach.jpg');
+    background-size:cover;
+    top: 0;
+    
+}
+
+#SearchForm{
+    
+    margin: 120px auto 0px auto;
+}
+
+
+#IndexContent{
+    margin-top:230px;
+    background-color:white;
 }
 
 
@@ -317,20 +340,19 @@ input[type="radio"]{
     min-height: 215px;
     max-height: 215px;   
     }
+    
 }
 
 @media(max-width:768px) {
     .IndexThumb{
     max-height : 215px;   
-    height:auto;
+    width:auto;
     }
-
+   
 }
 
 
-#SearchForm{
-    margin:15px auto;
-}
+
 
 
 @media(max-width:768px){

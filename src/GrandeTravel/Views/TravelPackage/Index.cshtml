@@ -1,4 +1,7 @@
 ﻿@model DisplayAllTravelPackagesViewModel
+
+<div id="bgIndex" class="container"> </div>
+
 <div class="container">
    
 
@@ -9,40 +12,25 @@
         <input type="submit" class="btn btn-default" value="Search" />
     </form>
 
-    <h2>Number of Available Packages @Model.Total</h2>
+    
 </div>
-<div class="container-fluid">
+<div class="container-fluid" id="IndexContent">
+
+    <h2 class="text-center">Number of Available Packages @Model.Total</h2>
     <div class="row">
-        <div class="col-md-9">
-            <div class="row">
+        <div class="col-lg-10">
 
 
-                @{
-                    int count = 1;
-                }
-                @foreach (var item in Model.TravelPackageList)
+
+            @{
+                int count = 1;
+            }
+            @foreach (var item in Model.TravelPackageList)
             {
                 if (count % 4 == 0)
                 {
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                                <div class="thumbnail text-center">
-                                    <a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId"><img src="~/Media/TravelPackage/@item.PackageName/@item.PhotoLocation" class="IndexThumb" /></a>
-                                    <div class="caption">
-                                        <h3>@item.PackageName</h3>
-                                        <p>@item.Location</p>
-                                        <p>@item.PackageDescription</p>
-                                        <p>$@item.PackagePrice</p>
-                                        <p><a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId" class="btn btn-primary" role="button">Details</a> <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@item.TravelPackageId" class="btn btn-warning" role="button">Update</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    }
-                    else
-                    {
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                             <div class="thumbnail text-center">
                                 <a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId"><img src="~/Media/TravelPackage/@item.PackageName/@item.PhotoLocation" class="IndexThumb" /></a>
                                 <div class="caption">
@@ -54,23 +42,33 @@
                                 </div>
                             </div>
                         </div>
-
-                    }
-                    count++;
-
+                    </div>
 
                 }
-            </div>
+                else
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="thumbnail text-center">
+                            <a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId"><img src="~/Media/TravelPackage/@item.PackageName/@item.PhotoLocation" class="IndexThumb" /></a>
+                            <div class="caption">
+                                <h3>@item.PackageName</h3>
+                                <p>@item.Location</p>
+                                <p>@item.PackageDescription</p>
+                                <p>$@item.PackagePrice</p>
+                                <p><a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId" class="btn btn-primary" role="button">Details</a> <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@item.TravelPackageId" class="btn btn-warning" role="button">Update</a></p>
+                            </div>
+                        </div>
+                    </div>
 
+                }
+                count++;
+
+
+            }
         </div>
-        
-        <div class="col-lg-2 col-lg-offset-1">
-            <i class="fa fa-twitter" aria-hidden="true"></i>
-            <div>
-                <a class="twitter-timeline" data-width="350" data-height="1500" data-chrome="nofooter" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/Australia">Tweets by Australia</a>
-                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-            </div>
-        </div>
+
     </div>
-    
+
 </div>
+  
+  
