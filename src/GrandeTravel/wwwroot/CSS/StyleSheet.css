@@ -279,6 +279,67 @@ address{
     padding-bottom: 200px;
 }
 
+.localIcon{
+    font-size:20px;
+    color:orange;
+}
+
+.thumbnail .price{
+    display: block;
+    position: absolute;
+    top: 41px;
+    right: 15px;
+    height: 32px;
+    padding: 0 10px;
+    line-height: 32px;
+    font-size: 18px;
+    text-decoration: none;
+     color: #37621f;
+    text-shadow: 1px 1px 0px rgba(255,255,255, .2); 
+    background: #82d344;
+    background: -moz-linear-gradient(top,  #82d344 0%, #51af34 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#82d344), color-stop(100%,#51af34));
+    background: -webkit-linear-gradient(top,  #82d344 0%,#51af34 100%);
+    background: -o-linear-gradient(top,  #82d344 0%,#51af34 100%);
+    background: -ms-linear-gradient(top,  #82d344 0%,#51af34 100%);
+    background: linear-gradient(to bottom,  #82d344 0%,#51af34 100%);
+
+}
+
+.thumbnail .price:before,
+.thumbnail .price:after{
+    display: block;
+    position: absolute;
+    content: '';
+}
+
+    .thumbnail .price:before {
+        width: 8px;
+        height: 32px;
+        top: 0;
+        left: -8px;
+        background: url(../media/badge.png) no-repeat;
+        
+    }
+ 
+
+.thumbnail .price:after {
+    width: 0;
+    height: 0;
+    bottom: -5px;
+    right: 0;
+    border-bottom: 5px solid transparent;
+}
+ 
+.thumbnail .price:after { background-position: 0 0; }
+
+.thumbnail .price:after { border-left: 5px solid #1c5d40; }
+
+ 
+
+
+
+
 
 /*Details Page*/
 
@@ -331,7 +392,7 @@ input[type="radio"]{
 
 @media(max-width:1200px){
     .IndexThumb{
-    min-height: 284px;
+    min-height: 164px;
     max-height: 284px;   
     }
 }

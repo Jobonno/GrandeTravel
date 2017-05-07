@@ -33,9 +33,10 @@
                         <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                             <div class="thumbnail text-center">
                                 <a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId"><img src="~/Media/TravelPackage/@item.PackageName/@item.PhotoLocation" class="IndexThumb" /></a>
+                                <a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId" class="price"><strong><em>$@item.PackagePrice</em></strong></a>
                                 <div class="caption">
-                                    <h3>@item.PackageName</h3>
-                                    <p>@item.Location</p>
+                                    <h3 class="text-success"><strong>@item.PackageName</strong></h3>
+                                    <p><i class="fa fa-map-marker localIcon" aria-hidden="true"></i> <strong>@item.Location</strong></p>
                                     <p>@item.PackageDescription</p>
                                     <p>$@item.PackagePrice</p>
                                     <p><a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId" class="btn btn-primary" role="button">Details</a> <a asp-controller="Booking" asp-action="Create" asp-route-id="@item.TravelPackageId" class="btn btn-success" role="button">Book</a></p>
@@ -50,9 +51,10 @@
                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                         <div class="thumbnail text-center">
                             <a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId"><img src="~/Media/TravelPackage/@item.PackageName/@item.PhotoLocation" class="IndexThumb" /></a>
+                            <a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId" class="price"><strong><em>$@item.PackagePrice</em></strong></a>
                             <div class="caption">
-                                <h3>@item.PackageName</h3>
-                                <p>@item.Location</p>
+                                <h3 class="text-success"><strong>@item.PackageName</strong></h3>
+                                <p><i class="fa fa-map-marker localIcon" aria-hidden="true"></i> <strong>@item.Location</strong></p>
                                 <p>@item.PackageDescription</p>
                                 <p>$@item.PackagePrice</p>
                                 <p><a asp-controller="TravelPackage" asp-action="Details" asp-route-id="@item.TravelPackageId" class="btn btn-primary" role="button">Details</a> <a asp-controller="Booking" asp-action="Create" asp-route-id="@item.TravelPackageId" class="btn btn-success" role="button">Book</a></p>
