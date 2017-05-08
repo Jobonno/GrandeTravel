@@ -1,0 +1,58 @@
+﻿@model StatisticsViewModel
+<script src="~/lib/Chart.js/dist/Chart.min.js"></script>
+<script>
+
+        var data = {
+    labels: [
+        @Html.Raw(@Model.Labels)
+    ],
+    datasets: [
+        {
+            data: [@Model.Data],
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56",
+                "#CCFCE6",
+                "#1133FF"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56",
+                "#CCFCE6",
+                "#1133FF"
+            ]
+        }]
+};
+
+            window.onload = function () {
+                var ctx1 = document.getElementById("Piecanvas").getContext("2d");
+                window.myBar = new Chart(ctx1,
+                    {
+                        type: 'pie',
+                        data: data,
+                        options:
+                            {
+                                title:
+                                {
+                                    display: true,
+                                    text: "Total Booking Sales Count"
+                                },
+                                responsive: true,
+                                maintainAspectRatio: true
+                            }
+                    });
+            }
+</script>
+<div class="container">
+    <div class="row">
+        <div class=col-lg-6>
+            <div style="text-align: center">
+                <canvas id="Piecanvas"></canvas>
+                
+            </div>
+        </div>
+    </div>
+</div>
+  

@@ -39,12 +39,12 @@ namespace GrandeTravel.Controllers
         public IActionResult Index(string searchString, int minPrice, int maxPrice)
         {
             IEnumerable<TravelPackage> list;
-            
+
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 list = _TravelPackageRepo.Query(b => b.Location.Contains(searchString));
-                if(maxPrice > 0 || minPrice > 0)
+                if (maxPrice > 0 || minPrice > 0)
                 {
                     if (minPrice > maxPrice)
                     {
@@ -55,18 +55,21 @@ namespace GrandeTravel.Controllers
                         list = list.Where(b => (b.PackagePrice <= maxPrice && b.PackagePrice >= minPrice));
                     }
                 }
-                
-            }else if (maxPrice > 0 || minPrice > 0)
+
+            }
+            else if (maxPrice > 0 || minPrice > 0)
             {
                 //only if minprice is entered
-                if(minPrice > maxPrice)
+                if (minPrice > maxPrice)
                 {
                     list = _TravelPackageRepo.Query(b => b.PackagePrice >= minPrice);
-                }else
+                }
+                else
                 {
                     list = _TravelPackageRepo.Query(b => (b.PackagePrice <= maxPrice && b.PackagePrice >= minPrice));
-                }                
-            }else
+                }
+            }
+            else
             {
                 list = _TravelPackageRepo.GetAll();
             }
@@ -83,14 +86,14 @@ namespace GrandeTravel.Controllers
             return View(vm);
         }
 
-        
+
 
 
         [HttpGet]
         [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Create()
         {
-           
+
             return View();
         }
 
@@ -104,10 +107,11 @@ namespace GrandeTravel.Controllers
                 var id = _userManager.GetUserId(User);
                 TravelProviderProfile tpp = _travelProfileRepo.GetSingle(t => t.UserId == id);
                 string providerName;
-                if(tpp == null)
+                if (tpp == null)
                 {
                     providerName = "";
-                }else
+                }
+                else
                 {
                     providerName = tpp.CompanyName;
                 }
@@ -120,19 +124,19 @@ namespace GrandeTravel.Controllers
                     PackagePrice = vm.PackagePrice,
                     ProviderName = providerName,
                     MyUserId = id
-                    
+
                 };
                 if (PhotoLocation != null)
                 {
                     string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media/TravelPackage");
                     Directory.CreateDirectory(Path.Combine(uploadPath, tp.PackageName));
                     string filename = Path.GetFileName(PhotoLocation.FileName);
-                    
+
                     using (FileStream fs = new FileStream(Path.Combine(uploadPath, tp.PackageName, filename), FileMode.Create))
                     {
                         PhotoLocation.CopyTo(fs);
                     }
-                   
+
                     tp.PhotoLocation = filename;
                 }
 
@@ -147,18 +151,18 @@ namespace GrandeTravel.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-           
+
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
             IEnumerable<Booking> list = _BookingRepo.Query(b => b.TravelPackageId == id);
             IEnumerable<Feedback> feedbacks = _feedbackRepo.Query(f => f.TravelPackageId == id);
             MyUser travelProviderName = await _userManager.FindByIdAsync(tp.MyUserId);
-            string TpName = travelProviderName.UserName; 
+            string TpName = travelProviderName.UserName;
             DisplaySingleTravelPackageViewModel vm = new DisplaySingleTravelPackageViewModel
             {
                 PackageName = tp.PackageName,
                 TravelPackageId = tp.TravelPackageId,
-                Location = tp.Location,    
-                PhotoLocation = tp.PhotoLocation,            
+                Location = tp.Location,
+                PhotoLocation = tp.PhotoLocation,
                 PackageDescription = tp.PackageDescription,
                 PackagePrice = tp.PackagePrice,
                 Bookings = list,
@@ -166,7 +170,7 @@ namespace GrandeTravel.Controllers
                 TravelProviderName = tp.ProviderName,
                 UserName = TpName
 
-        };
+            };
 
             return View(vm);
         }
@@ -212,7 +216,7 @@ namespace GrandeTravel.Controllers
                     {
                         PhotoLocation.CopyTo(fs);
                     }
-                    
+
                     tp.PhotoLocation = filename;
                 }
 
@@ -233,9 +237,37 @@ namespace GrandeTravel.Controllers
             if (tp != null && (tp.MyUserId == _userManager.GetUserId(User) || User.IsInRole("Admin")))
             {
                 _TravelPackageRepo.Delete(tp);
-                
+
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "TravelProvider,Admin")]
+        public IActionResult Statistics()
+        {
+            IEnumerable<TravelPackage> tpList = _TravelPackageRepo.Query(i => i.MyUserId == _userManager.GetUserId(User)).ToList();
+            List<string> names = new List<string>();
+                       
+            List<string> values = new List<string>();
+            foreach (var item in tpList)
+            {
+                names.Add("\"" + item.PackageName +"\"");
+                values.Add(_BookingRepo.Query(t => t.TravelPackageName == item.PackageName).Sum(r => r.TotalCost).ToString());              
+               
+            }
+           
+            string PackageNames = string.Join(",", names);
+            string SalesTotal = string.Join(",", values);
+
+
+            StatisticsViewModel vm = new StatisticsViewModel
+            {
+                Labels = PackageNames,
+                Data = SalesTotal
+            };
+            
+            return View(vm);
         }
     }
 }
