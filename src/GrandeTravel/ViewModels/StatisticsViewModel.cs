@@ -9,5 +9,6 @@ namespace GrandeTravel.ViewModels
     {
         public string Labels { get; set; }
         public string  Data { get; set; }
+        public string AmountBookings { get; set; }
     }
 }

@@ -248,23 +248,25 @@ namespace GrandeTravel.Controllers
         {
             IEnumerable<TravelPackage> tpList = _TravelPackageRepo.Query(i => i.MyUserId == _userManager.GetUserId(User)).ToList();
             List<string> names = new List<string>();
-                       
+            List<string> NoBookings = new List<string>();
             List<string> values = new List<string>();
             foreach (var item in tpList)
             {
                 names.Add("\"" + item.PackageName +"\"");
-                values.Add(_BookingRepo.Query(t => t.TravelPackageName == item.PackageName).Sum(r => r.TotalCost).ToString());              
-               
+                values.Add(_BookingRepo.Query(t => t.TravelPackageName == item.PackageName).Sum(r => r.TotalCost).ToString());
+                NoBookings.Add(_BookingRepo.Query(b => b.TravelPackageName == item.PackageName).Count().ToString());
+
             }
-           
+
             string PackageNames = string.Join(",", names);
             string SalesTotal = string.Join(",", values);
-
+            string BookingsTotal = string.Join(",", NoBookings);
 
             StatisticsViewModel vm = new StatisticsViewModel
             {
                 Labels = PackageNames,
-                Data = SalesTotal
+                Data = SalesTotal,
+                AmountBookings = BookingsTotal
             };
             
             return View(vm);

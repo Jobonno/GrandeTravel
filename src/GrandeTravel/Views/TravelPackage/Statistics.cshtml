@@ -25,7 +25,34 @@
             ]
         }]
 };
-
+    var bardata = {
+        labels: [
+        @Html.Raw(@Model.Labels)
+    ],
+    datasets: [
+        {
+            data: [@Model.AmountBookings],
+            label: "Booking dataset",
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56",
+                "#CCFCE6",
+                "#1133FF"
+            ],
+            borderColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56",
+                "#CCFCE6",
+                "#1133FF"
+            ]
+        }]
+};
+               
+            
+        
+    
             window.onload = function () {
                 var ctx1 = document.getElementById("Piecanvas").getContext("2d");
                 window.myBar = new Chart(ctx1,
@@ -43,14 +70,47 @@
                                 maintainAspectRatio: true
                             }
                     });
+                var ctx2 = document.getElementById("Barcanvas").getContext("2d");
+                window.myBar = new Chart(ctx2,
+                    {
+                        type: 'horizontalBar',
+                        data: bardata,
+                        options:
+                            {
+                                title:
+                                {
+                                    display: true,
+                                    text: "Total Booking Count"
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                ,
+                                    responsive: true,
+                                    maintainAspectRatio: true
+                                }
+                            }
+                    });
             }
+
+
+
 </script>
 <div class="container">
     <div class="row">
-        <div class=col-lg-6>
+        <div class="col-lg-6">
             <div style="text-align: center">
                 <canvas id="Piecanvas"></canvas>
                 
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div style="text-align: center">
+                <canvas id="Barcanvas"></canvas>
+
             </div>
         </div>
     </div>
