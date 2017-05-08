@@ -1,44 +1,111 @@
 ﻿@model DisplaySingleTravelPackageViewModel
 
 
-
-
-
-<div class="container">
-    <h2>@Model.PackageName</h2>
-    <h6><em>posted by</em> @Model.TravelProviderName</h6>
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-            <img class="img-rounded img-responsive" src="~/Media/TravelPackage/@Model.PackageName/@Model.PhotoLocation" />
-            <div class="text-center" id="shareIcons">
-                
+        <div class="col-lg-4">
+            <img class="img-responsive" src="~/Media/TravelPackage/@Model.PackageName/@Model.PhotoLocation" />
+        </div>
+        <div class="col-lg-6">
+            <div class="row text-center">                
                
+                <div class="col-lg-12 col-md-12">
+                    <h2 class="text-center"><strong>@Model.PackageName</strong></h2>
+                    <h6 class="text-center"><em>posted by</em> @Model.TravelProviderName</h6>
+                    <h4 class="text-center"><i class="fa fa-map-marker localIcon" aria-hidden="true"></i> <strong>@Model.Location</strong></h4>
+                    <h2><strong>$@Model.PackagePrice</strong></h2>
+                    <p>@Model.PackageDescription</p>
+                    <a id="BookBtn" asp-controller="Booking" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-success" role="button">Book Now</a>
+                
+                    <div class="text-center" id="shareIcons">
+
+
+                    </div>
+
+                    <div class="text-center">
+                        @if (Model.UserName == User.Identity.Name || User.IsInRole("Admin"))
+                        {
+                            <a asp-controller="TravelPackage" asp-action="Delete" asp-route-id="@Model.TravelPackageId" class="btn btn-danger">Delete</a>
+                            <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>
+
+
+                        }
+
+                    </div>
+                    <div id="ReviewList">
+                        <h4>Reviews</h4>
+                        <ul id="commentList">
+                            @foreach (var item in Model.Feedbacks)
+                            {
+                                <li>
+                                    @for (int i = 1; i <= item.Rating; i++)
+                                    {
+                                        <span><i class="fa fa-star detailStars"></i></span>
+                                    }
+                                    <br />
+                                    @item.Comment
+                                    <ul>
+                                        <li class="text-right"><i>Posted by </i>@item.UserName</li>
+                                    </ul>
+                                    <hr />
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="text-center"><strong>@Model.PackageName</strong></h2>
+            <h6 class="text-center"><em>posted by</em> @Model.TravelProviderName</h6>
+            <h4 class="text-center"><i class="fa fa-map-marker localIcon" aria-hidden="true"></i> <strong>@Model.Location</strong></h4>
+            <p>@Model.PackageDescription</p>
+        </div>
+        <div class="col-md-4">
+            <div class="text-center" id="shareIcons">
+
+
             </div> 
+            <p><strong>$@Model.PackagePrice</strong></p>
             <div class="text-center">
                 @if (Model.UserName == User.Identity.Name || User.IsInRole("Admin"))
                 {
-                    <a asp-controller="TravelPackage" asp-action="Delete" asp-route-id="@Model.TravelPackageId" class="btn btn-danger">Delete</a> 
+                    <a asp-controller="TravelPackage" asp-action="Delete" asp-route-id="@Model.TravelPackageId" class="btn btn-danger">Delete</a>
                     <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>
-                                       
+
 
                 }
                 <a asp-controller="Booking" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-success" role="button">Book</a>
-            </div>           
-         </div>
-        
-            
-            
-            
-       
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10">
-            <h4>@Model.Location</h4>
-            <p>@Model.PackageDescription</p>
-            <p><strong>$@Model.PackagePrice</strong></p>
+            </div>
+            <ul>
+                @foreach (var item in Model.Feedbacks)
+                {
+                    <li>
+                        @for (int i = 1; i <= item.Rating; i++)
+                        {
+                            <span><i class="fa fa-star detailStars"></i></span>
+                        }
+                        <br />
+                        @item.Comment
+                        <ul>
+                            <li><i>Posted by </i>@item.UserName</li>
+                        </ul>
+                        <hr />
+                    </li>
+                }
+            </ul>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <table border="1">
+   
+
+            @*<table border="1">
                 <tr>
                     <td>Booking Date</td>
                     <td>Number of People</td>
@@ -59,26 +126,6 @@
 
 
             </table>
-        </div>
-        <div class="col-lg-6">
-            <ul>
-                @foreach (var item in Model.Feedbacks)
-                {
-                    <li>
-                        @for (int i = 1; i <= item.Rating; i++)
-                        {
-                            <span><i class="fa fa-star detailStars"></i></span>
-                        }
-                        <br />
-                        @item.Comment
-                        <ul>
-                            <li><i>Posted by </i>@item.UserName</li>
-                        </ul>
-                        <hr />
-                    </li>
-                }
-            </ul>
-        </div>
-    </div>  
      
-</div>
+     
+</div>*@

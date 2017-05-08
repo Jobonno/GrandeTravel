@@ -358,7 +358,18 @@ address{
     font-size: 16px;
     color:yellow;
 }
+#BookBtn{
+    font-size:20px;
+}
 
+#commentList li{
+    list-style:none;
+    
+}
+#ReviewList{
+    width:200px;
+    margin:auto;
+}
 
 
 /*Create Feedback Page*/
