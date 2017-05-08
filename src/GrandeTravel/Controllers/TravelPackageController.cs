@@ -39,6 +39,7 @@ namespace GrandeTravel.Controllers
         public IActionResult Index(string searchString, int minPrice, int maxPrice)
         {
             IEnumerable<TravelPackage> list;
+            
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -69,7 +70,11 @@ namespace GrandeTravel.Controllers
             {
                 list = _TravelPackageRepo.GetAll();
             }
-            
+            //Display Only TravelProviders Packages
+            if (User.IsInRole("TravelProvider"))
+            {
+                list = list.Where(id => id.MyUserId == _userManager.GetUserId(User));
+            }
             DisplayAllTravelPackagesViewModel vm = new DisplayAllTravelPackagesViewModel
             {
                 Total = list.Count(),
