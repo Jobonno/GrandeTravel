@@ -205,8 +205,7 @@ address{
 /*Contact Page*/
 #contactContent{
     height: 500px;
-    background-image:url(../Media/beachRoad.jpg);
-    background-size: cover;
+    
 }
 
 .ContactUsBtn{
@@ -369,6 +368,10 @@ address{
 #ReviewList{
     width:200px;
     margin:auto;
+}
+
+#PackageImg{
+    margin-top: 30px;
 }
 
 
