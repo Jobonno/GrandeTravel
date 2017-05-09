@@ -128,7 +128,8 @@ namespace GrandeTravel.Controllers
                 };
                 if (PhotoLocation != null)
                 {
-                    string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media/TravelPackage");
+                    string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media\\TravelPackage");
+                    uploadPath = Path.Combine(uploadPath, User.Identity.Name);
                     Directory.CreateDirectory(Path.Combine(uploadPath, tp.PackageName));
                     string filename = Path.GetFileName(PhotoLocation.FileName);
 
@@ -136,8 +137,10 @@ namespace GrandeTravel.Controllers
                     {
                         PhotoLocation.CopyTo(fs);
                     }
+                    string SaveFilename = Path.Combine(User.Identity.Name, tp.PackageName, filename);                  
 
-                    tp.PhotoLocation = filename;
+                    
+                    tp.PhotoLocation = SaveFilename;
                 }
 
                 //call the service to add the package
@@ -208,7 +211,8 @@ namespace GrandeTravel.Controllers
                 tp.PackagePrice = vm.PackagePrice;
                 if (PhotoLocation != null)
                 {
-                    string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media/TravelPackage");
+                    string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media\\TravelPackage");
+                    uploadPath = Path.Combine(uploadPath, User.Identity.Name);
                     uploadPath = Path.Combine(uploadPath, tp.PackageName);
                     string filename = Path.GetFileName(PhotoLocation.FileName);
 
@@ -216,8 +220,8 @@ namespace GrandeTravel.Controllers
                     {
                         PhotoLocation.CopyTo(fs);
                     }
-
-                    tp.PhotoLocation = filename;
+                    string SaveFilename = Path.Combine(User.Identity.Name, tp.PackageName, filename);
+                    tp.PhotoLocation = SaveFilename;
                 }
 
                 _TravelPackageRepo.Update(tp);
