@@ -65,6 +65,7 @@ namespace GrandeTravel.Controllers
                     loggedProfile.Phone = vm.Phone;
                     //save the update to the database
                     _travelProfileRepo.Update(loggedProfile);
+                    await _userManager.SetEmailAsync(loggedUser, vm.Email);
                     //update existing Packages For Name Changes
                     IEnumerable<TravelPackage> list = _travelPackageRepo.Query(l => l.MyUserId == loggedUser.Id).ToList();
                     foreach (var item in list)
@@ -85,6 +86,7 @@ namespace GrandeTravel.Controllers
                     };
                     //save the new profile to database
                     _travelProfileRepo.Create(loggedProfile);
+                    await _userManager.SetEmailAsync(loggedUser, vm.Email);
                 }
                 return RedirectToAction("Index", "TravelPackage");
             }
