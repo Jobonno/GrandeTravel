@@ -38,7 +38,7 @@ namespace GrandeTravel.Controllers
             {
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress(vm.FromAddress, vm.FromAddress));
-                message.To.Add(new MailboxAddress("Joe", "jobonno@gmail.com"));
+                message.To.Add(new MailboxAddress("Joe", "grandetravelproject@gmail.com"));
                 message.Subject = vm.Subject;
                 message.Body = new TextPart("plain")
                 {
@@ -49,7 +49,7 @@ namespace GrandeTravel.Controllers
                 {
                     client.Connect("smtp.gmail.com", 587, false);
                     client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    client.Authenticate("jobonno@gmail.com", "monteleone82");
+                    client.Authenticate("grandetravelproject@gmail.com", "Diplomaproject");
                     client.Send(message);
                     client.Disconnect(true);
                 }

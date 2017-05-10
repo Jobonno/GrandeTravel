@@ -64,7 +64,7 @@
                                 title:
                                 {
                                     display: true,
-                                    text: "Total Booking Sales Count"
+                                    text: "Total Booking Sales"
                                 },
                                 responsive: true,
                                 maintainAspectRatio: true
@@ -80,7 +80,47 @@
                                 title:
                                 {
                                     display: true,
-                                    text: "Total Booking Count"
+                                    text: "Total Amount of Bookings"
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                ,
+                                    responsive: true,
+                                    maintainAspectRatio: true
+                                }
+                            }
+                    });
+                var ctx1 = document.getElementById("Piecanvas2").getContext("2d");
+                window.myBar = new Chart(ctx1,
+                    {
+                        type: 'pie',
+                        data: bardata,
+                        options:
+                            {
+                                title:
+                                {
+                                    display: true,
+                                    text: "Total Amount of Bookings"
+                                },
+                                responsive: true,
+                                maintainAspectRatio: true
+                            }
+                    });
+                var ctx2 = document.getElementById("Barcanvas2").getContext("2d");
+                window.myBar = new Chart(ctx2,
+                    {
+                        type: 'horizontalBar',
+                        data: data,
+                        options:
+                            {
+                                title:
+                                {
+                                    display: true,
+                                    text: "Total Booking Sales"
                                 },
                                 scales: {
                                     xAxes: [{
@@ -101,13 +141,27 @@
 </script>
 <div class="container">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div style="text-align: center">
                 <canvas id="Piecanvas"></canvas>
                 
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
+            <div style="text-align: center">
+                <canvas id="Barcanvas2"></canvas>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div style="text-align: center">
+                <canvas id="Piecanvas2"></canvas>
+
+            </div>
+        </div>
+        <div class="col-lg-4">
             <div style="text-align: center">
                 <canvas id="Barcanvas"></canvas>
 
