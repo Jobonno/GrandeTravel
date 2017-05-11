@@ -133,6 +133,7 @@ namespace GrandeTravel.Controllers
                     loggedProfile.Phone = vm.Phone;
                     //save the update to the database
                     _customerProfileRepo.Update(loggedProfile);
+                    await _userManager.SetEmailAsync(loggedUser, vm.Email);
                 }
                 else
                 {
@@ -147,6 +148,7 @@ namespace GrandeTravel.Controllers
                     };
                     //save the new profile to database
                     _customerProfileRepo.Create(loggedProfile);
+                    await _userManager.SetEmailAsync(loggedUser, vm.Email);
                 }
                 return RedirectToAction("Index", "TravelPackage");
             }

@@ -9,6 +9,8 @@ using GrandeTravel.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -58,7 +60,7 @@ namespace GrandeTravel.Controllers
         }
         [HttpPost]
         [Authorize]
-        public IActionResult Create(CreateBookingViewModel vm)
+        public async Task<IActionResult> Create(CreateBookingViewModel vm)
         {
             
             if (ModelState.IsValid)
@@ -75,6 +77,31 @@ namespace GrandeTravel.Controllers
                     TravelPackageName = vm.TravelPackageName
                 };
                 _bookingRepo.Create(booking);
+                //Send Email
+                var message = new MimeMessage();
+                MyUser user = await _userManager.FindByIdAsync(userId);
+                message.From.Add(new MailboxAddress("Grande Travel", "grandetravelproject@gmail.com"));
+                message.To.Add(new MailboxAddress(user.UserName, user.Email));
+                message.Subject = "Your Booking Voucher";
+                message.Body = new TextPart("plain")
+                {
+                    Text = "Booking Date : " + booking.BookingDate + "\n" +
+                           "Package Name : " + booking.TravelPackageName + "\n" +
+                           "Number of People: " + booking.People + "\n" +
+                           "Total cost : $" + booking.TotalCost + "\n" +
+                           "Expiry Date : " + booking.BookingDate.AddMonths(3)
+                           //add voucher code here
+
+                };
+
+                using (var client = new SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.AuthenticationMechanisms.Remove("XOAUTH2");
+                    client.Authenticate("grandetravelproject@gmail.com", "Diplomaproject");
+                    client.Send(message);
+                    client.Disconnect(true);
+                }
                 return RedirectToAction("Details", "TravelPackage", new { id = booking.TravelPackageId});
             }
             return View(vm);

@@ -38,7 +38,7 @@ namespace GrandeTravel.Controllers
             {
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress(vm.FromAddress, vm.FromAddress));
-                message.To.Add(new MailboxAddress("Joe", "grandetravelproject@gmail.com"));
+                message.To.Add(new MailboxAddress("Grande Travel", "grandetravelproject@gmail.com"));
                 message.Subject = vm.Subject;
                 message.Body = new TextPart("plain")
                 {
