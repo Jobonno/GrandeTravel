@@ -8,6 +8,7 @@ using GrandeTravel.Models;
 using GrandeTravel.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,6 +31,7 @@ namespace GrandeTravel.Controllers
 
         // GET: /<controller>/
         [HttpGet]
+        [Authorize(Roles = "TravelProvider")]
         public async Task<IActionResult> UpdateProviderProfile()
         {
             MyUser user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -47,6 +49,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "TravelProvider")]
         public async Task<IActionResult> UpdateProviderProfile(UpdateProviderProfileViewModel vm)
         {
             if (ModelState.IsValid)
@@ -96,6 +99,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> UpdateCustomerProfile()
         {
             MyUser user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -115,6 +119,7 @@ namespace GrandeTravel.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> UpdateCustomerProfile(UpdateCustomerProfileViewModel vm)
         {
             if (ModelState.IsValid)

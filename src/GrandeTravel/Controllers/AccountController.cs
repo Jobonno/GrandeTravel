@@ -22,14 +22,15 @@ namespace GrandeTravel.Controllers
         private UserManager<MyUser> _userManager;
         private SignInManager<MyUser> _signInManager;
         private RoleManager<IdentityRole> _roleManager;
+        private IEmailSender _emailService;
 
-        
 
-        public AccountController(UserManager<MyUser> userManager, SignInManager<MyUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public AccountController(UserManager<MyUser> userManager, SignInManager<MyUser> signInManager, RoleManager<IdentityRole> roleManager, IEmailSender emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _emailService = emailService;
         }
 
        
@@ -58,33 +59,11 @@ namespace GrandeTravel.Controllers
                     
                     var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account",
                         new { userId = tempUser.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                    var message = new MimeMessage();
-                    message.To.Add(new MailboxAddress(tempUser.UserName, vm.Email));
-                    message.From.Add(new MailboxAddress("Grande Travel", "grandetravelproject@gmail.com"));
-                    message.Subject = "Confirm Your Account";
-                    message.Body = new TextPart("plain")
-                    {
-                        Text = $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>"
-                    };
 
-                    using (var client = new SmtpClient())
-                    {
-                        client.Connect("smtp.gmail.com", 587, false);
-                        client.AuthenticationMechanisms.Remove("XOAUTH2");
-                        client.Authenticate("grandetravelproject@gmail.com", "Diplomaproject");
-                        client.Send(message);
-                        client.Disconnect(true);
-                    }
+                    _emailService.SendEmail("grandetravelproject@gmail.com", vm.Email, "Confirm Registration",
+                        $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
 
-
-                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
-               // $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>";
-
-                    // Comment out following line to prevent a new user automatically logged on.
-                    // await _signInManager.SignInAsync(user, isPersistent: false);
-                    //_logger.LogInformation(3, "User created a new account with password.");
                    
-
 
                     //remember to add roles first!!
                     await _userManager.AddToRoleAsync(tempUser, "Customer");
@@ -126,8 +105,8 @@ namespace GrandeTravel.Controllers
                 {
                     //remember to add roles first!!
                     await _userManager.AddToRoleAsync(tempUser, "TravelProvider");
-                    await _signInManager.SignInAsync(tempUser,false);
-                    return RedirectToAction("UpdateProviderProfile", "Profile");
+                   // await _signInManager.SignInAsync(tempUser,false);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
