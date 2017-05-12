@@ -40,7 +40,7 @@ namespace GrandeTravel.Controllers
         public IActionResult Create(int id)
         {
             TravelPackage tp = _travelPackageManager.GetSingle(t => t.TravelPackageId == id);
-            
+            //add check for security
             CreateFeedbackViewModel vm = new CreateFeedbackViewModel
             {
                 TravelPackageId = tp.TravelPackageId,

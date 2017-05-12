@@ -11,6 +11,8 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.Net;
+using System.Xml.Linq;
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GrandeTravel.Controllers
@@ -160,6 +162,18 @@ namespace GrandeTravel.Controllers
             IEnumerable<Feedback> feedbacks = _feedbackRepo.Query(f => f.TravelPackageId == id);
             MyUser travelProviderName = await _userManager.FindByIdAsync(tp.MyUserId);
             string TpName = travelProviderName.UserName;
+            //Google Maps 
+            var address = tp.Location;
+            var requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(address));
+
+            var request = WebRequest.Create(requestUri);
+            var response =await  request.GetResponseAsync();
+            var xdoc = XDocument.Load(response.GetResponseStream());
+            var result = xdoc.Element("GeocodeResponse").Element("result");
+            var locationElement = result.Element("geometry").Element("location");
+            var lat = locationElement.Element("lat").Value;
+            var lng = locationElement.Element("lng").Value;
+
             DisplaySingleTravelPackageViewModel vm = new DisplaySingleTravelPackageViewModel
             {
                 PackageName = tp.PackageName,
@@ -171,7 +185,10 @@ namespace GrandeTravel.Controllers
                 Bookings = list,
                 Feedbacks = feedbacks,
                 TravelProviderName = tp.ProviderName,
-                UserName = TpName
+                UserName = TpName,
+                latitude = lat,
+                longitude = lng
+
 
             };
 
