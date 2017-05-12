@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 using Microsoft.AspNetCore.Authorization;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,12 +23,16 @@ namespace GrandeTravel.Controllers
         private SignInManager<MyUser> _signInManager;
         private RoleManager<IdentityRole> _roleManager;
 
+        
+
         public AccountController(UserManager<MyUser> userManager, SignInManager<MyUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
         }
+
+       
 
        [HttpGet]
         public IActionResult Register()
@@ -48,10 +54,42 @@ namespace GrandeTravel.Controllers
                 var result = await _userManager.CreateAsync(tempUser, vm.Password);
                 if (result.Succeeded)
                 {
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(tempUser);
+                    
+                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account",
+                        new { userId = tempUser.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    var message = new MimeMessage();
+                    message.To.Add(new MailboxAddress(tempUser.UserName, vm.Email));
+                    message.From.Add(new MailboxAddress("Grande Travel", "grandetravelproject@gmail.com"));
+                    message.Subject = "Confirm Your Account";
+                    message.Body = new TextPart("plain")
+                    {
+                        Text = $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>"
+                    };
+
+                    using (var client = new SmtpClient())
+                    {
+                        client.Connect("smtp.gmail.com", 587, false);
+                        client.AuthenticationMechanisms.Remove("XOAUTH2");
+                        client.Authenticate("grandetravelproject@gmail.com", "Diplomaproject");
+                        client.Send(message);
+                        client.Disconnect(true);
+                    }
+
+
+                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
+               // $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>";
+
+                    // Comment out following line to prevent a new user automatically logged on.
+                    // await _signInManager.SignInAsync(user, isPersistent: false);
+                    //_logger.LogInformation(3, "User created a new account with password.");
+                   
+
+
                     //remember to add roles first!!
                     await _userManager.AddToRoleAsync(tempUser, "Customer");
-                    await _signInManager.SignInAsync(tempUser, false);
-                    return RedirectToAction("UpdateCustomerProfile", "Profile");
+                    //await _signInManager.SignInAsync(tempUser, false);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -119,6 +157,16 @@ namespace GrandeTravel.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByNameAsync(vm.Username);
+                if (user != null)
+                {
+                    if (!await _userManager.IsEmailConfirmedAsync(user))
+                    {
+                        ModelState.AddModelError(string.Empty,
+                                      "You must have a confirmed email to log in.");
+                        return View(vm);
+                    }
+                }
                 var result = await _signInManager.PasswordSignInAsync(vm.Username, vm.Password, vm.RememberMe, false);
                 if (result.Succeeded)
                 {
@@ -175,6 +223,24 @@ namespace GrandeTravel.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return View("Error");
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+            return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
     }

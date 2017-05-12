@@ -25,7 +25,7 @@ namespace GrandeTravel
             services.AddScoped<IRepository<Feedback>, BaseRepository<Feedback>>();
             services.AddScoped<IRepository<TravelProviderProfile>, BaseRepository<TravelProviderProfile>>();
             services.AddScoped<IRepository<CustomerProfile>, BaseRepository<CustomerProfile>>();
-
+            
             services.AddIdentity<MyUser, IdentityRole>
                 (
                 config =>
@@ -34,8 +34,10 @@ namespace GrandeTravel
                     config.Password.RequiredLength = 4;
                     config.Password.RequireDigit = false;
                     config.Cookies.ApplicationCookie.AccessDeniedPath = "/Account/AccessDenied";
+                    config.SignIn.RequireConfirmedEmail = true;
                 }
-                ).AddEntityFrameworkStores<GrandeTravelDbContext>();
+
+                ).AddEntityFrameworkStores<GrandeTravelDbContext>().AddDefaultTokenProviders();
             services.AddDbContext<GrandeTravelDbContext>();
         }
 
@@ -51,6 +53,8 @@ namespace GrandeTravel
 
             app.UseStaticFiles();
             app.UseIdentity();
+            
+
             app.UseMvcWithDefaultRoute();
         }
     }
