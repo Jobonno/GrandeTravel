@@ -163,7 +163,7 @@ namespace GrandeTravel.Controllers
             MyUser travelProviderName = await _userManager.FindByIdAsync(tp.MyUserId);
             string TpName = travelProviderName.UserName;
             //Google Maps 
-            var address = tp.Location;
+            var address = tp.Location + " Australia";
             var requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(address));
 
             var request = WebRequest.Create(requestUri);
