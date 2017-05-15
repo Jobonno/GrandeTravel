@@ -39,15 +39,24 @@ namespace GrandeTravel.Controllers
         [Authorize(Roles = "Customer,Admin")]
         public IActionResult Create(int id)
         {
-            TravelPackage tp = _travelPackageManager.GetSingle(t => t.TravelPackageId == id);
+            Booking booking = _bookingRepo.GetSingle(t => t.BookingId == id);
             //add check for security
-            CreateFeedbackViewModel vm = new CreateFeedbackViewModel
+            if(booking != null)
             {
-                TravelPackageId = tp.TravelPackageId,
-               
-              
-            };
-            return View(vm);
+                if (booking.MyUserId == _userManager.GetUserId(User))
+                {
+                    CreateFeedbackViewModel vm = new CreateFeedbackViewModel
+                    {
+                        TravelPackageId = booking.TravelPackageId,
+
+
+                    };
+                    return View(vm);
+                }
+            }
+            
+            return RedirectToAction("AccessDenied", "Account");
+            
         }
 
         [HttpPost]
