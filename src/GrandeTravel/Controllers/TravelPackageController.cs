@@ -40,12 +40,11 @@ namespace GrandeTravel.Controllers
         //GET: /<controller>/
         public IActionResult Index(string searchString, int minPrice, int maxPrice)
         {
-            IEnumerable<TravelPackage> list;
-
+            IEnumerable<TravelPackage> list;            
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                list = _TravelPackageRepo.Query(b => b.Location.Contains(searchString));
+                list = _TravelPackageRepo.Query(b => b.Location.Contains(searchString) && !b.Discontinued);
                 if (maxPrice > 0 || minPrice > 0)
                 {
                     if (minPrice > maxPrice)
@@ -64,16 +63,16 @@ namespace GrandeTravel.Controllers
                 //only if minprice is entered
                 if (minPrice > maxPrice)
                 {
-                    list = _TravelPackageRepo.Query(b => b.PackagePrice >= minPrice);
+                    list = _TravelPackageRepo.Query(b => b.PackagePrice >= minPrice && !b.Discontinued);
                 }
                 else
                 {
-                    list = _TravelPackageRepo.Query(b => (b.PackagePrice <= maxPrice && b.PackagePrice >= minPrice));
+                    list = _TravelPackageRepo.Query(b => (b.PackagePrice <= maxPrice && b.PackagePrice >= minPrice && !b.Discontinued));
                 }
             }
             else
             {
-                list = _TravelPackageRepo.GetAll();
+                list = _TravelPackageRepo.Query(d => !d.Discontinued);
             }
             //Display Only TravelProviders Packages
             if (User.IsInRole("TravelProvider"))
