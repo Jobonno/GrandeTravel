@@ -68,7 +68,7 @@
                                     <li><a asp-area="" asp-controller="Booking" asp-action="Index">Display My Bookings</a></li>
                                     <li role="separator" class="divider"></li>                                  
                                 }
-                                <li><a><form method="post" asp-controller="Account" asp-action="Logout"><input id="logoutBtn" type="submit" value="Logout" /></form></a></li>
+                                <li><a><form method="post" asp-controller="Account" asp-action="Logout" asp-anti-forgery="true"><input id="logoutBtn" type="submit" value="Logout" /></form></a></li>
                             </ul>
                         </li>
 

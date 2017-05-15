@@ -40,6 +40,8 @@ namespace GrandeTravel.Controllers
         {
             return View();
         }
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUserViewModel vm)
         {
@@ -87,7 +89,9 @@ namespace GrandeTravel.Controllers
         {
             return View();
         }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RegisterTravelProvider(RegisterUserViewModel vm)
         {
@@ -132,6 +136,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogIn(LoginViewModel vm)
         {
             if (ModelState.IsValid)
@@ -162,7 +167,8 @@ namespace GrandeTravel.Controllers
             return View(vm);
         }
 
-        [HttpPost]        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -178,6 +184,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddRole(AddRoleViewModel vm)
         {

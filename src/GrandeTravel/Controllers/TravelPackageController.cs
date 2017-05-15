@@ -101,6 +101,7 @@ namespace GrandeTravel.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Create(CreateTravelPackageViewModel vm, IFormFile PhotoLocation)
         {
@@ -216,6 +217,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Update(int id, UpdateTravelPackageViewModel vm, IFormFile PhotoLocation)
         {

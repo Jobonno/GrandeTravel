@@ -48,6 +48,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "TravelProvider")]
         public async Task<IActionResult> UpdateProviderProfile(UpdateProviderProfileViewModel vm)
         {
@@ -118,6 +119,7 @@ namespace GrandeTravel.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> UpdateCustomerProfile(UpdateCustomerProfileViewModel vm)
         {

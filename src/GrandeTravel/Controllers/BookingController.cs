@@ -60,6 +60,7 @@ namespace GrandeTravel.Controllers
         }
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateBookingViewModel vm)
         {
             

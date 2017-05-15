@@ -51,6 +51,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Customer,Admin")]
         public IActionResult Create(CreateFeedbackViewModel vm)
         {

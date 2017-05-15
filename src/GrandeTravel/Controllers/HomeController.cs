@@ -39,27 +39,12 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Contact(ContactViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                //var message = new MimeMessage();
-                //message.From.Add(new MailboxAddress(vm.FromAddress, vm.FromAddress));
-                //message.To.Add(new MailboxAddress("Grande Travel", "grandetravelproject@gmail.com"));
-                //message.Subject = vm.Subject;
-                //message.Body = new TextPart("plain")
-                //{
-                //    Text = vm.Body
-                //};
-
-                //using (var client = new SmtpClient())
-                //{
-                //    client.Connect("smtp.gmail.com", 587, false);
-                //    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                //    client.Authenticate("grandetravelproject@gmail.com", "Diplomaproject");
-                //    client.Send(message);
-                //    client.Disconnect(true);
-                //}
+             
                 _emailService.SendEmail(vm.FromAddress, "grandetravelproject@gmail.com", vm.Subject, vm.Body);
 
                 return RedirectToAction("index");
