@@ -41,7 +41,6 @@ namespace GrandeTravel.Controllers
             {
 
                 vm.CompanyName = temp.CompanyName;
-                vm.Email = temp.Email;
                 vm.Phone = temp.Phone;
 
             }
@@ -64,11 +63,11 @@ namespace GrandeTravel.Controllers
                     
                     //update the loggedProfile
                     loggedProfile.CompanyName = vm.CompanyName;
-                    loggedProfile.Email = vm.Email;
+                    
                     loggedProfile.Phone = vm.Phone;
                     //save the update to the database
                     _travelProfileRepo.Update(loggedProfile);
-                    await _userManager.SetEmailAsync(loggedUser, vm.Email);
+                   
                     //update existing Packages For Name Changes
                     IEnumerable<TravelPackage> list = _travelPackageRepo.Query(l => l.MyUserId == loggedUser.Id).ToList();
                     foreach (var item in list)
@@ -84,12 +83,12 @@ namespace GrandeTravel.Controllers
                     {
                         UserId = loggedUser.Id,
                         CompanyName = vm.CompanyName,
-                        Email = vm.Email,
+                        
                         Phone = vm.Phone
                     };
                     //save the new profile to database
                     _travelProfileRepo.Create(loggedProfile);
-                    await _userManager.SetEmailAsync(loggedUser, vm.Email);
+                   
                 }
                 return RedirectToAction("Index", "TravelPackage");
             }
@@ -110,7 +109,7 @@ namespace GrandeTravel.Controllers
 
                 vm.FirstName = temp.FirstName;
                 vm.LastName = temp.LastName;
-                vm.Email = temp.Email;
+                
                 vm.Phone = temp.Phone;
 
             }
@@ -134,11 +133,11 @@ namespace GrandeTravel.Controllers
                     //update the loggedProfile
                     loggedProfile.FirstName = vm.FirstName;
                     loggedProfile.LastName = vm.LastName;
-                    loggedProfile.Email = vm.Email;
+                    
                     loggedProfile.Phone = vm.Phone;
                     //save the update to the database
                     _customerProfileRepo.Update(loggedProfile);
-                    await _userManager.SetEmailAsync(loggedUser, vm.Email);
+                    
                 }
                 else
                 {
@@ -148,12 +147,10 @@ namespace GrandeTravel.Controllers
                         UserId = loggedUser.Id,
                         FirstName = vm.FirstName,
                         LastName = vm.LastName,
-                        Email = vm.Email,
                         Phone = vm.Phone
                     };
                     //save the new profile to database
-                    _customerProfileRepo.Create(loggedProfile);
-                    await _userManager.SetEmailAsync(loggedUser, vm.Email);
+                    _customerProfileRepo.Create(loggedProfile);                    
                 }
                 return RedirectToAction("Index", "TravelPackage");
             }

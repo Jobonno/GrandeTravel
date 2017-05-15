@@ -12,9 +12,7 @@ namespace GrandeTravel.ViewModels
 
         public string LastName { get; set; }
 
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-
+      
         [DataType(DataType.PhoneNumber)]
         public int Phone { get; set; }
     }

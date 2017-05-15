@@ -11,9 +11,7 @@ namespace GrandeTravel.ViewModels
         [Required, Display(Name ="Company Name")]
         public string CompanyName { get; set; }
 
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-
+        
         [DataType(DataType.PhoneNumber)]
         public int Phone { get; set; }
     }
