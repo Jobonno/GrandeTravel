@@ -251,7 +251,8 @@ namespace GrandeTravel.Controllers
             return View(vm);
         }
 
-        [HttpGet]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Delete(int id)
         {
@@ -259,7 +260,8 @@ namespace GrandeTravel.Controllers
             //check if It is Their Own Travel Package
             if (tp != null && (tp.MyUserId == _userManager.GetUserId(User) || User.IsInRole("Admin")))
             {
-                _TravelPackageRepo.Delete(tp);
+                tp.Discontinued = true;
+                _TravelPackageRepo.Update(tp);
 
             }
             return RedirectToAction("Index");

@@ -24,6 +24,9 @@ namespace GrandeTravel.Models
 
         public int PackagePrice { get; set; }
 
+        public bool Discontinued { get; set; }
+
+
         public string MyUserId { get; set; }
         public MyUser MyUser { get; set; }
 
