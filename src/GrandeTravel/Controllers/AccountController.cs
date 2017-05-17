@@ -229,5 +229,19 @@ namespace GrandeTravel.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> TravelProviderList()
+        {
+            IEnumerable<MyUser> travelProviders = await _userManager.GetUsersInRoleAsync("TravelProvider");
+
+            DisplayAllTravelProvidersViewModel vm = new DisplayAllTravelProvidersViewModel
+            {
+                TravelProviders = travelProviders
+            };
+            
+            return View(vm);
+        }
+
     }
 }
