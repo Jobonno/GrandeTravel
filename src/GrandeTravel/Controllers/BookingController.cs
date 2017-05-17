@@ -21,12 +21,14 @@ namespace GrandeTravel.Controllers
         private IRepository<Booking> _bookingRepo;
         private UserManager<MyUser> _userManager;
         private IRepository<TravelPackage> _travelPackageManager;
+        private IEmailSender _emailService;
 
-        public BookingController(IRepository<Booking> bookingRepo, UserManager<MyUser> userManager, IRepository<TravelPackage> travelPackageManager)
+        public BookingController(IRepository<Booking> bookingRepo, UserManager<MyUser> userManager, IRepository<TravelPackage> travelPackageManager, IEmailSender emailService)
         {
             _userManager = userManager;
             _bookingRepo = bookingRepo;
             _travelPackageManager = travelPackageManager;
+            _emailService = emailService;
         }
 
         // GET: /<controller>/
@@ -67,6 +69,7 @@ namespace GrandeTravel.Controllers
             if (ModelState.IsValid)
             {
                 var userId = _userManager.GetUserId(User);
+                string voucherCode = Guid.NewGuid().ToString().GetHashCode().ToString("x");
                 Booking booking = new Booking
                 {
                     BookingDate = vm.BookingDate,
@@ -75,34 +78,21 @@ namespace GrandeTravel.Controllers
                     People = vm.People,
                     Name = User.Identity.Name,
                     TotalCost = (vm.People * vm.TotalCost),
-                    TravelPackageName = vm.TravelPackageName
+                    TravelPackageName = vm.TravelPackageName,
+                    VoucherCode = voucherCode
                 };
                 _bookingRepo.Create(booking);
                 //Send Email
-                var message = new MimeMessage();
                 MyUser user = await _userManager.FindByIdAsync(userId);
-                message.From.Add(new MailboxAddress("Grande Travel", "grandetravelproject@gmail.com"));
-                message.To.Add(new MailboxAddress(user.UserName, user.Email));
-                message.Subject = "Your Booking Voucher";
-                message.Body = new TextPart("plain")
-                {
-                    Text = "Booking Date : " + booking.BookingDate + "\n" +
-                           "Package Name : " + booking.TravelPackageName + "\n" +
-                           "Number of People: " + booking.People + "\n" +
-                           "Total cost : $" + booking.TotalCost + "\n" +
-                           "Expiry Date : " + booking.BookingDate.AddMonths(3)
-                           //add voucher code here
+                _emailService.SendEmail("grandetravelproject@gmail.com", user.Email, "Your Booking Voucher",
+                            "Booking Date : " + booking.BookingDate + "\n" +
+                            "Package Name : " + booking.TravelPackageName + "\n" +
+                            "Number of People: " + booking.People + "\n" +
+                            "Total cost : $" + booking.TotalCost + "\n" +
+                            "Expiry Date : " + booking.BookingDate.AddMonths(3) + "\n" +
+                            "Voucher Code : " + voucherCode);
+                                               
 
-                };
-
-                using (var client = new SmtpClient())
-                {
-                    client.Connect("smtp.gmail.com", 587, false);
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    client.Authenticate("grandetravelproject@gmail.com", "Diplomaproject");
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
                 return RedirectToAction("Details", "TravelPackage", new { id = booking.TravelPackageId});
             }
             return View(vm);

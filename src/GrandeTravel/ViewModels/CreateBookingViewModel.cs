@@ -13,12 +13,8 @@ namespace GrandeTravel.ViewModels
         [DataType(DataType.Date)]
         public DateTime BookingDate { get; set; }
 
-        public int TravelPackageId { get; set; }
-
-       
-        
-     
-
+        public int TravelPackageId { get; set; }   
+             
         [Display(Name = "Number of People")] [Range(1,20, ErrorMessage = "Please enter Atleast 1 Person and No more than 20 People")]      
         public int People { get; set; }
 
