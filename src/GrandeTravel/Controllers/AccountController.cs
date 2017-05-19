@@ -107,6 +107,14 @@ namespace GrandeTravel.Controllers
                 var result = await _userManager.CreateAsync(tempUser, vm.Password);
                 if (result.Succeeded)
                 {
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(tempUser);
+
+                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account",
+                        new { userId = tempUser.Id, code = code }, protocol: HttpContext.Request.Scheme);
+
+                    _emailService.SendEmail("grandetravelproject@gmail.com", vm.Email, "Confirm Registration",
+                        $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+
                     //remember to add roles first!!
                     await _userManager.AddToRoleAsync(tempUser, "TravelProvider");
                    // await _signInManager.SignInAsync(tempUser,false);
