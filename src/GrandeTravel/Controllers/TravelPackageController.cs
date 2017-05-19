@@ -170,6 +170,15 @@ namespace GrandeTravel.Controllers
             var response =await  request.GetResponseAsync();
             var xdoc = XDocument.Load(response.GetResponseStream());
             var result = xdoc.Element("GeocodeResponse").Element("result");
+            if(result == null)
+            {
+                address= " Australia";
+                requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(address));
+                request = WebRequest.Create(requestUri);
+                response = await request.GetResponseAsync();
+                xdoc = XDocument.Load(response.GetResponseStream());
+                result = xdoc.Element("GeocodeResponse").Element("result");
+            }
             var locationElement = result.Element("geometry").Element("location");
             var lat = locationElement.Element("lat").Value;
             var lng = locationElement.Element("lng").Value;

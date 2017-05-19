@@ -10,7 +10,7 @@ namespace GrandeTravel.Models
     {
         public int TravelPackageId { get; set; }
 
-       
+        
         public string PackageName { get; set; }
         
         public string PhotoLocation { get; set; }
