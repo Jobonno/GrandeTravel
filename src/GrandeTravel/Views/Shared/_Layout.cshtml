@@ -129,6 +129,10 @@
     <script src="~/lib/devbridge-autocomplete/dist/jquery.autocomplete.js"></script>
     
     <script src="~/JS/MyScript.js"></script>
-    
+    @if(ViewBag.Title == "Grande Travel Landing Page" || ViewBag.Title == "Grande Travel Index Page")
+    {
+        <script src="~/JS/AutoCompleteScript.js"></script>
+    }
+
 </body>
 </html>

@@ -13,8 +13,7 @@
             "twitter",
             "facebook",
             "googleplus",
-            "linkedin"
-           
+            "linkedin"          
             
         ]
     });
@@ -45,8 +44,5 @@
 
 
     //Moved down, throws error if can't find packages...
-    $('#autocomplete').autocomplete({
-        lookup: packages,
-
-    });
+   
 });
