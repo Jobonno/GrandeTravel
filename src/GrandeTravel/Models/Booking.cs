@@ -28,5 +28,7 @@ namespace GrandeTravel.Models
 
         public string VoucherCode { get; set; }
 
+        public bool LeftFeedback { get; set; }
+
     }
 }
