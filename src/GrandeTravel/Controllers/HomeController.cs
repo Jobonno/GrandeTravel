@@ -28,7 +28,7 @@ namespace GrandeTravel.Controllers
         public IActionResult Index()
         {
             List<string> names = new List<string>();
-            var list = _TravelPackageRepo.GetAll();
+            var list = _TravelPackageRepo.Query(p =>!p.Discontinued);
             foreach (var item in list)
             {
                 names.Add(item.PackageName);                

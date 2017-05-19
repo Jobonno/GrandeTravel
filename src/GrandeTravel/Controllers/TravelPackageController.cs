@@ -82,7 +82,7 @@ namespace GrandeTravel.Controllers
             }
             list = list.Take(10);
             List<string> names = new List<string>();
-            var sList = _TravelPackageRepo.GetAll();
+            var sList = _TravelPackageRepo.Query(p => !p.Discontinued);
             foreach (var item in sList)
             {
                 names.Add(item.PackageName);

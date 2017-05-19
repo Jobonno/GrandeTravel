@@ -21,10 +21,7 @@
 
    
 
-    $('#autocomplete').autocomplete({
-        lookup: packages,
-       
-    });
+   
 
     $(".ratings").on('click', function () {
         $(".ratings").removeClass('selected-active');
@@ -45,4 +42,11 @@
         $(".ratings").removeClass('secondary-active');
        
     })
+
+
+    //Moved down, throws error if can't find packages...
+    $('#autocomplete').autocomplete({
+        lookup: packages,
+
+    });
 });
