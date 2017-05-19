@@ -19,6 +19,13 @@
         ]
     });
 
+   
+
+    $('#autocomplete').autocomplete({
+        lookup: packages,
+       
+    });
+
     $(".ratings").on('click', function () {
         $(".ratings").removeClass('selected-active');
         $(".ratings").removeClass('selected-secondary-active');

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GrandeTravel.Controllers
@@ -44,7 +45,7 @@ namespace GrandeTravel.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                list = _TravelPackageRepo.Query(b => b.Location.Contains(searchString) && !b.Discontinued);
+                list = _TravelPackageRepo.Query(b => b.PackageName.Contains(searchString) && !b.Discontinued);
                 if (maxPrice > 0 || minPrice > 0)
                 {
                     if (minPrice > maxPrice)
@@ -80,10 +81,19 @@ namespace GrandeTravel.Controllers
                 list = list.Where(id => id.MyUserId == _userManager.GetUserId(User));
             }
             list = list.Take(10);
+            List<string> names = new List<string>();
+            var sList = _TravelPackageRepo.GetAll();
+            foreach (var item in sList)
+            {
+                names.Add(item.PackageName);
+            }
+            var json = JsonConvert.SerializeObject(names);
+
             DisplayAllTravelPackagesViewModel vm = new DisplayAllTravelPackagesViewModel
             {
                 Total = list.Count(),
-                TravelPackageList = list
+                TravelPackageList = list,
+                searchList = json
             };
             return View(vm);
         }

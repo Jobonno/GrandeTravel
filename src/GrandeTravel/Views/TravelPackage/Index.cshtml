@@ -7,7 +7,7 @@
    
 
     <form class="form-inline text-center" asp-controller="TravelPackage" asp-action="Index" id="SearchForm">
-        <input type="text" class="form-control" name="searchString" placeholder="Search Here..">
+        <input id="autocomplete" type="text" class="form-control autocomplete-suggestions" name="searchString" placeholder="Search Here..">
         <input type="number" class="form-control" name="minPrice" placeholder="Min Price">
         <input type="number" class="form-control" name="maxPrice" placeholder="Max Price">
         <input type="submit" class="btn btn-default" value="Search" />
@@ -74,4 +74,6 @@
 
 </div>
   
-  
+  <script>
+      var packages = @Html.Raw(Model.searchList);
+  </script>

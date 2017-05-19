@@ -7,6 +7,8 @@ using GrandeTravel.ViewModels;
 using MimeKit;
 using MailKit.Net.Smtp;
 using GrandeTravel.Services;
+using GrandeTravel.Models;
+using Newtonsoft.Json;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,15 +17,28 @@ namespace GrandeTravel.Controllers
     public class HomeController : Controller
     {
         private IEmailSender _emailService;
+        private IRepository<TravelPackage> _TravelPackageRepo;
 
-        public HomeController(IEmailSender emailService)
+        public HomeController(IEmailSender emailService, IRepository<TravelPackage> TravelPackageRepo)
         {
+            _TravelPackageRepo = TravelPackageRepo;
             _emailService = emailService;
         }
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            List<string> names = new List<string>();
+            var list = _TravelPackageRepo.GetAll();
+            foreach (var item in list)
+            {
+                names.Add(item.PackageName);                
+            }
+            var json = JsonConvert.SerializeObject(names);
+            SearchIndexViewModel vm = new SearchIndexViewModel
+            {
+                list = json
+            };
+            return View(vm);
         }
 
 
