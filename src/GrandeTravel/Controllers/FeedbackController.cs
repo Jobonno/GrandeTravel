@@ -41,15 +41,14 @@ namespace GrandeTravel.Controllers
         {
             Booking booking = _bookingRepo.GetSingle(t => t.BookingId == id);
             //add check for security
-            if(booking != null)
+            if(booking != null && !booking.LeftFeedback)
             {
                 if (booking.MyUserId == _userManager.GetUserId(User))
                 {
                     CreateFeedbackViewModel vm = new CreateFeedbackViewModel
                     {
                         TravelPackageId = booking.TravelPackageId,
-
-
+                        BookingId = booking.BookingId
                     };
                     return View(vm);
                 }
@@ -66,17 +65,28 @@ namespace GrandeTravel.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userId = _userManager.GetUserId(User);
-                Feedback newfeedback = new Feedback
+                Booking booking = _bookingRepo.GetSingle(t => t.BookingId == vm.BookingId);
+                if (booking != null  && !booking.LeftFeedback)
                 {
-                    UserName = User.Identity.Name,
-                    TravelPackageId = vm.TravelPackageId,
-                    MyUserId = userId,
-                    Rating = vm.Rating,
-                    Comment = vm.Comment
-                };
-                _feedbackManager.Create(newfeedback);
-                return RedirectToAction("Details", "TravelPackage", new { id = newfeedback.TravelPackageId });
+                    var userId = _userManager.GetUserId(User);
+                    Feedback newfeedback = new Feedback
+                    {
+                        UserName = User.Identity.Name,
+                        TravelPackageId = vm.TravelPackageId,
+                        MyUserId = userId,
+                        Rating = vm.Rating,
+                        Comment = vm.Comment
+                    };
+                    _feedbackManager.Create(newfeedback);
+                    booking.LeftFeedback = true;
+                    _bookingRepo.Update(booking);
+
+                    return RedirectToAction("Details", "TravelPackage", new { id = newfeedback.TravelPackageId });
+                }else
+                {
+                    return RedirectToAction("AccessDenied", "Account");
+                }
+                
             }
             return View(vm);
         }

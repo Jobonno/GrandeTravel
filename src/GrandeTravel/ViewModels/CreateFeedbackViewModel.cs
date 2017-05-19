@@ -13,7 +13,9 @@ namespace GrandeTravel.ViewModels
         [Display(Name ="")]
         public byte Rating { get; set; }
 
-        public int TravelPackageId { get; set; }       
+        public int TravelPackageId { get; set; }  
+        
+        public int BookingId { get; set; }     
 
         
     }

@@ -79,7 +79,8 @@ namespace GrandeTravel.Controllers
                     Name = User.Identity.Name,
                     TotalCost = (vm.People * vm.TotalCost),
                     TravelPackageName = vm.TravelPackageName,
-                    VoucherCode = voucherCode
+                    VoucherCode = voucherCode,
+                    LeftFeedback = false
                 };
                 _bookingRepo.Create(booking);
                 //Send Email
