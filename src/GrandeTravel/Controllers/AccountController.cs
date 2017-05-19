@@ -251,5 +251,18 @@ namespace GrandeTravel.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CustomerList()
+        {
+            IEnumerable<MyUser> customers = await _userManager.GetUsersInRoleAsync("Customer");
+
+            DisplayAllCustomersViewModel vm = new DisplayAllCustomersViewModel
+            {
+                Customers = customers
+            };
+
+            return View(vm);
+        }
     }
 }

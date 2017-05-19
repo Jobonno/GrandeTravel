@@ -50,7 +50,7 @@
                                     <li><a asp-area="" asp-controller="Account" asp-action="AddRole">Add Role</a></li>
                                     <li><a asp-area="" asp-controller="Account" asp-action="RegisterTravelProvider">Add A Travel Provider</a></li>
                                     <li><a asp-area="" asp-controller="Account" asp-action="TravelProviderList">View All Travel Providers</a></li>
-                                    <li><a href="#">Something else here</a></li>
+                                    <li><a asp-area="" asp-controller="Account" asp-action="CustomerList">View All Customers</a></li>
                                 }
                                 @if (User.IsInRole("TravelProvider"))
                                 { 

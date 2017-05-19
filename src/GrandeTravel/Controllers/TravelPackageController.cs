@@ -79,6 +79,7 @@ namespace GrandeTravel.Controllers
             {
                 list = list.Where(id => id.MyUserId == _userManager.GetUserId(User));
             }
+            list = list.Take(10);
             DisplayAllTravelPackagesViewModel vm = new DisplayAllTravelPackagesViewModel
             {
                 Total = list.Count(),
