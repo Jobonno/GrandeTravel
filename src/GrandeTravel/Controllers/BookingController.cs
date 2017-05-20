@@ -68,6 +68,7 @@ namespace GrandeTravel.Controllers
             
             if (ModelState.IsValid)
             {
+                TravelPackage tp = _travelPackageManager.GetSingle(t => t.TravelPackageId == vm.TravelPackageId);
                 var userId = _userManager.GetUserId(User);
                 string voucherCode = Guid.NewGuid().ToString().GetHashCode().ToString("x");
                 Booking booking = new Booking
@@ -77,7 +78,8 @@ namespace GrandeTravel.Controllers
                     MyUserId = userId,
                     People = vm.People,
                     Name = User.Identity.Name,
-                    TotalCost = (vm.People * vm.TotalCost),
+                    //xtra Security getting price from database
+                    TotalCost = (vm.People * tp.PackagePrice),
                     TravelPackageName = vm.TravelPackageName,
                     VoucherCode = voucherCode,
                     LeftFeedback = false

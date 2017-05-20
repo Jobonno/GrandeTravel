@@ -43,6 +43,9 @@
     })
 
 
-    //Moved down, throws error if can't find packages...
+    $("#People").change(function () {
+        var people = $("#People").val();
+        $("#totalCost").html(people * price);
+        })
    
 });
