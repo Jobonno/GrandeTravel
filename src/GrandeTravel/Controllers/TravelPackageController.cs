@@ -113,12 +113,36 @@ namespace GrandeTravel.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "TravelProvider")]
-        public IActionResult Create(CreateTravelPackageViewModel vm, IFormFile PhotoLocation)
+        public async Task<IActionResult> Create(CreateTravelPackageViewModel vm, IFormFile PhotoLocation)
         {
             if (ModelState.IsValid)
             {
                 var id = _userManager.GetUserId(User);
-                TravelProviderProfile tpp = _travelProfileRepo.GetSingle(t => t.UserId == id);
+                //Validate Unique Package Name
+                IEnumerable<TravelPackage> list = _TravelPackageRepo.Query(l => l.MyUserId == id && !l.Discontinued);
+                if(list != null)
+                {
+                    if(list.Any(n => n.PackageName == vm.PackageName))
+                    {
+                        ModelState.AddModelError("PackageName", "Please Choose a Different Package Name");
+                        return View(vm);
+                    }
+                }
+
+                var address = vm.Location + " Australia";
+                var requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(address));
+
+                var request = WebRequest.Create(requestUri);
+                var response = await request.GetResponseAsync();
+                var xdoc = XDocument.Load(response.GetResponseStream());
+                var result = xdoc.Element("GeocodeResponse").Element("result");
+                if (result == null)
+                {
+                    ModelState.AddModelError("Location", "Please Choose a Valid location");
+                    return View(vm);
+                }
+
+                    TravelProviderProfile tpp = _travelProfileRepo.GetSingle(t => t.UserId == id);
                 string providerName;
                 if (tpp == null)
                 {
@@ -181,15 +205,6 @@ namespace GrandeTravel.Controllers
             var response =await  request.GetResponseAsync();
             var xdoc = XDocument.Load(response.GetResponseStream());
             var result = xdoc.Element("GeocodeResponse").Element("result");
-            if(result == null)
-            {
-                address= " Australia";
-                requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(address));
-                request = WebRequest.Create(requestUri);
-                response = await request.GetResponseAsync();
-                xdoc = XDocument.Load(response.GetResponseStream());
-                result = xdoc.Element("GeocodeResponse").Element("result");
-            }
             var locationElement = result.Element("geometry").Element("location");
             var lat = locationElement.Element("lat").Value;
             var lng = locationElement.Element("lng").Value;
@@ -238,11 +253,35 @@ namespace GrandeTravel.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "TravelProvider,Admin")]
-        public IActionResult Update(int id, UpdateTravelPackageViewModel vm, IFormFile PhotoLocation)
+        public async Task<IActionResult> Update(int id, UpdateTravelPackageViewModel vm, IFormFile PhotoLocation)
         {
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
             if (ModelState.IsValid && tp != null)
             {
+                IEnumerable<TravelPackage> list = _TravelPackageRepo.Query(l => l.PackageName != tp.PackageName && !l.Discontinued);
+                if (list != null)
+                {
+                    if (list.Any(n => n.PackageName == vm.PackageName))
+                    {
+                        ModelState.AddModelError("PackageName", "Please Choose a Different Package Name");
+                        return View(vm);
+                    }
+                }
+
+                var address = vm.Location + " Australia";
+                var requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(address));
+
+                var request = WebRequest.Create(requestUri);
+                var response = await request.GetResponseAsync();
+                var xdoc = XDocument.Load(response.GetResponseStream());
+                var result = xdoc.Element("GeocodeResponse").Element("result");
+                if (result == null)
+                {
+                    ModelState.AddModelError("Location", "Please Choose a Valid location");
+                    return View(vm);
+                }
+
+
                 tp.PackageName = vm.PackageName;
                 tp.Location = vm.Location;
                 tp.PackageDescription = vm.PackageDescription;
