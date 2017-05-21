@@ -23,7 +23,6 @@ padding: 0;
     margin-top: 50px;
 }
 
-
 .autocomplete-suggestions { 
     width:auto;
     border: 1px solid #999; 
@@ -451,8 +450,18 @@ input[type="radio"]{
 
 
 @media(max-width:768px){
+     #autocomplete{
+         
+        margin:auto;
+        width:100%;
+}
+     #landingSearch{
+         width:300px;
+         margin:auto;
+     }
     #landingSearch>.btn{
     margin-top: 10px;
+    
     }
     .mobile-hide{
         display:none;
@@ -469,6 +478,11 @@ input[type="radio"]{
 
 
 @media(max-width:450px){
+    #autocomplete{
+        width:100%;
+        margin:auto;
+}
+
     address{
         margin-top: 5px;
         }
