@@ -36,8 +36,21 @@ namespace GrandeTravel.Controllers
         public IActionResult Index()
         {
             var userId = _userManager.GetUserId(User);
-            IEnumerable<Booking> list = _bookingRepo.Query(b => b.MyUserId == userId);
+            IEnumerable<Booking> list = _bookingRepo.Query(b => b.MyUserId == userId && b.BookingDate > DateTime.Today);
             DisplayAllBookingsViewModel vm = new DisplayAllBookingsViewModel
+            {
+                Bookings = list,
+                total = list.Count()
+            };
+            return View(vm);
+        }
+
+        [Authorize]
+        public IActionResult IndexofPast()
+        {
+            var userId = _userManager.GetUserId(User);
+            IEnumerable<Booking> list = _bookingRepo.Query(b => b.MyUserId == userId && b.BookingDate < DateTime.Today);
+            DisplayPastBookingsViewModel vm = new DisplayPastBookingsViewModel
             {
                 Bookings = list,
                 total = list.Count()
