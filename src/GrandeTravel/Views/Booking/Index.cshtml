@@ -1,10 +1,10 @@
 ﻿@model DisplayAllBookingsViewModel
-
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <h2>Number of Bookings @Model.total</h2>
 
 <table class="table table-striped">
     <tr>
-        <th>Booking Date</th><th>Package Name</th><th>Number of People</th><th>Total Cost</th><th>Feedback</th>
+        <th>Booking Date</th><th>Package Name</th><th>Number of People</th><th>Total Cost</th><th>Payment Received</th><th>Feedback</th>
     </tr>
     @foreach (var item in Model.Bookings)
     {
@@ -13,6 +13,55 @@
             <td>@item.TravelPackageName</td>
             <td>@item.People</td>
             <td>$@item.TotalCost</td>
+            @if (@item.PaymentReceived == false)
+            {
+                string count = "paypal-button" + item.BookingId;
+                <td>
+                    <span id=@count></span>
+                    <script>
+        paypal.Button.render({
+
+                env: 'sandbox', // Or 'sandbox',
+
+            commit: true, // Show a 'Pay Now' button
+
+            client: {
+                sandbox: 'ARnedG8RRiNWBEWKb6ZmFdo8_KcIogU5GeVrhpdJ50zHktGdB6DV0vGqPal7R4-wB4rgkPTpk8dT_63E'
+
+            },
+
+            payment: function(data, actions) {
+                        return actions.payment.create({
+                        transactions: [
+                                {
+                            amount: { total: @item.TotalCost, currency: 'AUD' }
+                            }
+                    ]
+                });
+                    },
+
+            onAuthorize: function(data, actions) {
+                        return actions.payment.execute().then(function(payment) {
+                            window.location.href =  "@Url.Action("PaymentRecieved", "Booking", new { id = item.BookingId })";
+                           
+                            // You can now show a confirmation message to the customer
+                        });
+                    }
+
+                }, '#paypal-button' + @item.BookingId);
+                    </script>
+
+                </td>
+               
+            }
+            else
+            {
+
+                <td>PAID</td>
+             }
+    
+
+           
             @if (@item.LeftFeedback != true)
             {
                 <td><a asp-controller="Feedback" asp-action="Create" asp-route-id="@item.BookingId" class="btn btn-success" role="button">Add a Feedback</a></td>

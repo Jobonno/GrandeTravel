@@ -30,5 +30,7 @@ namespace GrandeTravel.Models
 
         public bool LeftFeedback { get; set; }
 
+        public bool PaymentReceived { get; set; }
+
     }
 }

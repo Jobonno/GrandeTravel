@@ -100,5 +100,15 @@ namespace GrandeTravel.Controllers
             }
             return View(vm);
         }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult PaymentRecieved(int id)
+        {
+            Booking booking = _bookingRepo.GetSingle(b => b.BookingId == id);
+            booking.PaymentReceived = true;
+            _bookingRepo.Update(booking);
+            return RedirectToAction("Index");
+        }
     }
 }
