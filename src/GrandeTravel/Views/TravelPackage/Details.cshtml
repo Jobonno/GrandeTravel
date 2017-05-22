@@ -2,71 +2,72 @@
 
 
 
+<div class="jumbotron">
 
-<h2 class="text-center"><strong>@Model.PackageName</strong></h2>
+
+<h1 class="text-center"><strong>@Model.PackageName</strong></h1>
 <h6 class="text-center"><em>posted by</em> @Model.TravelProviderName</h6>
 <h4 class="text-center"><i class="fa fa-map-marker localIcon" aria-hidden="true"></i> <strong>@Model.Location</strong></h4>
 <h2 class="text-center"><strong>$@Model.PackagePrice</strong></h2>
-<div class="container-fluid" id="detailsContent">
-    <div class="row">    
-        <div class="col-lg-4 col-md-5 col-sm-6">
-            <img id="PackageImg" class="img-responsive" src="~/Media/TravelPackage/@Model.PhotoLocation" />
-           
-
-            <div class="text-center" id="shareIcons">
-
-            </div>
-            <div class="text-center">
-                @if (Model.UserName == User.Identity.Name || User.IsInRole("Admin"))
-                {
-                    <form method="post" asp-controller="TravelPackage" asp-route-id="@Model.TravelPackageId" asp-action="Delete" asp-anti-forgery="true"><input class="btn btn-danger" type="submit" value="Delete" /></form>
-
-                            <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>
+    <div class="container-fluid" id="detailsContent">
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-1 col-md-5 col-sm-6">
+                <img id="PackageImg" class="img-responsive" src="~/Media/TravelPackage/@Model.PhotoLocation" />
 
 
-                }
-            </div>
+                <div class="text-center" id="shareIcons">
 
-        </div>
-        <div class="col-lg-8 col-md-7 col-sm-6">
-            <p>@Model.PackageDescription</p>
-            <a id="BookBtn" asp-controller="Booking" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-success" role="button">Book Now</a>
-        </div>
-        
-    </div>
-    <div class="row">
-        <div class="col-lg-4 col-md-5 col-sm-6">
-            <div id="ReviewList">
-                <h4>Reviews</h4>
-                <ul id="commentList">
-                    @foreach (var item in Model.Feedbacks)
+                </div>
+                <div class="text-center">
+                    @if (Model.UserName == User.Identity.Name || User.IsInRole("Admin"))
                     {
-                        <li>
-                            @for (int i = 1; i <= item.Rating; i++)
-                            {
-                                <span><i class="fa fa-star detailStars"></i></span>
-                            }
-                            <br />
-                            @item.Comment
-                            <ul>
-                                <li class="text-right"><i>Posted by </i>@item.UserName</li>
-                            </ul>
-                            <hr />
-                        </li>
+                        <form method="post" asp-controller="TravelPackage" asp-route-id="@Model.TravelPackageId" asp-action="Delete" asp-anti-forgery="true"><input class="btn btn-danger" type="submit" value="Delete" /></form>
+
+                        <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>
+
+
                     }
-                </ul>
+                </div>
+
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-6 text-center">
+                <h2 class="text-center"><strong>Package Description</strong></h2>
+                <p>@Model.PackageDescription</p>
+                <a id="BookBtn" asp-controller="Booking" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-success" role="button">Book Now</a>
             </div>
 
-
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-lg-offset-1 col-md-5 col-sm-6">
+                <div id="map"></div>
+               
+            </div>
+            <div class="col-lg-7 col-md-6 col-sm-6">
+                <div id="ReviewList">
+                    <h4>Reviews</h4>
+                    <ul id="commentList">
+                        @foreach (var item in Model.Feedbacks)
+                        {
+                            <li>
+                                @for (int i = 1; i <= item.Rating; i++)
+                                {
+                                    <span><i class="fa fa-star detailStars"></i></span>
+                                }
+                                <br />
+                                @item.Comment
+                                <ul>
+                                    <li class="text-right"><i>Posted by </i>@item.UserName</li>
+                                </ul>
+                                <hr />
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
 
         </div>
-        <div class="col-lg-8 col-md-7 col-sm-6">
-            <div id="map"></div>
-        </div>
-
-    </div>       
-                
-        
+    </div>                
+ </div>       
   
 <script>
 
