@@ -194,6 +194,8 @@ address{
 
 #aboutContent{
     position: relative;
+    margin-top:300px;
+    background-color:white;
 }
 
 #aboutImg{
@@ -222,7 +224,7 @@ address{
 /*Contact Page*/
 #contactContent{
     height: 500px;
-    
+    margin-top:300px;
 }
 
 .ContactUsBtn{
