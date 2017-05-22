@@ -365,12 +365,16 @@ address{
 
 
 /*Details Page*/
+
 #detailsHead {
    
     font-size:56px;
 }
 #detailsContainer{
-    margin-top:100px;
+    margin-top:300px;
+    background-color:white;
+     box-shadow: 0 3px 15px rgba(103,122,141,0.17);
+    
 }
 #detailImg{
     margin-top:50px;
