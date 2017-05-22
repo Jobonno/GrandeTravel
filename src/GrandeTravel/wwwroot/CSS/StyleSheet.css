@@ -110,6 +110,10 @@ padding: 0;
 }
 
 /*NavBar Css*/
+.navbar{
+    margin-bottom:0px;
+}
+
 
 #brandLogo{
     font-family: 'Titan One';
@@ -154,7 +158,7 @@ footer {
 	width:100%;
 	
 	position:relative;
-    margin-top:100px;
+    margin-top:0px;
 	
 }
 address{
@@ -266,7 +270,13 @@ address{
     
 }
 
+#packageHeader{
+     color: steelblue; font-size: 38px; font-family: 'Titan One'; padding-bottom: 10px;
+}
 
+.thumbnail{
+   box-shadow: 0 3px 15px rgba(103,122,141,0.17);
+}
 
 #bgIndex {
     width: 100%;
@@ -287,8 +297,9 @@ address{
 
 #IndexContent{
     margin-top:100px;
-    background-color:white;
+    background-color:rgb(243,243,243);
     padding-bottom: 200px;
+  
 }
 
 .localIcon{
@@ -355,6 +366,13 @@ address{
 
 /*Details Page*/
 
+
+#detailsContent{
+    margin-top:100px;
+}
+
+
+
 #SocialSharing{
     
     font-size:16px;
@@ -383,9 +401,7 @@ address{
     margin:auto;
 }
 
-#PackageImg{
-    margin-top: 30px;
-}
+
 #map {
    width: 100%;
    height: 400px;
@@ -439,7 +455,7 @@ input[type="radio"]{
 
 @media(max-width:768px) {
     .IndexThumb{
-    max-height : 215px;   
+    max-height : 155px;   
     width:auto;
     }
    
@@ -473,6 +489,9 @@ input[type="radio"]{
      .socialMedia{
         display:none;
     }
+      #IndexContent{
+       margin-top:0px;
+   }
      
 }
 
@@ -499,4 +518,5 @@ input[type="radio"]{
         width: 100%;
         margin:auto;
    }
+  
 }
