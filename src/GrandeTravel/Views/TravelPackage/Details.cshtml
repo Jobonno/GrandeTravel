@@ -1,47 +1,55 @@
 ﻿@model DisplaySingleTravelPackageViewModel
 
 
-
-<div class="jumbotron">
-
-
-<h1 class="text-center"><strong>@Model.PackageName</strong></h1>
-<h6 class="text-center"><em>posted by</em> @Model.TravelProviderName</h6>
-<h4 class="text-center"><i class="fa fa-map-marker localIcon" aria-hidden="true"></i> <strong>@Model.Location</strong></h4>
-<h2 class="text-center"><strong>$@Model.PackagePrice</strong></h2>
-    <div class="container-fluid" id="detailsContent">
-        <div class="row">
-            <div class="col-lg-4 col-lg-offset-1 col-md-5 col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <img id="PackageImg" class="img-responsive" src="~/Media/TravelPackage/@Model.PhotoLocation" />
-                    </div>
-                    <div class="panel-footer">
-                        <div class="text-center" id="shareIcons"></div>
-                    </div>
-                </div>
-                
+<div id="bodyBG">
+    
 
 
-               
-                <div class="text-center">
-                   
-                </div>
 
-            </div>
-            <div class="col-lg-7 col-md-7 col-sm-6 text-center">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+        <div class="container" id="detailsContainer">
+            <div id="detailsContent">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6 text-center" id="pckDesc">
+                        <h1 class="text-center" id="detailsHead"><i><strong>@Model.PackageName</strong></i></h1>
+                        <h6 class="text-center"><em>posted by</em> @Model.TravelProviderName</h6>
+                        <h4 class="text-center"><i class="fa fa-map-marker localIcon" aria-hidden="true"></i> <strong>@Model.Location</strong></h4>
+                        
                         <h2 class="text-center"><strong>Package Description</strong></h2>
                         <p>@Model.PackageDescription</p>
-                            <a id="BookBtn" asp-controller="Booking" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-success" role="button">Book Now</a>
+                        <span>from </span><span class="text-center" id="price"><strong>$@Model.PackagePrice</strong></span><br />
+                        <a id="BookBtn" asp-controller="Booking" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-success" role="button">Book Now</a>
                         @if (Model.UserName == User.Identity.Name || User.IsInRole("Admin"))
                         {
                             <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>
                             <form method="post" asp-controller="TravelPackage" asp-route-id="@Model.TravelPackageId" asp-action="Delete" asp-anti-forgery="true"><input class="btn btn-danger" type="submit" value="Delete" /></form>
-                                                      
+
                         }
-                        <div id="ReviewList">
+
+                    </div>
+
+                    <div class="col-lg-7 col-lg-offset-1  col-md-6 col-sm-6">
+                        <div class="panel panel-default" id="detailImg">
+                            <div class="panel-body text-center" id="panelImage">
+                                <img id="PackageImg" class="img-responsive" src="~/Media/TravelPackage/@Model.PhotoLocation" />
+
+                            </div>
+                            <div class="panel-body">
+                                <div class="text-center" id="shareIcons"></div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="text-center">
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4  col-md-6  col-sm-6">
+                        <div class="text-center" id="ReviewList">
                             <h4>Reviews</h4>
                             <ul id="commentList">
                                 @foreach (var item in Model.Feedbacks)
@@ -61,46 +69,40 @@
                                 }
                             </ul>
                         </div>
+
+
+
                     </div>
-                </div>
-                
-            </div>
+                    <div class="col-lg-6 col-lg-offset-2 col-md-6 col-sm-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div id="map"></div>
+                            </div>
+                        </div>
 
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-lg-offset-1 col-md-5 col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div id="map"></div>
                     </div>
+
                 </div>
-                
-               
-            </div>
-            <div class="col-lg-7 col-md-6 col-sm-6">
-                
             </div>
 
-        </div>
-    </div>                
- </div>       
-  
-<script>
+    </div>
+</div>
+    <script>
 
-      function initMap() {
-          var location = {lat: @Model.latitude, lng: @Model.longitude};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 10,
-          center: location
-        });
-        var marker = new google.maps.Marker({
-            position: location,
-          map: map
-        });
-      }
-</script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj-R9D3cBqhiuL4KiJIq8vcQ_nCHouQJQ&callback=initMap&region=AU">
-</script>
+        function initMap() {
+            var location = {lat: @Model.latitude, lng: @Model.longitude};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: location
+            });
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj-R9D3cBqhiuL4KiJIq8vcQ_nCHouQJQ&callback=initMap&region=AU">
+    </script>
 
 

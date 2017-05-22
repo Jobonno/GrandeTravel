@@ -358,21 +358,30 @@ address{
 
 .thumbnail .price:after { border-left: 5px solid #1c5d40; }
 
- 
+
 
 
 
 
 
 /*Details Page*/
-
-
-#detailsContent{
+#detailsHead {
+   
+    font-size:56px;
+}
+#detailsContainer{
     margin-top:100px;
 }
+#detailImg{
+    margin-top:50px;
+}
 
-
-
+#price{
+    font-size:30px;
+}
+#panelImage{
+    padding:0px;
+}
 #SocialSharing{
     
     font-size:16px;
@@ -390,7 +399,8 @@ address{
 }
 #BookBtn{
     font-size:20px;
-    
+    margin-top:20px;
+    margin-bottom:20px;
 }
 
 #commentList li{
