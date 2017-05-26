@@ -166,18 +166,21 @@ namespace GrandeTravel.Controllers
                 if (PhotoLocation != null)
                 {
                     string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media\\TravelPackage");
-                    uploadPath = Path.Combine(uploadPath, User.Identity.Name);
-                    Directory.CreateDirectory(Path.Combine(uploadPath, tp.PackageName));
-                    string filename = Path.GetFileName(PhotoLocation.FileName);
+                    //uploadPath = Path.Combine(uploadPath, User.Identity.Name);
+                    //Directory.CreateDirectory(Path.Combine(uploadPath, tp.PackageName));
+                    string filename = User.Identity.Name + "-" + tp.PackageName + "-1" + Path.GetExtension(PhotoLocation.FileName);
+                    uploadPath = Path.Combine(uploadPath, filename);
+                    
 
-                    using (FileStream fs = new FileStream(Path.Combine(uploadPath, tp.PackageName, filename), FileMode.Create))
+                    using (FileStream fs = new FileStream(uploadPath, FileMode.Create))
                     {
                         PhotoLocation.CopyTo(fs);
                     }
-                    string SaveFilename = Path.Combine(User.Identity.Name, tp.PackageName, filename);                  
+                    string SaveFilename = Path.Combine("Media\\TravelPackage", filename);
+                    tp.PhotoLocation = SaveFilename;
+
 
                     
-                    tp.PhotoLocation = SaveFilename;
                 }
 
                 //call the service to add the package
@@ -290,16 +293,17 @@ namespace GrandeTravel.Controllers
                 if (PhotoLocation != null)
                 {
                     string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media\\TravelPackage");
-                    uploadPath = Path.Combine(uploadPath, User.Identity.Name);
-                    uploadPath = Path.Combine(uploadPath, tp.PackageName);
-                    Directory.CreateDirectory(uploadPath);
-                    string filename = Path.GetFileName(PhotoLocation.FileName);
+                    //uploadPath = Path.Combine(uploadPath, User.Identity.Name);
+                    //Directory.CreateDirectory(Path.Combine(uploadPath, tp.PackageName));
+                    string filename = User.Identity.Name + "-" + tp.PackageName + "-1" + Path.GetExtension(PhotoLocation.FileName);
+                    uploadPath = Path.Combine(uploadPath, filename);
 
-                    using (FileStream fs = new FileStream(Path.Combine(uploadPath, filename), FileMode.Create))
+
+                    using (FileStream fs = new FileStream(uploadPath, FileMode.Create))
                     {
                         PhotoLocation.CopyTo(fs);
                     }
-                    string SaveFilename = Path.Combine(User.Identity.Name, tp.PackageName, filename);
+                    string SaveFilename = Path.Combine("Media\\TravelPackage", filename);
                     tp.PhotoLocation = SaveFilename;
                 }
 
