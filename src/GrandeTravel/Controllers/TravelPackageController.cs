@@ -258,7 +258,8 @@ namespace GrandeTravel.Controllers
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
             if (ModelState.IsValid && tp != null)
             {
-                IEnumerable<TravelPackage> list = _TravelPackageRepo.Query(l => l.PackageName != tp.PackageName && !l.Discontinued);
+                var userId = _userManager.GetUserId(User);
+                IEnumerable<TravelPackage> list = _TravelPackageRepo.Query(l => l.MyUserId == userId &&  l.PackageName != tp.PackageName && !l.Discontinued);
                 if (list != null)
                 {
                     if (list.Any(n => n.PackageName == vm.PackageName))
@@ -291,6 +292,7 @@ namespace GrandeTravel.Controllers
                     string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media\\TravelPackage");
                     uploadPath = Path.Combine(uploadPath, User.Identity.Name);
                     uploadPath = Path.Combine(uploadPath, tp.PackageName);
+                    Directory.CreateDirectory(uploadPath);
                     string filename = Path.GetFileName(PhotoLocation.FileName);
 
                     using (FileStream fs = new FileStream(Path.Combine(uploadPath, filename), FileMode.Create))
@@ -333,11 +335,12 @@ namespace GrandeTravel.Controllers
             List<string> names = new List<string>();
             List<string> NoBookings = new List<string>();
             List<string> values = new List<string>();
+           
             foreach (var item in tpList)
             {
                 names.Add("\"" + item.PackageName +"\"");
-                values.Add(_BookingRepo.Query(t => t.TravelPackageName == item.PackageName).Sum(r => r.TotalCost).ToString());
-                NoBookings.Add(_BookingRepo.Query(b => b.TravelPackageName == item.PackageName).Count().ToString());
+                values.Add(_BookingRepo.Query(t => t.TravelPackageId == item.TravelPackageId).Sum(r => r.TotalCost).ToString());                
+                NoBookings.Add(_BookingRepo.Query(b => b.TravelPackageId == item.TravelPackageId).Count().ToString());
 
             }
 
