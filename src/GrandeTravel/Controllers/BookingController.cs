@@ -130,7 +130,7 @@ namespace GrandeTravel.Controllers
 
         //[HttpGet]
         //[Authorize]
-        //public IActionResult BraintreePayment()
+        //public IActionResult BraintreePayment(int id)
         //{
         //    var gateway = new BraintreeGateway
         //    {
@@ -140,7 +140,8 @@ namespace GrandeTravel.Controllers
         //        PrivateKey = "5dcc19cb0bcdbb3c3f24421a9f07961f"
         //    };
         //    var clientToken = gateway.ClientToken.generate();
-            
+        //    return View();
+
         //}
 
         //[HttpPost]
