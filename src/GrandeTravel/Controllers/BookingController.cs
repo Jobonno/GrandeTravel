@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using MimeKit;
 using MailKit.Net.Smtp;
+using Braintree;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -123,5 +125,29 @@ namespace GrandeTravel.Controllers
             _bookingRepo.Update(booking);
             return RedirectToAction("Index");
         }
+
+
+
+        //[HttpGet]
+        //[Authorize]
+        //public IActionResult BraintreePayment()
+        //{
+        //    var gateway = new BraintreeGateway
+        //    {
+        //        Environment = Braintree.Environment.SANDBOX,
+        //        MerchantId = "t4xzfjwmtbd7dwvh",
+        //        PublicKey = "s4ynn5bwvf4sc588",
+        //        PrivateKey = "5dcc19cb0bcdbb3c3f24421a9f07961f"
+        //    };
+        //    var clientToken = gateway.ClientToken.generate();
+            
+        //}
+
+        //[HttpPost]
+        //public ActionResult CreatePurchase(FormCollection collection)
+        //{
+        //    string nonceFromTheClient = collection["payment_method_nonce"];
+        //    // Use payment method nonce here
+        //}
     }
 }
