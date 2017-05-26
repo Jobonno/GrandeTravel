@@ -27,7 +27,7 @@ namespace GrandeTravel.Controllers.API
         {
             try
             {
-                var list = _travelPackageRepo.GetAll();
+                var list = _travelPackageRepo.Query(p => !p.Discontinued);
                 return Json(list);
             }
             catch (Exception ex)
@@ -44,11 +44,29 @@ namespace GrandeTravel.Controllers.API
         {
             try
             {
-                var list = _travelPackageRepo.Query(c => c.Location.Contains(location));
+                var list = _travelPackageRepo.Query(c => c.Location.Contains(location) && !c.Discontinued);
                 return Json(list);
             }
             catch (Exception ex)
             {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = ex.Message });
+            }
+
+        }
+
+        [HttpGet("api/getLocations")]
+        public JsonResult GetLocations()
+        {
+            try
+            {
+                var list = _travelPackageRepo.Query(p => !p.Discontinued).Select(p => p.Location).Distinct();
+               
+                return Json(list);
+            }
+            catch (Exception ex)
+            {
+
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(new { Message = ex.Message });
             }

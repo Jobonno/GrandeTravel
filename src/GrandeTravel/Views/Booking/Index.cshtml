@@ -41,7 +41,8 @@
                     },
 
             onAuthorize: function(data, actions) {
-                        return actions.payment.execute().then(function(payment) {
+                return actions.payment.execute().then(function(payment) {
+                    
                             window.location.href =  "@Url.Action("PaymentRecieved", "Booking", new { id = item.BookingId })";
                            
                             // You can now show a confirmation message to the customer
