@@ -39,6 +39,22 @@ namespace GrandeTravel.Controllers.API
             
         }
 
+        [HttpPost("api/PackageByDesc")]
+        public JsonResult SearchPackageDesc(string description)
+        {
+            try
+            {
+                var list = _travelPackageRepo.Query(c => c.PackageDescription.Contains(description) && !c.Discontinued);
+                return Json(list);
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = ex.Message });
+            }
+
+        }
+
         [HttpPost("api/PackageByLocation")]
         public JsonResult SearchPackage(string location)
         {
