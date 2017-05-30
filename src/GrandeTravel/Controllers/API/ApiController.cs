@@ -42,6 +42,7 @@ namespace GrandeTravel.Controllers.API
         [HttpPost("api/PackageByDesc")]
         public JsonResult SearchPackageDesc(string description)
         {
+
             try
             {
                 var list = _travelPackageRepo.Query(c => c.PackageDescription.Contains(description) && !c.Discontinued);
@@ -58,16 +59,33 @@ namespace GrandeTravel.Controllers.API
         [HttpPost("api/PackageByLocation")]
         public JsonResult SearchPackage(string location)
         {
-            try
+            List<TravelPackage> list = new List<TravelPackage>();
+            if (!String.IsNullOrEmpty(location))
             {
-                var list = _travelPackageRepo.Query(c => c.Location.Contains(location) && !c.Discontinued);
-                return Json(list);
+                string[] locations = location.Split(',');
+                try
+                {
+                   
+                    foreach (var item in locations)
+                    {
+                        var tempList = _travelPackageRepo.Query(c => c.Location.Contains(item) && !c.Discontinued);
+                        foreach (var package in tempList)
+                        {
+                            list.Add(package);
+                        }
+
+
+                    }
+
+                    return Json(list);
+                }
+                catch (Exception ex)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { Message = ex.Message });
+                }
             }
-            catch (Exception ex)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(new { Message = ex.Message });
-            }
+            return Json(list);
 
         }
 
