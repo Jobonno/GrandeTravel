@@ -42,10 +42,20 @@ namespace GrandeTravel.Controllers.API
         [HttpPost("api/PackageByDesc")]
         public JsonResult SearchPackageDesc(string description)
         {
-
+            List<TravelPackage> list = new List<TravelPackage>();
+            string[] searchDescription = description.Split(' ');
             try
             {
-                var list = _travelPackageRepo.Query(c => c.PackageDescription.Contains(description) && !c.Discontinued);
+                foreach (var item in searchDescription)
+                {
+                    var tempList = _travelPackageRepo.Query(c => c.PackageDescription.Contains(item) && !c.Discontinued);
+                    foreach (var package in tempList)
+                    {
+                        list.Add(package);
+                    }
+                   
+                }
+                list = list.Distinct().ToList();
                 return Json(list);
             }
             catch (Exception ex)
