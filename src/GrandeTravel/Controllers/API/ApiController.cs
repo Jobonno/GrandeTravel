@@ -66,6 +66,83 @@ namespace GrandeTravel.Controllers.API
 
         }
 
+        [HttpPost("api/SearchCombine")]
+        public JsonResult SearchCombine(string description, string location)
+        {
+            
+            List<TravelPackage> list = new List<TravelPackage>();
+            string[] searchDescription;
+            string[] locations;
+            try
+            {
+                if (!String.IsNullOrEmpty(location) && !String.IsNullOrEmpty(description))
+                {
+                   
+                    locations = location.Split(',');
+                    searchDescription = description.Split(' ');
+                    foreach (var item in locations)
+                    {
+                        var tempList = _travelPackageRepo.Query(c => c.Location.Contains(item) && !c.Discontinued);
+                        foreach (var package in tempList)
+                        {
+                            foreach (var search in searchDescription)
+                            {
+                                if (package.PackageDescription.Contains(search))
+                                {
+                                    list.Add(package);
+                                }
+                            }
+
+                        }
+
+
+
+
+                    }
+                    //list = list.Distinct().ToList();
+                    //return Json(list);
+                }else if (!String.IsNullOrEmpty(description))
+                {
+                   
+                    searchDescription = description.Split(' ');
+                    foreach (var item in searchDescription)
+                    {
+                        var tempList = _travelPackageRepo.Query(c => c.PackageDescription.Contains(item) && !c.Discontinued);
+                        foreach (var package in tempList)
+                        {
+                            list.Add(package);
+                        }
+
+                    }
+                    list = list.Distinct().ToList();
+                    //return Json(list);
+
+                }else if (!String.IsNullOrEmpty(location))
+                {
+                    locations = location.Split(',');
+                    foreach (var item in locations)
+                    {
+                        var tempList = _travelPackageRepo.Query(c => c.Location.Contains(item) && !c.Discontinued);
+                        foreach (var package in tempList)
+                        {
+                            list.Add(package);
+                        }
+
+
+                    }
+
+                    
+                }
+                return Json(list);
+            }                         
+             catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = ex.Message });
+            }
+           
+        }
+
         [HttpPost("api/PackageByLocation")]
         public JsonResult SearchPackage(string location)
         {
