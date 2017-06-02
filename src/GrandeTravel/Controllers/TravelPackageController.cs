@@ -26,9 +26,12 @@ namespace GrandeTravel.Controllers
         private IHostingEnvironment _HostingEnviro;
         private IRepository<Feedback> _feedbackRepo;
         private IRepository<TravelProviderProfile> _travelProfileRepo;
+        private IRepository<Photo> _photoRepo;
 
-        public TravelPackageController(IRepository<TravelPackage> TravelPackagerepo, IRepository<Booking> bookingRepo, IHostingEnvironment HostingEnviro, UserManager<MyUser> userManager, IRepository<Feedback> feedbackRepo, IRepository<TravelProviderProfile> travelProfileRepo)
+        public TravelPackageController(IRepository<TravelPackage> TravelPackagerepo, IRepository<Booking> bookingRepo, IHostingEnvironment HostingEnviro, UserManager<MyUser> userManager, 
+            IRepository<Feedback> feedbackRepo, IRepository<TravelProviderProfile> travelProfileRepo, IRepository<Photo> photoRepo)
         {
+            _photoRepo = photoRepo;
             _TravelPackageRepo = TravelPackagerepo;
             _BookingRepo = bookingRepo;
             _HostingEnviro = HostingEnviro;
@@ -178,13 +181,12 @@ namespace GrandeTravel.Controllers
                     }
                     string SaveFilename = Path.Combine("Media\\TravelPackage", filename);
                     tp.PhotoLocation = SaveFilename;
-
-
-                    
+                   
                 }
+                
 
-                //call the service to add the package
-                _TravelPackageRepo.Create(tp);
+                    //call the service to add the package
+                    _TravelPackageRepo.Create(tp);
                 return RedirectToAction("Index", "TravelPackage");
             }
 

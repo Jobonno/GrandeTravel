@@ -21,6 +21,7 @@
                         @if (Model.UserName == User.Identity.Name || User.IsInRole("Admin"))
                         {
                             <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>
+                            <a asp-controller="Photo" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Add Photos</a>
                             <form method="post" asp-controller="TravelPackage" asp-route-id="@Model.TravelPackageId" asp-action="Delete" asp-anti-forgery="true"><input class="btn btn-danger" type="submit" value="Delete" /></form>
 
                         }
