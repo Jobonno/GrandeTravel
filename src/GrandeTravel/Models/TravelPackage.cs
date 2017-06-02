@@ -34,5 +34,7 @@ namespace GrandeTravel.Models
         public IEnumerable<Booking> Bookings { get; set; }
 
         public IEnumerable<Feedback> Feedbacks { get; set; }
+
+        public IEnumerable<Photo> Photos { get; set; }
     }
 }

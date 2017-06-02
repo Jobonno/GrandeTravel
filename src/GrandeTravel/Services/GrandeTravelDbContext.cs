@@ -15,7 +15,7 @@ namespace GrandeTravel.Services
         public DbSet<Feedback> TblFeedback { get; set; }
         public DbSet<TravelProviderProfile> TblTravelProviderProfile { get; set; }
         public DbSet<CustomerProfile> TblCustomerProfile { get; set; }
-
+        public DbSet<Photo> TblPhoto { get; set; }
 
 
         //connection string
