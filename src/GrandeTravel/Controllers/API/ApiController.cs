@@ -94,10 +94,6 @@ namespace GrandeTravel.Controllers.API
                             }
 
                         }
-
-
-
-
                     }
                     //list = list.Distinct().ToList();
                     //return Json(list);
@@ -143,38 +139,38 @@ namespace GrandeTravel.Controllers.API
            
         }
 
-        [HttpPost("api/PackageByLocation")]
-        public JsonResult SearchPackage(string location)
-        {
-            List<TravelPackage> list = new List<TravelPackage>();
-            if (!String.IsNullOrEmpty(location))
-            {
-                string[] locations = location.Split(',');
-                try
-                {
+        //[HttpPost("api/PackageByLocation")]
+        //public JsonResult SearchPackage(string location)
+        //{
+        //    List<TravelPackage> list = new List<TravelPackage>();
+        //    if (!String.IsNullOrEmpty(location))
+        //    {
+        //        string[] locations = location.Split(',');
+        //        try
+        //        {
                    
-                    foreach (var item in locations)
-                    {
-                        var tempList = _travelPackageRepo.Query(c => c.Location.Contains(item) && !c.Discontinued);
-                        foreach (var package in tempList)
-                        {
-                            list.Add(package);
-                        }
+        //            foreach (var item in locations)
+        //            {
+        //                var tempList = _travelPackageRepo.Query(c => c.Location.Contains(item) && !c.Discontinued);
+        //                foreach (var package in tempList)
+        //                {
+        //                    list.Add(package);
+        //                }
 
 
-                    }
+        //            }
 
-                    return Json(list);
-                }
-                catch (Exception ex)
-                {
-                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return Json(new { Message = ex.Message });
-                }
-            }
-            return Json(list);
+        //            return Json(list);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        //            return Json(new { Message = ex.Message });
+        //        }
+        //    }
+        //    return Json(list);
 
-        }
+        //}
 
         [HttpGet("api/getLocations")]
         public JsonResult GetLocations()
