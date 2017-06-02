@@ -196,7 +196,7 @@ namespace GrandeTravel.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-
+            IEnumerable<Photo> photos = _photoRepo.Query(p => p.TravelPackageId == id);
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
             IEnumerable<Booking> list = _BookingRepo.Query(b => b.TravelPackageId == id);
             IEnumerable<Feedback> feedbacks = _feedbackRepo.Query(f => f.TravelPackageId == id);
@@ -227,7 +227,8 @@ namespace GrandeTravel.Controllers
                 TravelProviderName = tp.ProviderName,
                 UserName = TpName,
                 latitude = lat,
-                longitude = lng
+                longitude = lng,
+                GalleryPhotos = photos
 
 
             };

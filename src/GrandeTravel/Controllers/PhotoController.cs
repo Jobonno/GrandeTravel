@@ -35,7 +35,9 @@ namespace GrandeTravel.Controllers
            
         }
         // GET: /<controller>/
+     
         [HttpGet]
+        [Authorize(Roles = "TravelProvider")]
         public IActionResult Create(int id)
         {
             CreatePhotoViewModel vm = new CreatePhotoViewModel
@@ -46,6 +48,7 @@ namespace GrandeTravel.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "TravelProvider")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(CreatePhotoViewModel vm, IList<IFormFile> PhotoLocation)
         {
@@ -53,7 +56,8 @@ namespace GrandeTravel.Controllers
             {
                 if(PhotoLocation != null)
                 {
-                    int count = 2;
+                    int count = _photoRepo.Query(p => p.TravelPackageId == vm.TravelPackageId).Count() + 2; 
+                                      
                     TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == vm.TravelPackageId);
                     foreach (var item in PhotoLocation)
                     {

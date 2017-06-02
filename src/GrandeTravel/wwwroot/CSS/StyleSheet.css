@@ -382,6 +382,14 @@ address{
     margin-top:50px;
 }
 
+.PackageImg{
+    min-height:100%;
+    display: block;
+    margin: auto auto;
+}
+.carouselImg{
+    height: 366px;
+}
 #price{
     font-size:30px;
 }
