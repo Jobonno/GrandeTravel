@@ -57,7 +57,11 @@ namespace GrandeTravel.Controllers
                 if(PhotoLocation != null)
                 {
                     int count = _photoRepo.Query(p => p.TravelPackageId == vm.TravelPackageId).Count() + 2; 
-                                      
+                    if((count -2) + PhotoLocation.Count() > 4)
+                    {
+                        ModelState.AddModelError("PhotoLocation", "Cannot have more than 5 Photos Per Package!");
+                        return View(vm);
+                    }                  
                     TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == vm.TravelPackageId);
                     foreach (var item in PhotoLocation)
                     {

@@ -318,8 +318,7 @@ namespace GrandeTravel.Controllers
             return View(vm);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
         [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Delete(int id)
         {

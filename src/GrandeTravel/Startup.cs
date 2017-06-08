@@ -62,6 +62,8 @@ namespace GrandeTravel
             
 
             app.UseMvcWithDefaultRoute();
+
+            GTDbSeed.Seed(app.ApplicationServices).Wait();
         }
     }
 }

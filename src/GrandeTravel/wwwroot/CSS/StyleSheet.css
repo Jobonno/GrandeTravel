@@ -373,9 +373,9 @@ address{
     font-size:56px;
 }
 #detailsContainer{
-    margin-top:300px;
+    margin-top:250px;
     background-color:white;
-     box-shadow: 0 3px 15px rgba(103,122,141,0.17);
+    box-shadow: 0 3px 15px rgba(103,122,141,0.17);
     
 }
 #detailImg{
@@ -388,7 +388,8 @@ address{
     margin: auto auto;
 }
 .carouselImg{
-    height: 366px;
+    height: 400px;
+    box-shadow: 0 3px 15px rgba(103,122,141,0.17);
 }
 #price{
     font-size:30px;
@@ -424,6 +425,7 @@ address{
 #ReviewList{
     width:200px;
     margin:auto;
+    
 }
 
 
@@ -543,5 +545,8 @@ input[type="radio"]{
         width: 100%;
         margin:auto;
    }
+   .carouselImg{
+    height: 200px;
+}
   
 }

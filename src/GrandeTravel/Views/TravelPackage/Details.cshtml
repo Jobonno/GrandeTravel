@@ -9,7 +9,7 @@
         <div class="container-fluid" id="detailsContainer">
             <div id="detailsContent">
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-6 text-center" id="pckDesc">
+                    <div class="col-lg-4 col-lg-offset-1 col-md-6 col-sm-6 text-center" id="pckDesc">
                         <h1 class="text-center" id="detailsHead"><i><strong>@Model.PackageName</strong></i></h1>
                         <h6 class="text-center"><em>posted by</em> @Model.TravelProviderName</h6>
                         <h4 class="text-center"><i class="fa fa-map-marker localIcon" aria-hidden="true"></i> <strong>@Model.Location</strong></h4>
@@ -17,18 +17,18 @@
                         <h2 class="text-center"><strong>Package Description</strong></h2>
                         <p>@Model.PackageDescription</p>
                         <span>from </span><span class="text-center" id="price"><strong>$@Model.PackagePrice</strong></span><br />
-                        <a id="BookBtn" asp-controller="Booking" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-success" role="button">Book Now</a>
+                        <a id="BookBtn" asp-controller="Booking" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-success" role="button">Book Now</a><br />
                         @if (Model.UserName == User.Identity.Name || User.IsInRole("Admin"))
                         {
                             <a asp-controller="TravelPackage" asp-action="Update" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Update</a>
                             <a asp-controller="Photo" asp-action="Create" asp-route-id="@Model.TravelPackageId" class="btn btn-warning" role="button">Add Photos</a>
-                            <form method="post" asp-controller="TravelPackage" asp-route-id="@Model.TravelPackageId" asp-action="Delete" asp-anti-forgery="true"><input class="btn btn-danger" type="submit" value="Delete" /></form>
+                            <a asp-controller="TravelPackage" asp-action="Delete" asp-route-id="@Model.TravelPackageId" class="btn btn-danger" role="button">Discontinue</a>
 
                         }
 
                     </div>
 
-                    <div class="col-lg-7 col-lg-offset-1  col-md-6 col-sm-6">
+                    <div class="col-lg-5 col-lg-offset-1  col-md-6 col-sm-6">
                         <div class="panel panel-default" id="detailImg">
                             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                 <!-- Indicators -->
@@ -44,7 +44,7 @@
                                 <!-- Wrapper for slides -->
                                 <div class="carousel-inner" role="listbox">
                                     <div class="item active carouselImg">
-                                        <img src="~/@Model.PhotoLocation">                                       
+                                        <img class="PackageImg" src="~/@Model.PhotoLocation">                                       
                                     </div>
                                     @foreach (var item in Model.GalleryPhotos)
                                     {
@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4  col-md-6  col-sm-6">
+                    <div class="col-lg-4 col-lg-offset-1 col-md-6  col-sm-6">
                         <div class="text-center" id="ReviewList">
                             <h4>Reviews</h4>
                             <ul id="commentList">
@@ -107,7 +107,7 @@
 
 
                     </div>
-                    <div class="col-lg-6 col-lg-offset-2 col-md-6 col-sm-6">
+                    <div class="col-lg-5 col-lg-offset-1  col-md-6 col-sm-6">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div id="map"></div>
