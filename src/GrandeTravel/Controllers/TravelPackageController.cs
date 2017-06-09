@@ -144,8 +144,11 @@ namespace GrandeTravel.Controllers
                     ModelState.AddModelError("Location", "Please Choose a Valid location");
                     return View(vm);
                 }
+                var locationElement = result.Element("geometry").Element("location");
+                var lat = locationElement.Element("lat").Value;
+                var lng = locationElement.Element("lng").Value;
 
-                    TravelProviderProfile tpp = _travelProfileRepo.GetSingle(t => t.UserId == id);
+                TravelProviderProfile tpp = _travelProfileRepo.GetSingle(t => t.UserId == id);
                 string providerName;
                 if (tpp == null)
                 {
@@ -163,7 +166,9 @@ namespace GrandeTravel.Controllers
                     PackageDescription = vm.PackageDescription,
                     PackagePrice = vm.PackagePrice,
                     ProviderName = providerName,
-                    MyUserId = id
+                    MyUserId = id,
+                    Longitude = lng,
+                    Latitude = lat
 
                 };
                 if (PhotoLocation != null)
@@ -202,17 +207,7 @@ namespace GrandeTravel.Controllers
             IEnumerable<Feedback> feedbacks = _feedbackRepo.Query(f => f.TravelPackageId == id);
             MyUser travelProviderName = await _userManager.FindByIdAsync(tp.MyUserId);
             string TpName = travelProviderName.UserName;
-            //Google Maps 
-            var address = tp.Location + " Australia";
-            var requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(address));
-
-            var request = WebRequest.Create(requestUri);
-            var response =await  request.GetResponseAsync();
-            var xdoc = XDocument.Load(response.GetResponseStream());
-            var result = xdoc.Element("GeocodeResponse").Element("result");
-            var locationElement = result.Element("geometry").Element("location");
-            var lat = locationElement.Element("lat").Value;
-            var lng = locationElement.Element("lng").Value;
+        
 
             DisplaySingleTravelPackageViewModel vm = new DisplaySingleTravelPackageViewModel
             {
@@ -226,8 +221,8 @@ namespace GrandeTravel.Controllers
                 Feedbacks = feedbacks,
                 TravelProviderName = tp.ProviderName,
                 UserName = TpName,
-                latitude = lat,
-                longitude = lng,
+                latitude = tp.Latitude,
+                longitude = tp.Longitude,
                 GalleryPhotos = photos
 
 
@@ -287,12 +282,16 @@ namespace GrandeTravel.Controllers
                     ModelState.AddModelError("Location", "Please Choose a Valid location");
                     return View(vm);
                 }
-
+                var locationElement = result.Element("geometry").Element("location");
+                var lat = locationElement.Element("lat").Value;
+                var lng = locationElement.Element("lng").Value;
 
                 tp.PackageName = vm.PackageName;
                 tp.Location = vm.Location;
                 tp.PackageDescription = vm.PackageDescription;
                 tp.PackagePrice = vm.PackagePrice;
+                tp.Latitude = lat;
+                tp.Longitude = lng;
                 if (PhotoLocation != null)
                 {
                     string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media\\TravelPackage");
