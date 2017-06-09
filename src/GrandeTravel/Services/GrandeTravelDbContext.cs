@@ -21,7 +21,7 @@ namespace GrandeTravel.Services
         //connection string
         protected override void OnConfiguring(DbContextOptionsBuilder option)
         {
-            option.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB; Database=GrandeTravel; Trusted_Connection=True");
+            option.UseSqlServer(@"Server=tcp:grandetravel2017dbserver.database.windows.net,1433;Initial Catalog=JoeGrandeTravel2017_db;Persist Security Info=False;User ID=jobonno;Password=Monteleone82;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
     }
 }

@@ -59,9 +59,15 @@ namespace GrandeTravel
 
             app.UseStaticFiles();
             app.UseIdentity();
-            
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(rb =>
+            {
+                rb.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Home", action = "Index" });
+            });
+            //app.UseMvcWithDefaultRoute();
 
             GTDbSeed.Seed(app.ApplicationServices).Wait();
         }
