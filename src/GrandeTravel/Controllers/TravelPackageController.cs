@@ -336,7 +336,7 @@ namespace GrandeTravel.Controllers
         [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Statistics()
         {
-            IEnumerable<TravelPackage> tpList = _TravelPackageRepo.Query(i => i.MyUserId == _userManager.GetUserId(User)).ToList();
+            IEnumerable<TravelPackage> tpList = _TravelPackageRepo.Query(i => i.MyUserId == _userManager.GetUserId(User) && !i.Discontinued).ToList();
             List<string> names = new List<string>();
             List<string> NoBookings = new List<string>();
             List<string> values = new List<string>();

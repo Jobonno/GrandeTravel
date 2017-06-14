@@ -223,9 +223,12 @@ address{
 
 /*Contact Page*/
 #contactContent{
-    height: 500px;
+    position: relative;
     margin-top:300px;
+    background-color:white;
 }
+
+
 
 .ContactUsBtn{
     font-size:36px;
