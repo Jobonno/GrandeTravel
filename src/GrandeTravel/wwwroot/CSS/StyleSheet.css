@@ -272,6 +272,10 @@ address{
     
 }
 
+.packageDsp{
+    min-height: 460px;
+}
+
 #packageHeader{
      color: steelblue; font-size: 38px; font-family: 'Titan One'; padding-bottom: 10px;
 }
@@ -465,7 +469,7 @@ input[type="radio"]{
 }
 
 
-@media(max-width:1200px){
+@media(max-width:1440px){
     .IndexThumb{
     min-height: 164px;
     max-height: 284px;   
@@ -482,8 +486,8 @@ input[type="radio"]{
 
 @media(max-width:768px) {
     .IndexThumb{
-    max-height : 155px;   
-    width:auto;
+    max-height : 305px;   
+    width:100%;
     }
    
 }

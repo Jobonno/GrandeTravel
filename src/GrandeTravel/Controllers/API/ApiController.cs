@@ -28,6 +28,28 @@ namespace GrandeTravel.Controllers.API
             try
             {
                 var list = _travelPackageRepo.Query(p => !p.Discontinued);
+                AllPackages packages = new AllPackages
+                {
+                    packages = list
+                };
+                return Json(packages);
+                    }
+            catch (Exception ex)
+            {
+
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = ex.Message });
+            }
+            
+        }
+
+        [HttpGet("api/getAllangular")]
+        public JsonResult GetAllangular()
+        {
+            try
+            {
+                var list = _travelPackageRepo.Query(p => !p.Discontinued);
+              
                 return Json(list);
             }
             catch (Exception ex)
@@ -36,7 +58,7 @@ namespace GrandeTravel.Controllers.API
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(new { Message = ex.Message });
             }
-            
+
         }
 
         [HttpPost("api/PackageByDesc")]
