@@ -15,13 +15,14 @@ namespace GrandeTravel.Services
         public DbSet<Feedback> TblFeedback { get; set; }
         public DbSet<TravelProviderProfile> TblTravelProviderProfile { get; set; }
         public DbSet<CustomerProfile> TblCustomerProfile { get; set; }
-
+        public DbSet<Photo> TblPhoto { get; set; }
 
 
         //connection string
         protected override void OnConfiguring(DbContextOptionsBuilder option)
         {
-            option.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB; Database=GrandeTravel; Trusted_Connection=True");
+            option.UseSqlServer(@"Server=tcp:grandetravel2017dbserver.database.windows.net,1433;Initial Catalog=JoeGrandeTravel2017_db;Persist Security Info=False;User ID=jobonno;Password=Monteleone82;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            //Server = (localdb)\MSSQLLocalDB; Database = GrandeTravel; Trusted_Connection = True
         }
     }
 }

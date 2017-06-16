@@ -26,9 +26,12 @@ namespace GrandeTravel.Controllers
         private IHostingEnvironment _HostingEnviro;
         private IRepository<Feedback> _feedbackRepo;
         private IRepository<TravelProviderProfile> _travelProfileRepo;
+        private IRepository<Photo> _photoRepo;
 
-        public TravelPackageController(IRepository<TravelPackage> TravelPackagerepo, IRepository<Booking> bookingRepo, IHostingEnvironment HostingEnviro, UserManager<MyUser> userManager, IRepository<Feedback> feedbackRepo, IRepository<TravelProviderProfile> travelProfileRepo)
+        public TravelPackageController(IRepository<TravelPackage> TravelPackagerepo, IRepository<Booking> bookingRepo, IHostingEnvironment HostingEnviro, UserManager<MyUser> userManager, 
+            IRepository<Feedback> feedbackRepo, IRepository<TravelProviderProfile> travelProfileRepo, IRepository<Photo> photoRepo)
         {
+            _photoRepo = photoRepo;
             _TravelPackageRepo = TravelPackagerepo;
             _BookingRepo = bookingRepo;
             _HostingEnviro = HostingEnviro;
@@ -141,8 +144,11 @@ namespace GrandeTravel.Controllers
                     ModelState.AddModelError("Location", "Please Choose a Valid location");
                     return View(vm);
                 }
+                var locationElement = result.Element("geometry").Element("location");
+                var lat = locationElement.Element("lat").Value;
+                var lng = locationElement.Element("lng").Value;
 
-                    TravelProviderProfile tpp = _travelProfileRepo.GetSingle(t => t.UserId == id);
+                TravelProviderProfile tpp = _travelProfileRepo.GetSingle(t => t.UserId == id);
                 string providerName;
                 if (tpp == null)
                 {
@@ -160,7 +166,9 @@ namespace GrandeTravel.Controllers
                     PackageDescription = vm.PackageDescription,
                     PackagePrice = vm.PackagePrice,
                     ProviderName = providerName,
-                    MyUserId = id
+                    MyUserId = id,
+                    Longitude = lng,
+                    Latitude = lat
 
                 };
                 if (PhotoLocation != null)
@@ -178,13 +186,12 @@ namespace GrandeTravel.Controllers
                     }
                     string SaveFilename = Path.Combine("Media\\TravelPackage", filename);
                     tp.PhotoLocation = SaveFilename;
-
-
-                    
+                   
                 }
+                
 
-                //call the service to add the package
-                _TravelPackageRepo.Create(tp);
+                    //call the service to add the package
+                    _TravelPackageRepo.Create(tp);
                 return RedirectToAction("Index", "TravelPackage");
             }
 
@@ -194,23 +201,13 @@ namespace GrandeTravel.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-
+            IEnumerable<Photo> photos = _photoRepo.Query(p => p.TravelPackageId == id);
             TravelPackage tp = _TravelPackageRepo.GetSingle(t => t.TravelPackageId == id);
             IEnumerable<Booking> list = _BookingRepo.Query(b => b.TravelPackageId == id);
             IEnumerable<Feedback> feedbacks = _feedbackRepo.Query(f => f.TravelPackageId == id);
             MyUser travelProviderName = await _userManager.FindByIdAsync(tp.MyUserId);
             string TpName = travelProviderName.UserName;
-            //Google Maps 
-            var address = tp.Location + " Australia";
-            var requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(address));
-
-            var request = WebRequest.Create(requestUri);
-            var response =await  request.GetResponseAsync();
-            var xdoc = XDocument.Load(response.GetResponseStream());
-            var result = xdoc.Element("GeocodeResponse").Element("result");
-            var locationElement = result.Element("geometry").Element("location");
-            var lat = locationElement.Element("lat").Value;
-            var lng = locationElement.Element("lng").Value;
+        
 
             DisplaySingleTravelPackageViewModel vm = new DisplaySingleTravelPackageViewModel
             {
@@ -224,8 +221,9 @@ namespace GrandeTravel.Controllers
                 Feedbacks = feedbacks,
                 TravelProviderName = tp.ProviderName,
                 UserName = TpName,
-                latitude = lat,
-                longitude = lng
+                latitude = tp.Latitude,
+                longitude = tp.Longitude,
+                GalleryPhotos = photos
 
 
             };
@@ -284,12 +282,16 @@ namespace GrandeTravel.Controllers
                     ModelState.AddModelError("Location", "Please Choose a Valid location");
                     return View(vm);
                 }
-
+                var locationElement = result.Element("geometry").Element("location");
+                var lat = locationElement.Element("lat").Value;
+                var lng = locationElement.Element("lng").Value;
 
                 tp.PackageName = vm.PackageName;
                 tp.Location = vm.Location;
                 tp.PackageDescription = vm.PackageDescription;
                 tp.PackagePrice = vm.PackagePrice;
+                tp.Latitude = lat;
+                tp.Longitude = lng;
                 if (PhotoLocation != null)
                 {
                     string uploadPath = Path.Combine(_HostingEnviro.WebRootPath, "Media\\TravelPackage");
@@ -315,8 +317,7 @@ namespace GrandeTravel.Controllers
             return View(vm);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
         [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Delete(int id)
         {
@@ -335,7 +336,7 @@ namespace GrandeTravel.Controllers
         [Authorize(Roles = "TravelProvider,Admin")]
         public IActionResult Statistics()
         {
-            IEnumerable<TravelPackage> tpList = _TravelPackageRepo.Query(i => i.MyUserId == _userManager.GetUserId(User)).ToList();
+            IEnumerable<TravelPackage> tpList = _TravelPackageRepo.Query(i => i.MyUserId == _userManager.GetUserId(User) && !i.Discontinued).ToList();
             List<string> names = new List<string>();
             List<string> NoBookings = new List<string>();
             List<string> values = new List<string>();

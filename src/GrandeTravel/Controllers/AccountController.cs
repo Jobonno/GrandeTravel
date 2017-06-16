@@ -54,6 +54,9 @@ namespace GrandeTravel.Controllers
                     Email = vm.Email
 
                 };
+                ///admin check
+                IEnumerable<MyUser> admin = await _userManager.GetUsersInRoleAsync("Admin");
+               
                 var result = await _userManager.CreateAsync(tempUser, vm.Password);
                 if (result.Succeeded)
                 {
@@ -68,7 +71,14 @@ namespace GrandeTravel.Controllers
                    
 
                     //remember to add roles first!!
-                    await _userManager.AddToRoleAsync(tempUser, "Customer");
+                    if(admin.Count() == 0)
+                    {
+                        await _userManager.AddToRoleAsync(tempUser, "Admin");
+                    }else
+                    {
+                        await _userManager.AddToRoleAsync(tempUser, "Customer");
+                    }
+                    
                     //await _signInManager.SignInAsync(tempUser, false);
                     return RedirectToAction("Index", "Home");
                 }

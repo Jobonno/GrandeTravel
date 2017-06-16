@@ -26,6 +26,9 @@ namespace GrandeTravel.Models
 
         public bool Discontinued { get; set; }
 
+        public string Longitude { get; set; }
+
+        public string Latitude { get; set; }
 
         public string MyUserId { get; set; }
         public MyUser MyUser { get; set; }
@@ -34,5 +37,7 @@ namespace GrandeTravel.Models
         public IEnumerable<Booking> Bookings { get; set; }
 
         public IEnumerable<Feedback> Feedbacks { get; set; }
+
+        public IEnumerable<Photo> Photos { get; set; }
     }
 }

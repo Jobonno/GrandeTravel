@@ -25,6 +25,7 @@ namespace GrandeTravel
             services.AddScoped<IRepository<Feedback>, BaseRepository<Feedback>>();
             services.AddScoped<IRepository<TravelProviderProfile>, BaseRepository<TravelProviderProfile>>();
             services.AddScoped<IRepository<CustomerProfile>, BaseRepository<CustomerProfile>>();
+            services.AddScoped<IRepository<Photo>, BaseRepository<Photo>>();
             services.AddTransient<IEmailSender, EmailSender>();
             
             services.AddIdentity<MyUser, IdentityRole>
@@ -58,9 +59,17 @@ namespace GrandeTravel
 
             app.UseStaticFiles();
             app.UseIdentity();
-            
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(rb =>
+            {
+                rb.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Home", action = "Index" });
+            });
+            //app.UseMvcWithDefaultRoute();
+
+            GTDbSeed.Seed(app.ApplicationServices).Wait();
         }
     }
 }

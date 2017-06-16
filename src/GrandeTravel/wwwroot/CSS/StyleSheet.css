@@ -223,9 +223,12 @@ address{
 
 /*Contact Page*/
 #contactContent{
-    height: 500px;
+    position: relative;
     margin-top:300px;
+    background-color:white;
 }
+
+
 
 .ContactUsBtn{
     font-size:36px;
@@ -270,6 +273,10 @@ address{
     width:100%; 
     
     
+}
+
+.packageDsp{
+    min-height: 460px;
 }
 
 #packageHeader{
@@ -373,15 +380,24 @@ address{
     font-size:56px;
 }
 #detailsContainer{
-    margin-top:300px;
+    margin-top:250px;
     background-color:white;
-     box-shadow: 0 3px 15px rgba(103,122,141,0.17);
+    box-shadow: 0 3px 15px rgba(103,122,141,0.17);
     
 }
 #detailImg{
     margin-top:50px;
 }
 
+.PackageImg{
+    min-height:100%;
+    display: block;
+    margin: auto auto;
+}
+.carouselImg{
+    height: 400px;
+    box-shadow: 0 3px 15px rgba(103,122,141,0.17);
+}
 #price{
     font-size:30px;
 }
@@ -416,6 +432,7 @@ address{
 #ReviewList{
     width:200px;
     margin:auto;
+    
 }
 
 
@@ -455,7 +472,7 @@ input[type="radio"]{
 }
 
 
-@media(max-width:1200px){
+@media(max-width:1440px){
     .IndexThumb{
     min-height: 164px;
     max-height: 284px;   
@@ -472,8 +489,8 @@ input[type="radio"]{
 
 @media(max-width:768px) {
     .IndexThumb{
-    max-height : 155px;   
-    width:auto;
+    max-height : 305px;   
+    width:100%;
     }
    
 }
@@ -535,5 +552,8 @@ input[type="radio"]{
         width: 100%;
         margin:auto;
    }
+   .carouselImg{
+    height: 200px;
+}
   
 }
