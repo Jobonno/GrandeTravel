@@ -23,9 +23,13 @@ namespace GrandeTravel.Migrations
 
                     b.Property<DateTime>("BookingDate");
 
+                    b.Property<bool>("LeftFeedback");
+
                     b.Property<string>("MyUserId");
 
                     b.Property<string>("Name");
+
+                    b.Property<bool>("PaymentReceived");
 
                     b.Property<int>("People");
 
@@ -34,6 +38,8 @@ namespace GrandeTravel.Migrations
                     b.Property<int>("TravelPackageId");
 
                     b.Property<string>("TravelPackageName");
+
+                    b.Property<string>("VoucherCode");
 
                     b.HasKey("BookingId");
 
@@ -135,6 +141,22 @@ namespace GrandeTravel.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("GrandeTravel.Models.Photo", b =>
+                {
+                    b.Property<int>("PhotoId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("PhotoLocation");
+
+                    b.Property<int>("TravelPackageId");
+
+                    b.HasKey("PhotoId");
+
+                    b.HasIndex("TravelPackageId");
+
+                    b.ToTable("TblPhoto");
+                });
+
             modelBuilder.Entity("GrandeTravel.Models.TravelPackage", b =>
                 {
                     b.Property<int>("TravelPackageId")
@@ -142,7 +164,11 @@ namespace GrandeTravel.Migrations
 
                     b.Property<bool>("Discontinued");
 
+                    b.Property<string>("Latitude");
+
                     b.Property<string>("Location");
+
+                    b.Property<string>("Longitude");
 
                     b.Property<string>("MyUserId");
 
@@ -306,6 +332,14 @@ namespace GrandeTravel.Migrations
 
                     b.HasOne("GrandeTravel.Models.TravelPackage", "TravelPackage")
                         .WithMany("Feedbacks")
+                        .HasForeignKey("TravelPackageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("GrandeTravel.Models.Photo", b =>
+                {
+                    b.HasOne("GrandeTravel.Models.TravelPackage", "TravelPackage")
+                        .WithMany("Photos")
                         .HasForeignKey("TravelPackageId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

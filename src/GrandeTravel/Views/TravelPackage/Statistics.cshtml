@@ -10,18 +10,24 @@
         {
             data: [@Model.Data],
             backgroundColor: [
-                "#FF6384",
+                "#446384",
                 "#36A2EB",
-                "#FFCE56",
+                "#77CE56",
                 "#CCFCE6",
-                "#1133FF"
+                "#1133FF",
+                "#9966FF",
+                "#CC8811",
+                "#1199CC"
             ],
             hoverBackgroundColor: [
-                "#FF6384",
+                "#446384",
                 "#36A2EB",
-                "#FFCE56",
+                "#77CE56",
                 "#CCFCE6",
-                "#1133FF"
+                "#1133FF",
+                "#9966FF",
+                "#CC8811",
+                "#1199CC"
             ]
         }]
 };
@@ -34,18 +40,24 @@
             data: [@Model.AmountBookings],
             label: "Booking dataset",
             backgroundColor: [
-                "#FF6384",
+                 "#446384",
                 "#36A2EB",
-                "#FFCE56",
+                "#77CE56",
                 "#CCFCE6",
-                "#1133FF"
+                "#1133FF",
+                "#9966FF",
+                "#CC8811",
+                "#1199CC"
             ],
             borderColor: [
-                "#FF6384",
+                "#446384",
                 "#36A2EB",
-                "#FFCE56",
+                "#77CE56",
                 "#CCFCE6",
-                "#1133FF"
+                "#1133FF",
+                "#9966FF",
+                "#CC8811",
+                "#1199CC"
             ]
         }]
 };
@@ -141,28 +153,32 @@
 </script>
 <div class="container">
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-4 col-lg-offset-1 col-md-5 col-sm-6">
             <div style="text-align: center">
+                <h2>Total Sales In $</h2>
                 <canvas id="Piecanvas"></canvas>
                 
             </div>
         </div>
-        <div class="col-lg-4">
-            <div style="text-align: center">
+        <div class="col-lg-4 col-lg-offset-1 col-md-5 col-sm-6">
+            <div class="mobile-hide" style="text-align: center">
+                <h2>Total Sales In $</h2>
                 <canvas id="Barcanvas2"></canvas>
 
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-4 col-lg-offset-1 col-md-5 col-sm-6">
             <div style="text-align: center">
+                <h2>Total Amount of Bookings</h2>
                 <canvas id="Piecanvas2"></canvas>
 
             </div>
         </div>
-        <div class="col-lg-4">
-            <div style="text-align: center">
+        <div class="col-lg-4 col-lg-offset-1 col-md-5 col-sm-6">
+            <div class="mobile-hide" style="text-align: center">
+                <h2>Total Amount of Bookings</h2>
                 <canvas id="Barcanvas"></canvas>
 
             </div>

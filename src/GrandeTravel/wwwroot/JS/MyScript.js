@@ -13,11 +13,14 @@
             "twitter",
             "facebook",
             "googleplus",
-            "linkedin"
-           
+            "linkedin"          
             
         ]
     });
+
+   
+
+   
 
     $(".ratings").on('click', function () {
         $(".ratings").removeClass('selected-active');
@@ -38,4 +41,11 @@
         $(".ratings").removeClass('secondary-active');
        
     })
+
+
+    $("#People").change(function () {
+        var people = $("#People").val();
+        $("#totalCost").html(people * price);
+        })
+   
 });

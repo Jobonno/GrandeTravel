@@ -12,6 +12,7 @@
     <link href="~/lib/fontawesome/css/font-awesome.css" rel="stylesheet" />
     <link href="~/lib/jssocials/dist/jssocials.css" rel="stylesheet" />
     <link href="~/lib/jssocials/dist/jssocials-theme-classic.css" rel="stylesheet" />
+   
 </head>
 <body>
     <nav class="navbar navbar-default" id="landingNav">
@@ -49,8 +50,8 @@
                                     <li class="dropdown-header">Admin Options</li>
                                     <li><a asp-area="" asp-controller="Account" asp-action="AddRole">Add Role</a></li>
                                     <li><a asp-area="" asp-controller="Account" asp-action="RegisterTravelProvider">Add A Travel Provider</a></li>
-                                    <li><a href="#">View All Travel Providers</a></li>
-                                    <li><a href="#">Something else here</a></li>
+                                    <li><a asp-area="" asp-controller="Account" asp-action="TravelProviderList">View All Travel Providers</a></li>
+                                    <li><a asp-area="" asp-controller="Account" asp-action="CustomerList">View All Customers</a></li>
                                 }
                                 @if (User.IsInRole("TravelProvider"))
                                 { 
@@ -66,6 +67,7 @@
                                     <li class="dropdown-header">Customer Options</li>
                                     <li><a asp-area="" asp-controller="Profile" asp-action="UpdateCustomerProfile">Update Profile</a></li>
                                     <li><a asp-area="" asp-controller="Booking" asp-action="Index">Display My Bookings</a></li>
+                                    <li><a asp-area="" asp-controller="Booking" asp-action="IndexOfPast">Display My Previous Bookings</a></li>
                                     <li role="separator" class="divider"></li>                                  
                                 }
                                 <li><a><form method="post" asp-controller="Account" asp-action="Logout" asp-anti-forgery="true"><input id="logoutBtn" type="submit" value="Logout" /></form></a></li>
@@ -120,9 +122,18 @@
             </div>
         </div>
     </footer>
+    
     <script src="~/lib/jquery/dist/jquery.js"></script>
+    
     <script src="~/lib/jssocials/dist/jssocials.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/devbridge-autocomplete/dist/jquery.autocomplete.js"></script>
+    
     <script src="~/JS/MyScript.js"></script>
+    @if(ViewBag.Title == "Grande Travel Landing Page" || ViewBag.Title == "Grande Travel Index Page")
+    {
+        <script src="~/JS/AutoCompleteScript.js"></script>
+    }
+
 </body>
 </html>

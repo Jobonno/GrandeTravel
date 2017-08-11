@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using MimeKit;
 using MailKit.Net.Smtp;
+using Braintree;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,12 +23,14 @@ namespace GrandeTravel.Controllers
         private IRepository<Booking> _bookingRepo;
         private UserManager<MyUser> _userManager;
         private IRepository<TravelPackage> _travelPackageManager;
+        private IEmailSender _emailService;
 
-        public BookingController(IRepository<Booking> bookingRepo, UserManager<MyUser> userManager, IRepository<TravelPackage> travelPackageManager)
+        public BookingController(IRepository<Booking> bookingRepo, UserManager<MyUser> userManager, IRepository<TravelPackage> travelPackageManager, IEmailSender emailService)
         {
             _userManager = userManager;
             _bookingRepo = bookingRepo;
             _travelPackageManager = travelPackageManager;
+            _emailService = emailService;
         }
 
         // GET: /<controller>/
@@ -34,8 +38,21 @@ namespace GrandeTravel.Controllers
         public IActionResult Index()
         {
             var userId = _userManager.GetUserId(User);
-            IEnumerable<Booking> list = _bookingRepo.Query(b => b.MyUserId == userId);
+            IEnumerable<Booking> list = _bookingRepo.Query(b => b.MyUserId == userId && b.BookingDate > DateTime.Today);
             DisplayAllBookingsViewModel vm = new DisplayAllBookingsViewModel
+            {
+                Bookings = list,
+                total = list.Count()
+            };
+            return View(vm);
+        }
+
+        [Authorize]
+        public IActionResult IndexofPast()
+        {
+            var userId = _userManager.GetUserId(User);
+            IEnumerable<Booking> list = _bookingRepo.Query(b => b.MyUserId == userId && b.BookingDate < DateTime.Today);
+            DisplayPastBookingsViewModel vm = new DisplayPastBookingsViewModel
             {
                 Bookings = list,
                 total = list.Count()
@@ -66,7 +83,9 @@ namespace GrandeTravel.Controllers
             
             if (ModelState.IsValid)
             {
+                TravelPackage tp = _travelPackageManager.GetSingle(t => t.TravelPackageId == vm.TravelPackageId);
                 var userId = _userManager.GetUserId(User);
+                string voucherCode = Guid.NewGuid().ToString().GetHashCode().ToString("x");
                 Booking booking = new Booking
                 {
                     BookingDate = vm.BookingDate,
@@ -74,38 +93,62 @@ namespace GrandeTravel.Controllers
                     MyUserId = userId,
                     People = vm.People,
                     Name = User.Identity.Name,
-                    TotalCost = (vm.People * vm.TotalCost),
-                    TravelPackageName = vm.TravelPackageName
+                    //xtra Security getting price from database
+                    TotalCost = (vm.People * tp.PackagePrice),
+                    TravelPackageName = vm.TravelPackageName,
+                    VoucherCode = voucherCode,
+                    LeftFeedback = false
                 };
                 _bookingRepo.Create(booking);
                 //Send Email
-                var message = new MimeMessage();
                 MyUser user = await _userManager.FindByIdAsync(userId);
-                message.From.Add(new MailboxAddress("Grande Travel", "grandetravelproject@gmail.com"));
-                message.To.Add(new MailboxAddress(user.UserName, user.Email));
-                message.Subject = "Your Booking Voucher";
-                message.Body = new TextPart("plain")
-                {
-                    Text = "Booking Date : " + booking.BookingDate + "\n" +
-                           "Package Name : " + booking.TravelPackageName + "\n" +
-                           "Number of People: " + booking.People + "\n" +
-                           "Total cost : $" + booking.TotalCost + "\n" +
-                           "Expiry Date : " + booking.BookingDate.AddMonths(3)
-                           //add voucher code here
+                _emailService.SendEmail("grandetravelproject@gmail.com", user.Email, "Your Booking Voucher",
+                            "Booking Date : " + booking.BookingDate + "\n" +
+                            "Package Name : " + booking.TravelPackageName + "\n" +
+                            "Number of People: " + booking.People + "\n" +
+                            "Total cost : $" + booking.TotalCost + "\n" +
+                            "Expiry Date : " + booking.BookingDate.AddMonths(3) + "\n" +
+                            "Voucher Code : " + voucherCode);
+                                               
 
-                };
-
-                using (var client = new SmtpClient())
-                {
-                    client.Connect("smtp.gmail.com", 587, false);
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    client.Authenticate("grandetravelproject@gmail.com", "Diplomaproject");
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
                 return RedirectToAction("Details", "TravelPackage", new { id = booking.TravelPackageId});
             }
             return View(vm);
         }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult PaymentRecieved(int id)
+        {
+            Booking booking = _bookingRepo.GetSingle(b => b.BookingId == id);
+            booking.PaymentReceived = true;
+            _bookingRepo.Update(booking);
+            return RedirectToAction("Index");
+        }
+
+
+
+        //[HttpGet]
+        //[Authorize]
+        //public IActionResult BraintreePayment(int id)
+        //{
+        //    var gateway = new BraintreeGateway
+        //    {
+        //        Environment = Braintree.Environment.SANDBOX,
+        //        MerchantId = "t4xzfjwmtbd7dwvh",
+        //        PublicKey = "s4ynn5bwvf4sc588",
+        //        PrivateKey = "5dcc19cb0bcdbb3c3f24421a9f07961f"
+        //    };
+        //    var clientToken = gateway.ClientToken.generate();
+        //    return View();
+
+        //}
+
+        //[HttpPost]
+        //public ActionResult CreatePurchase(FormCollection collection)
+        //{
+        //    string nonceFromTheClient = collection["payment_method_nonce"];
+        //    // Use payment method nonce here
+        //}
     }
 }

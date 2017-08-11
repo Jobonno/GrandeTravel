@@ -12,5 +12,7 @@ namespace GrandeTravel.ViewModels
 
         public IEnumerable<TravelPackage> TravelPackageList { get; set; }
 
+        public string searchList;
+
     }
 }

@@ -10,5 +10,6 @@ namespace GrandeTravel.ViewModels
     {
         public int total { get; set; }
         public IEnumerable<Booking> Bookings { get; set; }
+
     }
 }

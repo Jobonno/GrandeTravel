@@ -54,6 +54,9 @@ namespace GrandeTravel.Controllers
                     Email = vm.Email
 
                 };
+                ///admin check
+                IEnumerable<MyUser> admin = await _userManager.GetUsersInRoleAsync("Admin");
+               
                 var result = await _userManager.CreateAsync(tempUser, vm.Password);
                 if (result.Succeeded)
                 {
@@ -68,7 +71,14 @@ namespace GrandeTravel.Controllers
                    
 
                     //remember to add roles first!!
-                    await _userManager.AddToRoleAsync(tempUser, "Customer");
+                    if(admin.Count() == 0)
+                    {
+                        await _userManager.AddToRoleAsync(tempUser, "Admin");
+                    }else
+                    {
+                        await _userManager.AddToRoleAsync(tempUser, "Customer");
+                    }
+                    
                     //await _signInManager.SignInAsync(tempUser, false);
                     return RedirectToAction("Index", "Home");
                 }
@@ -107,6 +117,14 @@ namespace GrandeTravel.Controllers
                 var result = await _userManager.CreateAsync(tempUser, vm.Password);
                 if (result.Succeeded)
                 {
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(tempUser);
+
+                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account",
+                        new { userId = tempUser.Id, code = code }, protocol: HttpContext.Request.Scheme);
+
+                    _emailService.SendEmail("grandetravelproject@gmail.com", vm.Email, "Confirm Registration",
+                        $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+
                     //remember to add roles first!!
                     await _userManager.AddToRoleAsync(tempUser, "TravelProvider");
                    // await _signInManager.SignInAsync(tempUser,false);
@@ -229,5 +247,32 @@ namespace GrandeTravel.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> TravelProviderList()
+        {
+            IEnumerable<MyUser> travelProviders = await _userManager.GetUsersInRoleAsync("TravelProvider");
+
+            DisplayAllTravelProvidersViewModel vm = new DisplayAllTravelProvidersViewModel
+            {
+                TravelProviders = travelProviders
+            };
+            
+            return View(vm);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CustomerList()
+        {
+            IEnumerable<MyUser> customers = await _userManager.GetUsersInRoleAsync("Customer");
+
+            DisplayAllCustomersViewModel vm = new DisplayAllCustomersViewModel
+            {
+                Customers = customers
+            };
+
+            return View(vm);
+        }
     }
 }

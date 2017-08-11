@@ -26,7 +26,11 @@ namespace GrandeTravel.Models
 
         public string TravelPackageName { get; set; }
 
+        public string VoucherCode { get; set; }
 
+        public bool LeftFeedback { get; set; }
+
+        public bool PaymentReceived { get; set; }
 
     }
 }

@@ -33,5 +33,9 @@ namespace GrandeTravel.ViewModels
 
         public string longitude { get; set; }
         public string latitude { get; set; }
+
+        public IEnumerable<Photo> GalleryPhotos { get; set; }
+
+
     }
 }
